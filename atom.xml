@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2021-11-12T08:55:24&#43;00:00</updated>
+    <updated>2021-11-16T09:29:17&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -17,10 +17,151 @@
     
     <generator uri="https://gohugo.io/" version="0.76.5">Hugo</generator>
         <entry>
+            <title type="text">Rust Build Scripts</title>
+            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-build-scripts/" />
+            <id>https://haobogu.github.io/posts/rust-build-scripts/</id>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
+            <published>2021-11-12T17:27:44&#43;08:00</published>
+            <author>
+                    <name>Haobo Gu</name>
+                    <uri>haobogu.github.io</uri>
+                    <email>haobogu@outlook.com</email>
+                    </author>
+            <summary type="html">Introduction to Rust&#39;s build scripts</summary>
+            
+                <content type="html">&lt;h1 id=&#34;rust-build-scripts&#34;&gt;Rust Build Scripts&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://doc.rust-lang.org/cargo/reference/build-scripts.html&#34;&gt;https://doc.rust-lang.org/cargo/reference/build-scripts.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;whats-build-scripts-in-rust&#34;&gt;What&#39;s Build Scripts in Rust&lt;/h2&gt;
+&lt;p&gt;Build scripts in Rust is used to integrate Rust code to external tools or dependecies such as C libraries, or execute tasks before compiling the Rust project. You can enable build scripts by placing a file named &lt;code&gt;build.rs&lt;/code&gt; at the root of a Rust package. Cargo will compile and execute the build script before building the package.&lt;/p&gt;
+&lt;p&gt;Here are some usages of build scripts according to the Cargo Book:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Building a bundled C library.&lt;/li&gt;
+&lt;li&gt;Finding a C library on the host system.&lt;/li&gt;
+&lt;li&gt;Generating a Rust module from a specification.&lt;/li&gt;
+&lt;li&gt;Performing any platform-specific configuration needed for the crate.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The following sections will introduce the basics of build scripts in Rust.&lt;/p&gt;
+&lt;h2 id=&#34;life-cycle-of-build-scripts&#34;&gt;Life Cycle of Build Scripts&lt;/h2&gt;
+&lt;p&gt;Build scripts are compiled to an executable and executed before the package is built.
+It should return a zero exit code if there&#39;s no error. The rest of the package will be compiled after the build script finished.
+If any error occurs, a non-zero exit code should be returned by the build script to interrupt the build process.&lt;/p&gt;
+&lt;p&gt;By default, Cargo will rerun the build script if any file changes in the project. But you can also specify the watched files using &lt;code&gt;rerune-if-changed&lt;/code&gt; command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span class=&#34;n&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;cargo:rerun-if-changed=wrapper.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;inputs-and-outputs-of-the-build-script&#34;&gt;Inputs and Outputs of the Build Script&lt;/h2&gt;
+&lt;p&gt;All inputs of the build script are passed using environment variables. &lt;a href=&#34;https://doc.rust-lang.org/cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts&#34;&gt;Here&lt;/a&gt; is the list of all available inputs for build scripts.&lt;/p&gt;
+&lt;p&gt;All output files of the build script should be saved in the directory specified in &lt;code&gt;OUT_DIR&lt;/code&gt; environment variable.
+The script may commnunicate with Cargo by printing commands like &lt;code&gt;cargo:xxx&lt;/code&gt; to stdout, all other lines will be ignored.&lt;/p&gt;
+&lt;p&gt;Here is a list of all commands that Cargo accepts according to the Cargo Book:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cargo:rerun-if-changed=PATH — Tells Cargo when to re-run the script.&lt;/li&gt;
+&lt;li&gt;cargo:rerun-if-env-changed=VAR — Tells Cargo when to re-run the script.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-link-arg=FLAG – Passes custom flags to a linker for benchmarks, binaries, cdylib crates, examples, and tests.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-link-arg-bin=BIN=FLAG – Passes custom flags to a linker for the binary BIN.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-link-arg-bins=FLAG – Passes custom flags to a linker for binaries.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-link-lib=[KIND=]NAME — Adds a library to link.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-link-search=[KIND=]PATH — Adds to the library search path.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-flags=FLAGS — Passes certain flags to the compiler.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-cfg=KEY[=&amp;quot;VALUE&amp;quot;] — Enables compile-time cfg settings.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-env=VAR=VALUE — Sets an environment variable.&lt;/li&gt;
+&lt;li&gt;cargo:rustc-cdylib-link-arg=FLAG — Passes custom flags to a linker for cdylib crates.&lt;/li&gt;
+&lt;li&gt;cargo:warning=MESSAGE — Displays a warning on the terminal.&lt;/li&gt;
+&lt;li&gt;cargo:KEY=VALUE — Metadata, used by links scripts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;build-dependencies&#34;&gt;Build Dependencies&lt;/h2&gt;
+&lt;p&gt;You can specify dependencies for build scripts using &lt;code&gt;build-dependencies&lt;/code&gt; section in Cargo.toml:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;dependencies&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;cc&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;1.0.46&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The build script cannot use dependencies or dev-dependencies in Cargo.toml.&lt;/p&gt;
+&lt;h2 id=&#34;the-packagelinks-manifest-key&#34;&gt;The &lt;code&gt;package.links&lt;/code&gt; Manifest Key&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;package.links&lt;/code&gt; manifest key is used to specify the native libraries that the package depends on. When using this key, the package must have a build script with the &lt;code&gt;cargo:rustc-link-lib=[KIND=]=NAME&lt;/code&gt; command. With &lt;code&gt;links&lt;/code&gt; key, Cargo knows about the native libraries that the package depends on. Also, metadata is passed as the output of build script in the &lt;code&gt;KEY=VALUE&lt;/code&gt; format using &lt;code&gt;links&lt;/code&gt; key(see &lt;a href=&#34;https://doc.rust-lang.org/cargo/reference/build-scripts.html#the-links-manifest-key&#34;&gt;cargo:KEY=VALUE&lt;/a&gt; command). This metadata is automatically converted to an environment variable for the &lt;strong&gt;dependent&#39;s&lt;/strong&gt; build script.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;package&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# links to libonnxruntime&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;links&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;onnxruntime&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;By default, there is at most one package per &lt;code&gt;links&lt;/code&gt; value to prevent conflict symbols.&lt;/p&gt;
+&lt;h2 id=&#34;-sys-packages&#34;&gt;&lt;code&gt;*-sys&lt;/code&gt; Packages&lt;/h2&gt;
+&lt;p&gt;In Rust&#39;s convention, any package that link to system libraries should have a &lt;code&gt;-sys&lt;/code&gt; suffix. In our case, we generated &lt;code&gt;onnxruntime-sys&lt;/code&gt; at 【TODO】. It&#39;s also common to have another package which wraps the &lt;code&gt;-sys&lt;/code&gt; package, for example, &lt;code&gt;onnxruntime&lt;/code&gt;, to provide safe and high-level APIs.&lt;/p&gt;
+&lt;h2 id=&#34;overriding-the-build-script&#34;&gt;Overriding the Build Script&lt;/h2&gt;
+&lt;p&gt;You can also override params in build script at &lt;a href=&#34;https://doc.rust-lang.org/cargo/reference/config.html&#34;&gt;Cargo configuration file&lt;/a&gt;. Here is an example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;x86_64&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;unknown&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;linux&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;gnu&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;foo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;link&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;lib&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;foo&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;link&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;search&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/path/to/foo&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;flags&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;-L /some/path&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;cfg&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;key=&amp;#34;value&amp;#34;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;env&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;rustc&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;cdylib&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;link&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;arg&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;…&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;metadata_key1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;
+&lt;span class=&#34;nx&#34;&gt;metadata_key2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In this case, if a package links to &lt;code&gt;foo&lt;/code&gt;, then it&#39;s build script will &lt;strong&gt;not&lt;/strong&gt; be executed. Instead, the medata specified in Cargo configuration file will be used.&lt;/p&gt;
+&lt;h2 id=&#34;learn-build-script-from-examples&#34;&gt;Learn Build Script from Examples&lt;/h2&gt;
+&lt;p&gt;The Cargo book provides a complete &lt;a href=&#34;https://doc.rust-lang.org/cargo/reference/build-script-examples.html&#34;&gt;example&lt;/a&gt; of how to write build scripts.&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/rust/" term="rust" label="rust" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/rust-bindgen/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -237,7 +378,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/rusts-module-system/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -525,7 +666,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/learning-rust-4/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -849,7 +990,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/learning-rust-3/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1179,7 +1320,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/learning-rust-2/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1540,7 +1681,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/learning-rust-1/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2333,7 +2474,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/intellicode-compose/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2440,7 +2581,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/dockerfile/" />
             <id>https://haobogu.github.io/posts/dockerfile/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2768,7 +2909,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2896,7 +3037,7 @@ docker build -t nginx:v3 .
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/xlnet/" />
             <id>https://haobogu.github.io/posts/xlnet/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2020-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3027,7 +3168,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/effective-go/" />
             <id>https://haobogu.github.io/posts/effective-go/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3377,7 +3518,7 @@ docker build -t nginx:v3 .
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/language-server-protocol/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4136,7 +4277,7 @@ docker build -t nginx:v3 .
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/vs-code-extension/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4333,7 +4474,7 @@ docker build -t nginx:v3 .
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tttttransformer/" />
             <id>https://haobogu.github.io/posts/tttttransformer/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4595,7 +4736,7 @@ $$&lt;/p&gt;
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4670,7 +4811,7 @@ $$&lt;/p&gt;
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-hugo/" />
             <id>https://haobogu.github.io/posts/learning-hugo/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4834,7 +4975,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/get-started-with-gremlin/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5010,7 +5151,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-python/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5206,7 +5347,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/ssh/" />
             <id>https://haobogu.github.io/posts/ssh/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5313,7 +5454,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-basics/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5416,7 +5557,7 @@ https://example.com/posts/index.html
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5681,7 +5822,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vim/" />
             <id>https://haobogu.github.io/posts/vim/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5810,7 +5951,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/get-started-with-hugo/</id>
-            <updated>2021-11-12T08:55:21&#43;00:00</updated>
+            <updated>2021-11-16T09:29:14&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
