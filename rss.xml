@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 18 Nov 2021 02:24:52 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 29 Dec 2021 16:05:42 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -3652,6 +3652,91 @@ docker build -t nginx:v3 .
                                 
                                 
                                     <category domain="https://haobogu.github.io/tags/go/">go</category>
+                                
+                            
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title>Powerful Git Commands</title>
+                <link>https://haobogu.github.io/posts/git-commands/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/git-commands/</guid>
+                <pubDate>Wed, 18 Dec 2019 19:47:24 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;git-commands&#34;&gt;Git commands&lt;/h1&gt;
+&lt;p&gt;This post records some powerful git commands which I was not familiar with.&lt;/p&gt;
+&lt;h2 id=&#34;merge-a-specific-commit-to-another-branch&#34;&gt;Merge a specific commit to another branch&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Merge a commit to current branch&lt;/span&gt;
+git cherry-pick COMMIT_ID
+
+&lt;span class=&#34;c1&#34;&gt;# Merge commits in a range(without start commit)&lt;/span&gt;
+git cherry-pick START_COMMIT_ID..END_COMMIT_ID
+
+&lt;span class=&#34;c1&#34;&gt;# Merge commits in a range(with start commit)&lt;/span&gt;
+git cherry-pick START_COMMIT_ID^..END_COMMIT_ID
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In the commands above, the first 6 chars of &lt;code&gt;START_COMMIT_ID&lt;/code&gt; and &lt;code&gt;END_COMMIT_ID&lt;/code&gt; are enough.&lt;/p&gt;
+&lt;p&gt;For example, command&lt;code&gt;git cherry-pick 496986^...acc9bb&lt;/code&gt;  is same as &lt;code&gt;git cherry-pick 49698603a9c7d1dfdfef0505b52ab2cd4f7ed1a7^...acc9bb290a39275b59cb18e5eb661563fbf08c43&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;--patch&#34;&gt;--patch&lt;/h2&gt;
+&lt;p&gt;If you want to commit some specific changes, you can use &lt;code&gt;--patch&lt;/code&gt; option:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;git add --patch &amp;lt;filename&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;--patch&lt;/code&gt;(or &lt;code&gt;-p&lt;/code&gt; for short) is a powerful option, which allows you to pick your interested changes in a file or a commit.&lt;/p&gt;
+&lt;p&gt;If you use &lt;code&gt;--patch&lt;/code&gt; or &lt;code&gt;-p&lt;/code&gt;, the system will ask you whether to stage changes at every chunk:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Apply this hunk to index and worktree [y,n,q,a,d,j,J,g,/,e,?]?
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The explanation of those options:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;y - apply this hunk to index and worktree
+n - do not apply this hunk to index and worktree
+q - quit; do not apply this hunk or any of the remaining ones
+a - apply this hunk and all later hunks in the file
+d - do not apply this hunk or any of the later hunks in the file
+g - select a hunk to go to
+/ - search for a hunk matching the given regex
+j - leave this hunk undecided, see next undecided hunk
+J - leave this hunk undecided, see next hunk
+e - manually edit the current hunk
+? - print help
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The most commonly used options are &lt;code&gt;y&lt;/code&gt;(accept this chunk) and &lt;code&gt;n&lt;/code&gt;(ignore this chunk).&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/git/">git</category>
                                 
                             
                         
