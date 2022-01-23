@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Sun, 23 Jan 2022 15:24:38 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sun, 23 Jan 2022 16:27:27 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -46,10 +46,10 @@
 &lt;li&gt;Robust&lt;/li&gt;
 &lt;li&gt;Dependency-free&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;At the moment(2022/01/23), tree-sitter has been used in many famous projects, such as &lt;a href=&#34;https://neovim.io/&#34;&gt;Neovim&lt;/a&gt;, &lt;a href=&#34;https://cs.github.com/&#34;&gt;GitHub Code Search&lt;/a&gt;, etc. In this article, I&#39;ll introduce the basic usage of tree-sitter.&lt;/p&gt;
+&lt;p&gt;At the moment(2022/01/23), tree-sitter has been used in many famous projects, such as &lt;a href=&#34;https://neovim.io/&#34;&gt;Neovim&lt;/a&gt;, &lt;a href=&#34;https://cs.github.com/&#34;&gt;GitHub Code Search&lt;/a&gt;, etc.&lt;/p&gt;
 &lt;h2 id=&#34;language-bindings&#34;&gt;Language bindings&lt;/h2&gt;
 &lt;p&gt;Tree-sitter runtime is written in pure C, so it&#39;s easy to embed it to other languages. Tree-sitter provides many language bindings, you can find a list here: &lt;a href=&#34;https://tree-sitter.github.io/tree-sitter/#language-bindings&#34;&gt;https://tree-sitter.github.io/tree-sitter/#language-bindings&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;In this article, we&#39;ll use tree-sitter Rust bindings.&lt;/p&gt;
+&lt;p&gt;In this article, We&#39;ll use Rust bindings of tree-sitter. If you don&#39;t use Rust, don&#39;t worry! Other language bindings of tree-sitter should be similar to use.&lt;/p&gt;
 &lt;h2 id=&#34;using-tree-sitter-parsers-in-rust&#34;&gt;Using Tree-Sitter Parsers in Rust&lt;/h2&gt;
 &lt;p&gt;The Rust bindings of tree-sitter can be found &lt;a href=&#34;https://crates.io/crates/tree-sitter&#34;&gt;here&lt;/a&gt;. You can see all API docs at &lt;a href=&#34;https://docs.rs/tree-sitter/latest/tree_sitter/&#34;&gt;https://docs.rs/tree-sitter/latest/tree_sitter/&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The official document also has introductiosn of tree-sitter&#39;s raw &lt;a href=&#34;https://github.com/tree-sitter/tree-sitter/blob/master/lib/include/tree_sitter/api.h&#34;&gt;C API&lt;/a&gt;. If you want to use tree-sitter in other languages, C API is a good start to learn.&lt;/p&gt;
