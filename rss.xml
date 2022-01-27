@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 25 Jan 2022 15:15:47 &#43;0000</lastBuildDate>
+        <lastBuildDate>Thu, 27 Jan 2022 16:25:16 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -459,7 +459,7 @@
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;thats-all-about-tree-sitter-basics&#34;&gt;That&#39;s all about tree-sitter basics&lt;/h2&gt;
-&lt;p&gt;Yeah, we&#39;ve covered most tree-sitter APIs that will be used in basic parsing. In the next articles, I&#39;ll introduce some advanced topic of tree-sitter, like incrementally parsing, pattern matching and grammar writting.&lt;/p&gt;
+&lt;p&gt;In this article, we&#39;ve covered most basic tree-sitter APIs. In the next articles, I&#39;ll introduce some advanced topic of tree-sitter, like incrementally parsing, pattern matching and grammar writting.&lt;/p&gt;
 </description>
                 
                 
