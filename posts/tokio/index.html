@@ -54,13 +54,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2022-06-18T17:48:45+08:00",
-        "dateModified": "2022-06-23T07:23:27+00:00",
+        "dateModified": "2022-06-30T02:22:47+00:00",
         "url": "https://haobogu.github.io/posts/tokio/",
         "headline": "Get Started With Tokio",
         "description": "Learn Tokio by Tokio official tutorial",
         "inLanguage" : "en",
         "articleSection": "posts",
-        "wordCount":  1118 ,
+        "wordCount":  1270 ,
         "image": "https://haobogu.github.io/images/avatar.png",
         "author": {
             "@type": "Person",
@@ -97,7 +97,7 @@
 <meta property="og:locale" content="en" /><meta property="og:image" content="https://haobogu.github.io/images/avatar.png" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2022-06-18T17:48:45&#43;08:00" />
-    <meta property="article:modified_time" content="2022-06-23T07:23:27&#43;00:00" />
+    <meta property="article:modified_time" content="2022-06-30T02:22:47&#43;00:00" />
     
     <meta property="article:section" content="posts" />
 
@@ -217,7 +217,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1118</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;1270</span>
     
     
         
@@ -656,7 +656,71 @@
 </span></code></pre></td></tr></table></div>
 </div>
 </div><p>In the code, we process the received message in the main thread. You can also spawn a new thread to process it.</p>
-
+<h2 id="io"><a href="#io" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>IO</h2>
+<p>Tokio provides apis for asynchronous IO, which are similar with IO apis in <code>std</code>.</p>
+<h3 id="buffered-read-and-write"><a href="#buffered-read-and-write" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>Buffered read and write</h3>
+<p>Generally, the message is transmitted like a frame, a typical HTTP frame is like:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">enum</span> <span class="nc">HttpFrame</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">RequestHead</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="n">method</span>: <span class="nc">Method</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="n">uri</span>: <span class="nc">Uri</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="n">version</span>: <span class="nc">Version</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="n">headers</span>: <span class="nc">HeaderMap</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="p">},</span><span class="w">
+</span><span class="w">    </span><span class="n">ResponseHead</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="n">status</span>: <span class="nc">StatusCode</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="n">version</span>: <span class="nc">Version</span><span class="p">,</span><span class="w">
+</span><span class="w">        </span><span class="n">headers</span>: <span class="nc">HeaderMap</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="p">},</span><span class="w">
+</span><span class="w">    </span><span class="n">BodyChunk</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">        </span><span class="n">chunk</span>: <span class="nc">Bytes</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="p">},</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table></div>
+</div>
+</div><p>The frame will be converted to byte arrays to be transmitted, so when we read data, we have to convert byte arrays back to frames. Take <code>TcpStream::read()</code> as an example, when we manually call <code>read()</code>, an arbitrary amount of data might be returned. The returned data could be a frame, or a partial frame, or multiple frames. This is a little bit complex, as a result buffered IO is introduced to address this.</p>
+<p>First of all, we wrap <code>TcpStream</code> with a buffer:</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-rust" data-lang="rust"><span class="k">use</span><span class="w"> </span><span class="n">bytes</span>::<span class="n">BytesMut</span><span class="p">;</span><span class="w">
+</span><span class="w"></span><span class="k">use</span><span class="w"> </span><span class="n">tokio</span>::<span class="n">net</span>::<span class="n">TcpStream</span><span class="p">;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Connection</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">    </span><span class="n">stream</span>: <span class="nc">TcpStream</span><span class="p">,</span><span class="w">
+</span><span class="w">    </span><span class="n">buffer</span>: <span class="nc">BytesMut</span><span class="p">,</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></td></tr></table></div>
+</div>
+</div>
             </div>
 
             
@@ -683,9 +747,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2022-06-23 07:23:27 UTC" style="cursor:help">
+        <span title="Updated @ 2022-06-30 02:22:47 UTC" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-06-23</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-06-23</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-06-30</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-06-30</text></g></svg>
         </span></div>
 
 
@@ -796,15 +860,15 @@
                     </li>
                 
                     <li class="related-item">
-                        <a href="https://haobogu.github.io/posts/actix-web/" class="related-link">Basic Conceptions in actix-web</a>
-                    </li>
-                
-                    <li class="related-item">
                         <a href="https://haobogu.github.io/posts/rust-build-scripts/" class="related-link">Rust Build Scripts</a>
                     </li>
                 
                     <li class="related-item">
                         <a href="https://haobogu.github.io/posts/rust-bindgen/" class="related-link">Rust bindgen</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/rusts-module-system/" class="related-link">Rust's Module System</a>
                     </li>
                 
             </ul>
@@ -848,7 +912,7 @@
             
             
                 <li class="post-nav-next">
-                    <a href="https://haobogu.github.io/posts/vue/" rel="next">Basics of Vue &gt;</a>
+                    <a href="https://haobogu.github.io/posts/tree-sitter2/" rel="next">Tree sitter - advanced parsing &gt;</a>
                 </li>
             
         </ul>
