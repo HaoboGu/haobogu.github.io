@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-06-30T02:22:50&#43;00:00</updated>
+    <updated>2022-06-30T02:53:06&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tokio/" />
             <id>https://haobogu.github.io/posts/tokio/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -545,7 +545,7 @@
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter2/" />
             <id>https://haobogu.github.io/posts/tree-sitter2/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1112,7 +1112,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter/" />
             <id>https://haobogu.github.io/posts/tree-sitter/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1577,7 +1577,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/rust-build-scripts/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1718,7 +1718,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/rust-bindgen/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1935,7 +1935,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tttttransformer/" />
             <id>https://haobogu.github.io/posts/tttttransformer/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1953,7 +1953,6 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 &lt;/ol&gt;
 &lt;p&gt;Google提出的基于self-attention的Transformer和Transformer-XL结构可以很好地解决RNN的缺点，所以自2017年以来，Transformer已经成为了NLP领域对语言建模的默认选项。 Bert、GPT、XLNET等模型的基础单位都是Transformer。&lt;/p&gt;
 &lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-073121.png&#34; alt=&#34;image-20191008153121224&#34;&gt;&lt;/p&gt;
 &lt;p&gt;论文里面的Transformer沿用了传统的encoder-decoder结构。其主要构造单元为：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Multi-Head Attention layer&lt;/li&gt;
@@ -1961,30 +1960,22 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 &lt;li&gt;Positional encoding&lt;/li&gt;
 &lt;li&gt;LayerNorm&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;需要注意的是，对于encoder和decoder，每个结构可以重叠N次，在论文里面N=6，即encoder叠了N层。这时，decoder的每一层拿到的K-V的输入都是encoder的最后一层的结果，即：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-10-121934.png&#34; alt=&#34;image-20191010201934160&#34;&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的是，对于encoder和decoder，每个结构可以重叠N次，在论文里面N=6，即encoder叠了N层。这时，decoder的每一层拿到的K-V的输入都是encoder的最后一层的结果&lt;/p&gt;
 &lt;h2 id=&#34;attention&#34;&gt;Attention&lt;/h2&gt;
 &lt;p&gt;Multi-Head Attention是Transformer中最重要的一部分。&lt;/p&gt;
 &lt;h3 id=&#34;scaled-dot-product-attention&#34;&gt;Scaled Dot-Product Attention&lt;/h3&gt;
-&lt;p&gt;Multi-head attention的基础是Scaled Dot-Product Attention：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-074145.png&#34; alt=&#34;image-20191008154145448&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这里，输入有三个，Q代表query，K、V代表一个Key-Value对。用公式表示为：&lt;/p&gt;
+&lt;p&gt;Multi-head attention的基础是Scaled Dot-Product Attention, 这里，输入有三个，Q代表query，K、V代表一个Key-Value对。用公式表示为：&lt;/p&gt;
 &lt;p&gt;$$
 Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})\times V
 $$&lt;/p&gt;
 &lt;p&gt;所谓self-attention实际上就是Q、K、V三个是一样的。这里的Q、K、V都是多个单词embedding的矩阵。如果句子长度为128个token，embedding的长度$d_{model}=512$，那么左边的softmax输出的实际上就是128个权重向量，和value embedding相乘得到加了self-attention的结果。&lt;/p&gt;
 &lt;p&gt;可以简单理解为，self-attention是通过Q和K算出注意力需要放到哪些维度上，即权重向量，然后乘V得到加上attention之后的输出。&lt;/p&gt;
 &lt;h3 id=&#34;multi-head-attention&#34;&gt;Multi-Head Attention&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-084336.png&#34; alt=&#34;image-20191008164153020&#34;&gt;&lt;/p&gt;
-&lt;p&gt;了解了Scaled Dot-Product Attention之后，Multi-Head Attention就简单了：在输入的时候，把V、K、Q都重复h次，这个h就是head的数目。当然这里不是简单的复制，而是对V、K、Q做线性变换h次：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-083841.png&#34; alt=&#34;image-20191008163840936&#34;&gt;&lt;/p&gt;
-&lt;p&gt;注意，在线性变换的时候，需要把输出的维度变为$\frac{d_{model}}{h}$，这样的话在最终输出concat之后的结果的维度才正确。同时，这样也不会增加计算消耗。&lt;/p&gt;
+&lt;p&gt;了解了Scaled Dot-Product Attention之后，Multi-Head Attention就简单了：在输入的时候，把V、K、Q都重复h次，这个h就是head的数目。当然这里不是简单的复制，而是对V、K、Q做线性变换h次。注意，在线性变换的时候，需要把输出的维度变为$\frac{d_{model}}{h}$，这样的话在最终输出concat之后的结果的维度才正确。同时，这样也不会增加计算消耗。&lt;/p&gt;
 &lt;p&gt;在模型中，除了self-attention之外，还有一个encoder-decoder attention，区别就是在encoder-decoder attention中，Q和K变成了encoder的输出。V还是上一步decoder的输出。这里和传统RNN结构一样。&lt;/p&gt;
 &lt;p&gt;实际上，Transformer的并行性主要体现在训练上面，在做推理的时候，需要和传统RNN一样，一个词一个词地预测，并且在预测下一个词的时候需要当前的输出作为输入。&lt;/p&gt;
 &lt;h2 id=&#34;position-wise-feed-forward-layer&#34;&gt;Position-wise Feed-Forward Layer&lt;/h2&gt;
-&lt;p&gt;这一层简称FFN，是对每一个位置的结果单独训练一个网络，位置和位置之间不共享参数，因此叫&amp;quot;Position-wise&amp;quot;:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-10-121717.png&#34; alt=&#34;image-20191010201716753&#34;&gt;&lt;/p&gt;
-&lt;p&gt;FFN的结构也很简单：两个线性变换，其中一个是ReLU：
+&lt;p&gt;这一层简称FFN，是对每一个位置的结果单独训练一个网络，位置和位置之间不共享参数，因此叫&amp;quot;Position-wise&amp;quot;。FFN的结构也很简单：两个线性变换，其中一个是ReLU：
 $$
 FFN(x) = max(0, xW_1+b_1)W_2+b_2
 $$&lt;/p&gt;
@@ -1997,39 +1988,33 @@ $$&lt;/p&gt;
 &lt;p&gt;其中，LayerNorm的方法见Hinton的&lt;a href=&#34;https://arxiv.org/pdf/1607.06450.pdf&#34;&gt;论文&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;positional-encoding&#34;&gt;Positional Encoding&lt;/h2&gt;
 &lt;p&gt;由于self-attention中并没有保存位置相关的信息，因此需要加Positional Encoding。&lt;/p&gt;
-&lt;p&gt;在Transformer论文中，作者提供了两种Positional Encoding：第一种是基于三角函数的，第二种是learned positional embedding。经过实验两者的结果差不多，所以作者使用的基于三角函数的Positional Encoding:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-090552.png&#34; alt=&#34;image-20191008170552138&#34; style=&#34;zoom: 50%;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;这里，i是维度，pos是token的位置。所以，对于每个维度，位置编码的波长都是不同的。而对于相同的维度来说， $PE_{pos+k}$ 总是可以表示为$PE_{pos}$的线性函数。&lt;/p&gt;
+&lt;p&gt;在Transformer论文中，作者提供了两种Positional Encoding：第一种是基于三角函数的，第二种是learned positional embedding。经过实验两者的结果差不多，所以作者使用的基于三角函数的Positional Encoding。这里，i是维度，pos是token的位置。所以，对于每个维度，位置编码的波长都是不同的。而对于相同的维度来说， $PE_{pos+k}$ 总是可以表示为$PE_{pos}$的线性函数。&lt;/p&gt;
 &lt;h2 id=&#34;transformer的问题&#34;&gt;Transformer的问题&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;虽然在理论上，Transformer接受任意长的序列进行并行训练。但是，在实际训练中，由于GPU、TPU内存的限制，一般的做法是指定一个固定的上下文长度，然后把输入序列按照这个长度进行切分(segmentation)，然后把每个segment扔到Transformer里面进行训练。这种训练方式带来了两个缺点：第一个是无法捕捉跨segment的长距离依赖，第二个是固定长度切分会把同一个语义块（如一个句子）切分到不同的segment里面，这样的话在预测时，由于缺乏上文信息对前几个单词的预测效果很差。在训练时，也会降低收敛速度。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-093434.png&#34; alt=&#34;image-20191008173434024&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在预测时，Transformer在每一步只预测下一个单词，然后右移一位再预测。同样是只能拿到segment内的信息，且右移之后所有的预测步骤都要走一遍，速度慢。&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;虽然在理论上，Transformer接受任意长的序列进行并行训练。但是，在实际训练中，由于GPU、TPU内存的限制，一般的做法是指定一个固定的上下文长度，然后把输入序列按照这个长度进行切分(segmentation)，然后把每个segment扔到Transformer里面进行训练。这种训练方式带来了两个缺点：第一个是无法捕捉跨segment的长距离依赖，第二个是固定长度切分会把同一个语义块（如一个句子）切分到不同的segment里面，这样的话在预测时，由于缺乏上文信息对前几个单词的预测效果很差。在训练时，也会降低收敛速度。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在预测时，Transformer在每一步只预测下一个单词，然后右移一位再预测。同样是只能拿到segment内的信息，且右移之后所有的预测步骤都要走一遍，速度慢。&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;为了解决这些问题，Google提出了Transformer-XL&lt;/p&gt;
 &lt;h2 id=&#34;transformer-xl&#34;&gt;Transformer-XL&lt;/h2&gt;
 &lt;p&gt;Transformer-XL主要有两个贡献：1. 解决fixed-length context问题。2.引入了一种新的位置编码方式&lt;/p&gt;
 &lt;h3 id=&#34;segment-level-recurrence-with-state-reuse&#34;&gt;Segment-Level Recurrence with State Reuse&lt;/h3&gt;
-&lt;p&gt;Transformer-XL解决fixed-length context的方式是引入recurrent：对于每个segment，重用其之前的segment的状态开始训练而不是从头开始训练：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-094203.png&#34; alt=&#34;image-20191008174202532&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Transformer-XL解决fixed-length context的方式是引入recurrent：对于每个segment，重用其之前的segment的状态开始训练而不是从头开始训练。&lt;/p&gt;
 &lt;p&gt;这里，$h_{\tau}^n$表示第$\tau$个segment $s_\tau$生成的第n个隐层状态序列。所以这里首先把前面的segment和当前的segment做一个concat，然后再用线性映射的方式生成新的Q、K、V扔进Transformer中。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-08-095709.png&#34; alt=&#34;image-20191008175709491&#34;&gt;&lt;/p&gt;
 &lt;p&gt;在预测时也是类似，可以用到之前所有的segment的信息。由于所有的segment的隐状态都可以被缓存，所以相比Transformer，Transformer-XL的速度可以提升1800+倍。&lt;/p&gt;
 &lt;h3 id=&#34;relative-positional-encoding&#34;&gt;Relative Positional Encoding&lt;/h3&gt;
 &lt;p&gt;在Transformer-XL中，由于要对不同的窗口进行处理，因此在原版Transformer中的基于三角函数的绝对位置编码就会出现问题：原来的编码只和维度i和token的位置pos有关系，那么在不同的segment中会出现一样的位置编码（即有相同的pos和i）。&lt;/p&gt;
-&lt;p&gt;原来的绝对位置编码：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-033549.png&#34; alt=&#34;image-20191009113549160&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;公式中，$U_{1:L}$ 是绝对位置编码，$E_{s_\tau}$是embedding，$h_\tau$是隐状态&lt;/p&gt;
+&lt;p&gt;原来的绝对位置编码公式中，$U_{1:L}$ 是绝对位置编码，$E_{s_\tau}$是embedding，$h_\tau$是隐状态&lt;/p&gt;
 &lt;p&gt;所以，Transformer-XL引入了相对位置矩阵：&lt;/p&gt;
 &lt;p&gt;$$
 R_i \in \mathbb{R}^{L_{max}\times d}
 $$&lt;/p&gt;
 &lt;p&gt;这里，i是两个位置的相对距离，$L_{max}$是整个输入序列的最长长度，在实际计算中，i可以是从0到M+L-1的任何数字，M是记忆的长度，L是segment长度。&lt;/p&gt;
 &lt;p&gt;在实际应用中，R是可以被提前计算出来的，使用vanilla transformer中的三角函数即可。&lt;/p&gt;
-&lt;p&gt;不同于vanilla Transformer中单纯地把位置编码和embedding加起来，Transformer-XL是在计算attention score的时候动态插入相对位置编码：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-080936.png&#34; alt=&#34;image-20191009160936418&#34;  /&gt;&lt;/p&gt;
+&lt;p&gt;不同于vanilla Transformer中单纯地把位置编码和embedding加起来，Transformer-XL是在计算attention score的时候动态插入相对位置编码&lt;/p&gt;
 &lt;p&gt;这个公式猛一看不好理解，回想一下原始的attention score的计算方式：&lt;/p&gt;
 &lt;p&gt;$$
 Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})\times V
@@ -2039,7 +2024,7 @@ $$&lt;/p&gt;
 QK^T=(E+U)W_q\times ((K+U)W_k)^T
 $$&lt;/p&gt;
 &lt;p&gt;那对于第i个query和第j个key来说，有&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-081458.png&#34; alt=&#34;image-20191009161458108&#34; style=&#34;zoom: 50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-081458.png&#34; alt=&#34;image-2&#34; style=&#34;zoom: 50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;对比两个方案，发现区别有3点：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -2136,7 +2121,7 @@ $$&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;在Segment-Level Recurrence和Relative Positional Encoding的基础上，一个N层的Transformer-XL的整体公式表示为：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-085118.png&#34; alt=&#34;image-20191009165117783&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2019-10-09-085118.png&#34; alt=&#34;image-3&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;其中，n=1,...,N，$h_\tau^0=E_{s_\tau}$，即第一层的h是embedding。&lt;/p&gt;
 &lt;h2 id=&#34;reference&#34;&gt;Reference&lt;/h2&gt;
 &lt;ol&gt;
@@ -2197,7 +2182,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2462,7 +2447,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/rusts-module-system/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2747,138 +2732,10 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         </entry>
     
         <entry>
-            <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
-            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
-            <id>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
-            <published>2021-07-16T15:16:28&#43;08:00</published>
-            <author>
-                    <name>Haobo Gu</name>
-                    <uri>haobogu.github.io</uri>
-                    <email>haobogu@outlook.com</email>
-                    </author>
-            <summary type="html">Paper note on A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</summary>
-            
-                <content type="html">&lt;h1 id=&#34;a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning&#34;&gt;A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning&lt;/h1&gt;
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Current code completion algorithms sufferes from 3 major drawbacks:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Hierarchical structural information of the program is not fully utilized&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;In programs, the semantic relationships can be very long&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Underuse of the information from related tasks&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;In AST, node&#39;s type and value are two closely related attributes - but existing methods predict them separately&lt;/p&gt;
-&lt;h3 id=&#34;contribution&#34;&gt;Contribution&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Multi-task learning model for code completion&lt;/li&gt;
-&lt;li&gt;Exploit the hierarchical structure information of program&lt;/li&gt;
-&lt;li&gt;Introduce Transformer-XL to capture long-distance dependencies&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;motivating-example&#34;&gt;Motivating example&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090543.png&#34; alt=&#34;image-20200706170542750&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Predicting &lt;code&gt;break&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Predicting node&#39;s type &amp;amp; value&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;NOTE: borrows the idea from code2vec?&lt;/p&gt;
-&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
-&lt;h3 id=&#34;language-modeling&#34;&gt;Language modeling&lt;/h3&gt;
-&lt;p&gt;Probability of S:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090942.png&#34; alt=&#34;image-20200706170942064&#34;&gt;&lt;/p&gt;
-&lt;p&gt;N-gram:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090951.png&#34; alt=&#34;image-20200706170951403&#34;&gt;&lt;/p&gt;
-&lt;p&gt;RNN: capture longer dependencies than N-gram&lt;/p&gt;
-&lt;p&gt;LSTM/GRU: ease the vanishing gradient problem - uses about 200 context words on average&lt;/p&gt;
-&lt;p&gt;Transformer: fixed-length context&lt;/p&gt;
-&lt;p&gt;👍Transformer-XL: captures longer context&lt;/p&gt;
-&lt;h3 id=&#34;multi-task-learning&#34;&gt;Multi-task learning&lt;/h3&gt;
-&lt;p&gt;MTL can improve generalization and reduce the risk of over-fitting&lt;/p&gt;
-&lt;p&gt;Method: parameter sharing of hidden layers&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;soft parameter sharing: use the distance of parameters&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;hard parameter sharing: hidden layers are shared among tasks, output layers are task-specific&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;proposed-model&#34;&gt;Proposed model&lt;/h2&gt;
-&lt;p&gt;Task: predict the probability of next node in AST&lt;/p&gt;
-&lt;p&gt;Partial AST encoder: Transformer-XL&lt;/p&gt;
-&lt;p&gt;Path2root encoder:&lt;/p&gt;
-&lt;p&gt;MTL: hard parameter sharing&lt;/p&gt;
-&lt;p&gt;output layers are specfic&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-092509.png&#34; alt=&#34;image-20200706172509025&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;program-representation&#34;&gt;Program representation&lt;/h3&gt;
-&lt;p&gt;program -&amp;gt; AST -&amp;gt; sequence of nodes&lt;/p&gt;
-&lt;p&gt;​	- in-order depth-first traversal&lt;/p&gt;
-&lt;p&gt;Node -&amp;gt; type[value] -&amp;gt; $x = [T;V]$&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-102320.png&#34; alt=&#34;image-20200708182320153&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;partial-ast-encoder&#34;&gt;Partial AST encoder&lt;/h3&gt;
-&lt;p&gt;Transformer-XL is used to encode partial AST. It&#39;s a standard Transformer-XL.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-120027.png&#34; alt=&#34;image-20200708200026435&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;path2root-encoder&#34;&gt;Path2Root encoder&lt;/h3&gt;
-&lt;p&gt;The path from predicting node to the root node is extracted. In the above example, the extracted path is &lt;code&gt;{BinOp, Return, body, FunctionDef}&lt;/code&gt; in order to predict &lt;code&gt;NameLoad[b]&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;In this part, a bidirectional-LSTM is used as the encoder. The two hidden vectors are concatenated.&lt;/p&gt;
-&lt;h3 id=&#34;task-specific-output-layers&#34;&gt;Task-specific output layers&lt;/h3&gt;
-&lt;p&gt;Two tasks: predict next node&#39;s type and value&lt;/p&gt;
-&lt;p&gt;Output layers: the output of partial AST encoder and path2root encoder are concatenated. Softmax is used to generate the prediction&lt;/p&gt;
-&lt;h3 id=&#34;training&#34;&gt;Training&lt;/h3&gt;
-&lt;h4 id=&#34;loss&#34;&gt;loss&lt;/h4&gt;
-&lt;p&gt;Because there are multiple tasks, the final loss is calculated using a weighted sum over the task-specific losses&lt;/p&gt;
-&lt;h2 id=&#34;experiments&#34;&gt;Experiments&lt;/h2&gt;
-&lt;h3 id=&#34;dataset--metrics&#34;&gt;Dataset &amp;amp; Metrics&lt;/h3&gt;
-&lt;p&gt;dataset: java/python/js&lt;/p&gt;
-&lt;p&gt;Metrics: accuracy&lt;/p&gt;
-&lt;h3 id=&#34;experimental-setup&#34;&gt;Experimental setup&lt;/h3&gt;
-&lt;p&gt;Vocab size: 50000&lt;/p&gt;
-&lt;p&gt;embedding size: type[300], value[1200], total[1500]&lt;/p&gt;
-&lt;p&gt;6-layer Transformer-XL, 6 heads, d_h = 64&lt;/p&gt;
-&lt;p&gt;Segment length = 50&lt;/p&gt;
-&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-124448.png&#34; alt=&#34;image-20200708204448097&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;ablation-study&#34;&gt;Ablation study&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-125259.png&#34; alt=&#34;image-20200708205259004&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;weightsimage-20200708205456718httphaobo-markdownoss-cn-zhangjiakoualiyuncscommarkdown2020-07-08-125457png&#34;&gt;Weights&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-125457.png&#34; alt=&#34;image-20200708205456718&#34;&gt;&lt;/h3&gt;
-</content>
-            
-            
-            
-            
-            
-                
-                    
-                
-                    
-                        
-                            
-                            
-                            
-                                <category scheme="https://haobogu.github.io/tags/code-completion/" term="code completion" label="code completion" />
-                            
-                        
-                            
-                            
-                            
-                                <category scheme="https://haobogu.github.io/tags/paper-note/" term="paper note" label="paper note" />
-                            
-                        
-                    
-                
-            
-        </entry>
-    
-        <entry>
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/learning-rust-4/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3202,7 +3059,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/learning-rust-3/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3532,7 +3389,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/learning-rust-2/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3893,7 +3750,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/learning-rust-1/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4686,7 +4543,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/xlnet/" />
             <id>https://haobogu.github.io/posts/xlnet/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4817,7 +4674,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/intellicode-compose/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4924,7 +4781,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/dockerfile/" />
             <id>https://haobogu.github.io/posts/dockerfile/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5252,7 +5109,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5324,10 +5181,138 @@ docker build -t nginx:v3 .
         </entry>
     
         <entry>
+            <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
+            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
+            <id>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
+            <published>2020-07-16T15:16:28&#43;08:00</published>
+            <author>
+                    <name>Haobo Gu</name>
+                    <uri>haobogu.github.io</uri>
+                    <email>haobogu@outlook.com</email>
+                    </author>
+            <summary type="html">Paper note on A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</summary>
+            
+                <content type="html">&lt;h1 id=&#34;a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning&#34;&gt;A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning&lt;/h1&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Current code completion algorithms sufferes from 3 major drawbacks:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Hierarchical structural information of the program is not fully utilized&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In programs, the semantic relationships can be very long&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Underuse of the information from related tasks&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In AST, node&#39;s type and value are two closely related attributes - but existing methods predict them separately&lt;/p&gt;
+&lt;h3 id=&#34;contribution&#34;&gt;Contribution&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Multi-task learning model for code completion&lt;/li&gt;
+&lt;li&gt;Exploit the hierarchical structure information of program&lt;/li&gt;
+&lt;li&gt;Introduce Transformer-XL to capture long-distance dependencies&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivating-example&#34;&gt;Motivating example&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090543.png&#34; alt=&#34;image-20200706170542750&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Predicting &lt;code&gt;break&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Predicting node&#39;s type &amp;amp; value&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;NOTE: borrows the idea from code2vec?&lt;/p&gt;
+&lt;h2 id=&#34;background&#34;&gt;Background&lt;/h2&gt;
+&lt;h3 id=&#34;language-modeling&#34;&gt;Language modeling&lt;/h3&gt;
+&lt;p&gt;Probability of S:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090942.png&#34; alt=&#34;image-20200706170942064&#34;&gt;&lt;/p&gt;
+&lt;p&gt;N-gram:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-090951.png&#34; alt=&#34;image-20200706170951403&#34;&gt;&lt;/p&gt;
+&lt;p&gt;RNN: capture longer dependencies than N-gram&lt;/p&gt;
+&lt;p&gt;LSTM/GRU: ease the vanishing gradient problem - uses about 200 context words on average&lt;/p&gt;
+&lt;p&gt;Transformer: fixed-length context&lt;/p&gt;
+&lt;p&gt;👍Transformer-XL: captures longer context&lt;/p&gt;
+&lt;h3 id=&#34;multi-task-learning&#34;&gt;Multi-task learning&lt;/h3&gt;
+&lt;p&gt;MTL can improve generalization and reduce the risk of over-fitting&lt;/p&gt;
+&lt;p&gt;Method: parameter sharing of hidden layers&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;soft parameter sharing: use the distance of parameters&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;hard parameter sharing: hidden layers are shared among tasks, output layers are task-specific&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;proposed-model&#34;&gt;Proposed model&lt;/h2&gt;
+&lt;p&gt;Task: predict the probability of next node in AST&lt;/p&gt;
+&lt;p&gt;Partial AST encoder: Transformer-XL&lt;/p&gt;
+&lt;p&gt;Path2root encoder:&lt;/p&gt;
+&lt;p&gt;MTL: hard parameter sharing&lt;/p&gt;
+&lt;p&gt;output layers are specfic&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-06-092509.png&#34; alt=&#34;image-20200706172509025&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;program-representation&#34;&gt;Program representation&lt;/h3&gt;
+&lt;p&gt;program -&amp;gt; AST -&amp;gt; sequence of nodes&lt;/p&gt;
+&lt;p&gt;​	- in-order depth-first traversal&lt;/p&gt;
+&lt;p&gt;Node -&amp;gt; type[value] -&amp;gt; $x = [T;V]$&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-102320.png&#34; alt=&#34;image-20200708182320153&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;partial-ast-encoder&#34;&gt;Partial AST encoder&lt;/h3&gt;
+&lt;p&gt;Transformer-XL is used to encode partial AST. It&#39;s a standard Transformer-XL.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-120027.png&#34; alt=&#34;image-20200708200026435&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;path2root-encoder&#34;&gt;Path2Root encoder&lt;/h3&gt;
+&lt;p&gt;The path from predicting node to the root node is extracted. In the above example, the extracted path is &lt;code&gt;{BinOp, Return, body, FunctionDef}&lt;/code&gt; in order to predict &lt;code&gt;NameLoad[b]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;In this part, a bidirectional-LSTM is used as the encoder. The two hidden vectors are concatenated.&lt;/p&gt;
+&lt;h3 id=&#34;task-specific-output-layers&#34;&gt;Task-specific output layers&lt;/h3&gt;
+&lt;p&gt;Two tasks: predict next node&#39;s type and value&lt;/p&gt;
+&lt;p&gt;Output layers: the output of partial AST encoder and path2root encoder are concatenated. Softmax is used to generate the prediction&lt;/p&gt;
+&lt;h3 id=&#34;training&#34;&gt;Training&lt;/h3&gt;
+&lt;h4 id=&#34;loss&#34;&gt;loss&lt;/h4&gt;
+&lt;p&gt;Because there are multiple tasks, the final loss is calculated using a weighted sum over the task-specific losses&lt;/p&gt;
+&lt;h2 id=&#34;experiments&#34;&gt;Experiments&lt;/h2&gt;
+&lt;h3 id=&#34;dataset--metrics&#34;&gt;Dataset &amp;amp; Metrics&lt;/h3&gt;
+&lt;p&gt;dataset: java/python/js&lt;/p&gt;
+&lt;p&gt;Metrics: accuracy&lt;/p&gt;
+&lt;h3 id=&#34;experimental-setup&#34;&gt;Experimental setup&lt;/h3&gt;
+&lt;p&gt;Vocab size: 50000&lt;/p&gt;
+&lt;p&gt;embedding size: type[300], value[1200], total[1500]&lt;/p&gt;
+&lt;p&gt;6-layer Transformer-XL, 6 heads, d_h = 64&lt;/p&gt;
+&lt;p&gt;Segment length = 50&lt;/p&gt;
+&lt;h3 id=&#34;performance&#34;&gt;Performance&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-124448.png&#34; alt=&#34;image-20200708204448097&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;ablation-study&#34;&gt;Ablation study&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-125259.png&#34; alt=&#34;image-20200708205259004&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;weightsimage-20200708205456718httphaobo-markdownoss-cn-zhangjiakoualiyuncscommarkdown2020-07-08-125457png&#34;&gt;Weights&lt;img src=&#34;http://haobo-markdown.oss-cn-zhangjiakou.aliyuncs.com/markdown/2020-07-08-125457.png&#34; alt=&#34;image-20200708205456718&#34;&gt;&lt;/h3&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/code-completion/" term="code completion" label="code completion" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/paper-note/" term="paper note" label="paper note" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/effective-go/" />
             <id>https://haobogu.github.io/posts/effective-go/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5677,7 +5662,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/git-commands/" />
             <id>https://haobogu.github.io/posts/git-commands/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5765,7 +5750,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/language-server-protocol/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6524,7 +6509,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/vs-code-extension/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6721,7 +6706,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-hugo/" />
             <id>https://haobogu.github.io/posts/learning-hugo/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6885,7 +6870,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/get-started-with-gremlin/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7061,7 +7046,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-python/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7257,7 +7242,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/ssh/" />
             <id>https://haobogu.github.io/posts/ssh/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7364,7 +7349,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-basics/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7467,7 +7452,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vim/" />
             <id>https://haobogu.github.io/posts/vim/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7596,7 +7581,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/get-started-with-hugo/</id>
-            <updated>2022-06-30T02:22:47&#43;00:00</updated>
+            <updated>2022-06-30T02:53:00&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
