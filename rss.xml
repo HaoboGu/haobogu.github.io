@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 28 Jul 2022 13:33:46 &#43;0000</lastBuildDate>
+        <lastBuildDate>Fri, 29 Jul 2022 10:48:33 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -7657,6 +7657,163 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
                                     <category domain="https://haobogu.github.io/tags/hugo/">hugo</category>
                                 
                             
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/develop-stm32-using-vscode/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/develop-stm32-using-vscode/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;在mac上面使用vscode开发stm32&#34;&gt;在Mac上面使用VSCode开发stm32&lt;/h1&gt;
+&lt;p&gt;因为最近有项目需要对stm32进行硬件的开发，而我现在主要是在用M1芯片的Mac，且官方提供的各种配套工具都不太行，所以记录一下在Mac下折腾stm32开发的过程。&lt;/p&gt;
+&lt;h2 id=&#34;准备&#34;&gt;准备&lt;/h2&gt;
+&lt;p&gt;首先，进行硬件开发你得有相应的硬件。我是从淘宝上买了stm32f411ceu6的开发板，以及st-link v2的烧写器，在本文中我们就以它们作为示例。&lt;/p&gt;
+&lt;p&gt;其次，需要下载宇宙第一编辑器VSCode，并且安装PlatformIO插件。这个过程就不再展开了，可能安装PlatformIO插件会慢点，等待即可。&lt;/p&gt;
+&lt;h3 id=&#34;安装stm32cubemx&#34;&gt;安装STM32CubeMX&lt;/h3&gt;
+&lt;p&gt;再然后就需要安装STM32CubeMX了。这个工具是用来自动生成对应的工程的，要开发stm32系列单片机，几乎也是必须的。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先，下载STM32CubeMX安装包：https://www.st.com/zh/development-tools/stm32cubemx.html#overview。官方提供了Mac系统对应的安装包，点击下载即可，大约几百M&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;下载下来是一个zip文件，解压之&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;解压后的文件夹中，有一个&lt;code&gt;.app&lt;/code&gt;文件。一般来说直接执行这个.app文件即可，但是对于M1的Mac来说，由于苹果的安全策略，导致直接安装不可行，需要使用如下命令处理&lt;code&gt;.app&lt;/code&gt;文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo xattr -cr xxxxx.app
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装过程需要你本地装有Java，如果你本地没有Java，或者Java版本不对，依然不行。不过好在在安装包中，已经贴心地给你准备好了Jre（没错，压缩包解压之后有一个jre文件夹，就是做这个的）。不过，由于苹果的安全策略，你还是没有办法直接使用&lt;code&gt;jre&lt;/code&gt;文件夹中的Java，类似地，你需要对jre文件夹再执行一遍&lt;code&gt;xattr&lt;/code&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;sudo xattr -cr jre
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;现在你可以使用Java执行安装包：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;java -jar xxx.app
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;之后，会弹出安装包的界面（这界面真复古）。一路next，就能可以把STM32CubeMX安装好了&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;使用stm32cubemx初始化工程&#34;&gt;使用STM32CubeMX初始化工程&lt;/h2&gt;
+&lt;p&gt;所有的依赖都安装好了，下面来初始化工程。打开STM32CubeMX，上面的File菜单中选择New Project（可能会读条，等待即可）。然后在新建工程的窗口中搜索你的MCU，我这里使用stm32f411ceu6：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220729182329843.png&#34; alt=&#34;image-20220729182329843&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;选择完MCU之后，右上角Start Project，就进入初始化页面。前面的选项都不用改，直接点到Project Manager部分，输入一个Project名称，然后在&lt;strong&gt;ToolChain/IDE这里选择Makefile&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220729182744493.png&#34; alt=&#34;image-20220729182744493&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;点击右上角GENERATE CODE即可生成代码&lt;/p&gt;
+&lt;h2 id=&#34;创建platformio工程&#34;&gt;创建PlatformIO工程&lt;/h2&gt;
+&lt;p&gt;打开VSCode的命令界面，输入show platformIO，打开platformIO的主页面，点击页面上的New Project创建工程。在创建工程弹窗中， Project Name填写刚刚在CubeMX中写的Project名称，Board选择stm32f411CE，framework注意需要选择STM32Cube。然后重点来了，取消Use default location勾选，并且在下面的路径选择中选择&lt;strong&gt;刚刚CubeMX生成的代码目录的父文件夹&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220729183529388.png&#34; alt=&#34;image-20220729183529388&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;点击finish，初次生成可能需要等待，完成之后VSCode会自动跳到对应的文件夹。&lt;/p&gt;
+&lt;p&gt;然后，检查一下文件下的根目录下面是否同时存在&lt;code&gt;[你的工程名].ioc&lt;/code&gt;和&lt;code&gt;platformio.ini&lt;/code&gt;，如果有，那说明代码工程已经被成功创建。&lt;/p&gt;
+&lt;p&gt;接下来，打开&lt;code&gt;platformio.ini&lt;/code&gt;，把CubeMX生成的Src目录和Header目录设置为platformIO的对应目录，然后设置一下下载器，我使用的是st-link：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ini&#34; data-lang=&#34;ini&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# platformio.ini&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;[env:genericSTM32F411CE]&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;platform&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;ststm32&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;board&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;genericSTM32F411CE&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;framework&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;stm32cube&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# 设置下载器&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;debug_tool&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;stlink&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;upload_protocol&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;stlink&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;[platformio]&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;include_dir&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;Core/Inc&lt;/span&gt;
+&lt;span class=&#34;na&#34;&gt;src_dir&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;Core/Src&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Done！所有的配置都完成了。当然你也可以把platformIO自动生成的工程文件夹&lt;code&gt;src&lt;/code&gt;, &lt;code&gt;lib &lt;/code&gt;, &lt;code&gt;test&lt;/code&gt;删掉（我们用的是CubeMX生成的代码工程，不是吗）。&lt;/p&gt;
+&lt;h2 id=&#34;烧录和调试&#34;&gt;烧录和调试&lt;/h2&gt;
+&lt;p&gt;连接st-link以及开发板，单击VSCode下面的upload选项即可烧录代码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220729184552432.png&#34; alt=&#34;image-20220729184552432&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如果想要调试的话，单击F5（VSCode的默认调试快捷键）即可。Easy， huh？&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/keyboard-pcb/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard-pcb/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;draw&#34;&gt;Draw&lt;/h1&gt;
+&lt;p&gt;Ai03&#39;s guide for making a keyboard pcb&lt;/p&gt;
+&lt;h2 id=&#34;ide&#34;&gt;IDE&lt;/h2&gt;
+&lt;p&gt;Ai03 uses KiCad for drawing pcbs. We&#39;ll use &lt;a href=&#34;https://pro.lceda.cn/&#34;&gt;jialichuang&#39;s web eda editor&lt;/a&gt;, which is much more convenient.&lt;/p&gt;
+&lt;h2 id=&#34;lets-start&#34;&gt;Let&#39;s start&lt;/h2&gt;
+&lt;p&gt;First, you should add your MCU to the sheet. I&#39;d use stm32f303rbt6 as an example:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220729150825430.png&#34; alt=&#34;image-20220729150825430&#34;&gt;&lt;/p&gt;
+&lt;p&gt;You&#39;ll see there are many IOs. But how to set it up? We&#39;ll need its &lt;a href=&#34;https://www.st.com/resource/en/datasheet/stm32f303vc.pdf&#34;&gt;datasheet&lt;/a&gt;. The datasheet provides specs and a lot of useful information about the MCU. If you are using other MCUs, just search on the internet and get corresponding datasheet.&lt;/p&gt;
+&lt;h3 id=&#34;make-mcu-work&#34;&gt;Make MCU work&lt;/h3&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
                         
                     
                 
