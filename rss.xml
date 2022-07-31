@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Fri, 29 Jul 2022 13:14:32 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sun, 31 Jul 2022 15:32:17 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -7789,6 +7789,158 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
                                     <category domain="https://haobogu.github.io/tags/hugo/">hugo</category>
                                 
                             
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/stm32-2/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/stm32-2/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;stm32---2&#34;&gt;STM32 - 2&lt;/h1&gt;
+&lt;p&gt;之前我们已经了解了一些STM32的基础知识，下面就开始正式的编程了。我们主要会使用STM32的HAL库，这些库函数已经在创建工程的时候初始化好了，一般来说，直接使用即可。&lt;/p&gt;
+&lt;h2 id=&#34;gpio&#34;&gt;GPIO&lt;/h2&gt;
+&lt;h3 id=&#34;片上外设的使能时钟&#34;&gt;片上外设的使能时钟&lt;/h3&gt;
+&lt;p&gt;首先了解一下STM32的片上外设的使能时钟。STM32几乎所有的片上设备都有使能时钟，包括输入输出GPIO。不把使能时钟打开，对应的外设就不能用。STM32这么设计是为了降低功耗。&lt;/p&gt;
+&lt;p&gt;那怎么样启动使能时钟呢？以最小系统板上面的PC13为例，这个IO实际上就是GPIOC的13号引脚，那么我们就在&lt;code&gt;main.c&lt;/code&gt;里面使用如下代码就可以开启GPIOC的使能时钟：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;初始化gpio&#34;&gt;初始化GPIO&lt;/h3&gt;
+&lt;p&gt;在打开GPIO的使能时钟之后，就要初始化GPIO了。可以使用如下API初始化GPIO：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中，GPIOC就是GPIO的类型，而后面的那个&lt;code&gt;GPIO_InitStruct&lt;/code&gt;则是各种初始化参数，如输入输出模式、输入输出引脚等。下面是初始化设置的代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MX_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// GPIO初始化设置
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitTypeDef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 打开GPIOC的使能时钟
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 设置GPIOC的13号引脚的输出Level
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_WritePin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_RESET&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 然后配置各种GPIO的设置，如引脚为13，模式为PP（推挽输出），没有上拉电阻，输出速率等等。
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Mode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_MODE_OUTPUT_PP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pull&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_NOPULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_SPEED_FREQ_LOW&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// 完成GPIO的初始化
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;向gpio写入值输出&#34;&gt;向GPIO写入值（输出）&lt;/h3&gt;
+&lt;p&gt;在初始化完毕之后，就可以使用&lt;code&gt;HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);&lt;/code&gt;向对应的GPIO写入值了。参数都很容易理解，最后一个参数，如果是&lt;code&gt;SET&lt;/code&gt;，那么就是写1；如果是&lt;code&gt;RESET&lt;/code&gt;，就是写0。&lt;/p&gt;
+&lt;p&gt;OK，到这里，一个最简单的亮灯程序就写完了。后面，我们就深入了解一下GPIO的各种设置属性。&lt;/p&gt;
+&lt;h3 id=&#34;gpio的设置&#34;&gt;GPIO的设置&lt;/h3&gt;
+&lt;p&gt;GPIO的设置主要是使用&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;来声明：&lt;code&gt;GPIO_InitTypeDef GPIO_InitStruct = {0};&lt;/code&gt;。&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;主要包含4个设置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Mode：IO引脚的模式&lt;/p&gt;
+&lt;p&gt;我们在上面的示例代码中用到的，就是&lt;code&gt;GPIO_MODE_OUTPUT_PP&lt;/code&gt;，即输出推挽模式（Output Push-Pull Mode）。推挽模式就是高低电平均有驱动能力的输出模式。&lt;/p&gt;
+&lt;p&gt;此外，输出模式还有&lt;code&gt;GPIO_MODE_OUTPUT_OD&lt;/code&gt;，即输出开漏模式。开漏输出高电平相当于高阻态，是没有驱动能力的。&lt;/p&gt;
+&lt;p&gt;另外，还可以选择输入模式，即&lt;code&gt;GPIO_MODE_INPUT&lt;/code&gt;和&lt;code&gt;GPIO_MODE_AF_INPUT&lt;/code&gt;。具体这些模式的区别，可以参考下 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 15分钟左右的讲解，很详细&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pin：就是第几号IO引脚&lt;/p&gt;
+&lt;p&gt;如果要设置第13号引脚，就可以使用：&lt;code&gt;GPIO_InitStruct.Pin = GPIO_PIN_13;&lt;/code&gt;，如果要设置多个引脚，可以使用&lt;code&gt;|&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 同时设置13和14号引脚
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pull：用在输入模式里面，即上拉/下拉电阻，用来设置输入悬空的时候，输入口是高电平（上拉电阻PULLUP）还是低电平（下拉电阻PULLDOWN）还是就把它悬空（NOPULL），详见 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 9分钟30秒左右的讲解&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Speed：设置IO引脚允许的最大速度&lt;/p&gt;
+&lt;p&gt;看f411的源代码可以到这里可以设置4个级别的IO速度，分别是2M、12.5M~50M、25M~100M和50M~200M。速度越快，IO的读取频率就越高，也就越耗电。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_LOW         0x00000000U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; IO works at 2 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_MEDIUM      0x00000001U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 12,5 MHz to 50 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_HIGH        0x00000002U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 25 MHz to 100 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_VERY_HIGH   0x00000003U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 50 MHz to 200 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后，需要注意传进去的&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;是一个指针，所以需要使用&lt;code&gt;&amp;amp;GPIO_InitStruct &lt;/code&gt;传地址进去。&lt;/p&gt;
+&lt;h2 id=&#34;gpio输入&#34;&gt;GPIO输入&lt;/h2&gt;
+&lt;p&gt;我们就用最简单的开关来学习GPIO口的输入。&lt;/p&gt;
+&lt;p&gt;首先复习一下在配置输入模式的时候，有一个&lt;code&gt;Pull&lt;/code&gt;字段。这个字段代表着在输入悬空的时候，默认是上拉电阻还是下拉电阻或者是悬空。这玩意有什么用呢？我们看一下下面的开关电路：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;C:\Users\haobo\AppData\Roaming\Typora\typora-user-images\image-20220731203358393.png&#34; alt=&#34;image-20220731203358393&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;很好理解，开关按下的时候，GPIO输入就接地，即低电平0。那这个上下拉电阻有什么关系呢？&lt;/p&gt;
+&lt;p&gt;看下左边的图，如果开关断开，这个时候PA0输入就悬空了。如果这个时候GPIO口的配置为悬空，那这个引脚就真的悬空了，其输入就不确定。而如果这个时候，GPIO口的输入配置为下拉电阻，此时PA0悬空，输入就被下拉电阻拉到了低电平，那这个按键实际上就没用了。因此，在按键一边接地的时候，如果没有手动配置上拉电阻（右边的图），那就&lt;strong&gt;必须把GPIO的输入设置为上拉电阻模式（PULLUP），来保证开关断开时输入为高电平&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;当然，如果像右边一样，外面单独配置了上拉电阻，那么PA0的输入模式配置为上拉电阻模式或者悬空时都可以的。&lt;/p&gt;
+&lt;p&gt;❗ 注意：由于STM32系列并不是所有的开关都有下拉电阻模式，因此，在习惯上，只要是开关都采用低电平触发的方式，即&lt;strong&gt;一边接地&lt;/strong&gt;一边接GPIO。&lt;/p&gt;
+&lt;h3 id=&#34;按键消抖&#34;&gt;按键消抖&lt;/h3&gt;
+&lt;p&gt;一般来说，按下按键之后，按键会有一个5-10ms的抖动，然后才会稳定在高电平。消除抖动的策略很简单，在检测到按键之后，延迟20ms再进入完全按下时的那个while循环。然后就只要按下就一直在这个while循环里，直到松开按键，跳出while循环，然后再delay20ms。对于按键的要求比较高的场合，可能还需要后续的滤波。&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
                         
                     
                 
