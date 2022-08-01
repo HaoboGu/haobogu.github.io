@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-08-01T02:16:48&#43;00:00</updated>
+    <updated>2022-08-01T02:18:25&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -17,10 +17,345 @@
     
     <generator uri="https://gohugo.io/" version="0.76.5">Hugo</generator>
         <entry>
+            <title type="text">STM32 - 2</title>
+            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/stm32-2/" />
+            <id>https://haobogu.github.io/posts/stm32-2/</id>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <published>2022-07-31T20:22:12&#43;08:00</published>
+            <author>
+                    <name>Haobo Gu</name>
+                    <uri>haobogu.github.io</uri>
+                    <email>haobogu@outlook.com</email>
+                    </author>
+            <summary type="html">学习STM32的笔记</summary>
+            
+                <content type="html">&lt;h1 id=&#34;stm32---2&#34;&gt;STM32 - 2&lt;/h1&gt;
+&lt;p&gt;之前我们已经了解了一些STM32的基础知识，下面就开始正式的编程了。我们主要会使用STM32的HAL库，这些库函数已经在创建工程的时候初始化好了，一般来说，直接使用即可。&lt;/p&gt;
+&lt;h2 id=&#34;gpio&#34;&gt;GPIO&lt;/h2&gt;
+&lt;h3 id=&#34;片上外设的使能时钟&#34;&gt;片上外设的使能时钟&lt;/h3&gt;
+&lt;p&gt;首先了解一下STM32的片上外设的使能时钟。STM32几乎所有的片上设备都有使能时钟，包括输入输出GPIO。不把使能时钟打开，对应的外设就不能用。STM32这么设计是为了降低功耗。&lt;/p&gt;
+&lt;p&gt;那怎么样启动使能时钟呢？以最小系统板上面的PC13为例，这个IO实际上就是GPIOC的13号引脚，那么我们就在&lt;code&gt;main.c&lt;/code&gt;里面使用如下代码就可以开启GPIOC的使能时钟：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;初始化gpio&#34;&gt;初始化GPIO&lt;/h3&gt;
+&lt;p&gt;在打开GPIO的使能时钟之后，就要初始化GPIO了。可以使用如下API初始化GPIO：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中，GPIOC就是GPIO的类型，而后面的那个&lt;code&gt;GPIO_InitStruct&lt;/code&gt;则是各种初始化参数，如输入输出模式、输入输出引脚等。下面是初始化设置的代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MX_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// GPIO初始化设置
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitTypeDef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 打开GPIOC的使能时钟
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 设置GPIOC的13号引脚的输出Level
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_WritePin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_RESET&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;// 然后配置各种GPIO的设置，如引脚为13，模式为PP（推挽输出），没有上拉电阻，输出速率等等。
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Mode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_MODE_OUTPUT_PP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pull&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_NOPULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_SPEED_FREQ_LOW&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// 完成GPIO的初始化
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;向gpio写入值输出&#34;&gt;向GPIO写入值（输出）&lt;/h3&gt;
+&lt;p&gt;在初始化完毕之后，就可以使用&lt;code&gt;HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);&lt;/code&gt;向对应的GPIO写入值了。参数都很容易理解，最后一个参数，如果是&lt;code&gt;SET&lt;/code&gt;，那么就是写1；如果是&lt;code&gt;RESET&lt;/code&gt;，就是写0。&lt;/p&gt;
+&lt;p&gt;OK，到这里，一个最简单的亮灯程序就写完了。后面，我们就深入了解一下GPIO的各种设置属性。&lt;/p&gt;
+&lt;h3 id=&#34;gpio的设置&#34;&gt;GPIO的设置&lt;/h3&gt;
+&lt;p&gt;GPIO的设置主要是使用&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;来声明：&lt;code&gt;GPIO_InitTypeDef GPIO_InitStruct = {0};&lt;/code&gt;。&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;主要包含4个设置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Mode：IO引脚的模式&lt;/p&gt;
+&lt;p&gt;我们在上面的示例代码中用到的，就是&lt;code&gt;GPIO_MODE_OUTPUT_PP&lt;/code&gt;，即输出推挽模式（Output Push-Pull Mode）。推挽模式就是高低电平均有驱动能力的输出模式。&lt;/p&gt;
+&lt;p&gt;此外，输出模式还有&lt;code&gt;GPIO_MODE_OUTPUT_OD&lt;/code&gt;，即输出开漏模式。开漏输出高电平相当于高阻态，是没有驱动能力的。&lt;/p&gt;
+&lt;p&gt;另外，还可以选择输入模式，即&lt;code&gt;GPIO_MODE_INPUT&lt;/code&gt;和&lt;code&gt;GPIO_MODE_AF_INPUT&lt;/code&gt;。具体这些模式的区别，可以参考下 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 15分钟左右的讲解，很详细&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pin：就是第几号IO引脚&lt;/p&gt;
+&lt;p&gt;如果要设置第13号引脚，就可以使用：&lt;code&gt;GPIO_InitStruct.Pin = GPIO_PIN_13;&lt;/code&gt;，如果要设置多个引脚，可以使用&lt;code&gt;|&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 同时设置13和14号引脚
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Pull：用在输入模式里面，即上拉/下拉电阻，用来设置输入悬空的时候，输入口是高电平（上拉电阻PULLUP）还是低电平（下拉电阻PULLDOWN）还是就把它悬空（NOPULL），详见 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 9分钟30秒左右的讲解&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Speed：设置IO引脚允许的最大速度&lt;/p&gt;
+&lt;p&gt;看f411的源代码可以到这里可以设置4个级别的IO速度，分别是2M、12.5M~50M、25M~100M和50M~200M。速度越快，IO的读取频率就越高，也就越耗电。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_LOW         0x00000000U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; IO works at 2 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_MEDIUM      0x00000001U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 12,5 MHz to 50 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_HIGH        0x00000002U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 25 MHz to 100 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_VERY_HIGH   0x00000003U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 50 MHz to 200 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后，需要注意传进去的&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;是一个指针，所以需要使用&lt;code&gt;&amp;amp;GPIO_InitStruct &lt;/code&gt;传地址进去。&lt;/p&gt;
+&lt;h2 id=&#34;gpio输入&#34;&gt;GPIO输入&lt;/h2&gt;
+&lt;p&gt;我们就用最简单的开关来学习GPIO口的输入。&lt;/p&gt;
+&lt;p&gt;首先复习一下在配置输入模式的时候，有一个&lt;code&gt;Pull&lt;/code&gt;字段。这个字段代表着在输入悬空的时候，默认是上拉电阻还是下拉电阻或者是悬空。这玩意有什么用呢？我们看一下下面的开关电路：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;C:\Users\haobo\AppData\Roaming\Typora\typora-user-images\image-20220731203358393.png&#34; alt=&#34;image-20220731203358393&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;很好理解，开关按下的时候，GPIO输入就接地，即低电平0。那这个上下拉电阻有什么关系呢？&lt;/p&gt;
+&lt;p&gt;看下左边的图，如果开关断开，这个时候PA0输入就悬空了。如果这个时候GPIO口的配置为悬空，那这个引脚就真的悬空了，其输入就不确定。而如果这个时候，GPIO口的输入配置为下拉电阻，此时PA0悬空，输入就被下拉电阻拉到了低电平，那这个按键实际上就没用了。因此，在按键一边接地的时候，如果没有手动配置上拉电阻（右边的图），那就&lt;strong&gt;必须把GPIO的输入设置为上拉电阻模式（PULLUP），来保证开关断开时输入为高电平&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;当然，如果像右边一样，外面单独配置了上拉电阻，那么PA0的输入模式配置为上拉电阻模式或者悬空时都可以的。&lt;/p&gt;
+&lt;p&gt;❗ 注意：由于STM32系列并不是所有的开关都有下拉电阻模式，因此，在习惯上，只要是开关都采用低电平触发的方式，即&lt;strong&gt;一边接地&lt;/strong&gt;一边接GPIO。&lt;/p&gt;
+&lt;h3 id=&#34;按键消抖&#34;&gt;按键消抖&lt;/h3&gt;
+&lt;p&gt;一般来说，按下按键之后，按键会有一个5-10ms的抖动，然后才会稳定在高电平。消除抖动的策略很简单，在检测到按键之后，延迟20ms再进入完全按下时的那个while循环。然后就只要按下就一直在这个while循环里，直到松开按键，跳出while循环，然后再delay20ms。对于按键的要求比较高的场合，可能还需要后续的滤波。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/keyboard/" term="keyboard" label="keyboard" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
+            <title type="text">STM32</title>
+            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/stm32/" />
+            <id>https://haobogu.github.io/posts/stm32/</id>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <published>2022-07-30T15:23:40&#43;08:00</published>
+            <author>
+                    <name>Haobo Gu</name>
+                    <uri>haobogu.github.io</uri>
+                    <email>haobogu@outlook.com</email>
+                    </author>
+            <summary type="html">学习STM32的笔记</summary>
+            
+                <content type="html">&lt;h1 id=&#34;stm32&#34;&gt;STM32&lt;/h1&gt;
+&lt;p&gt;学习STM32的笔记，视频教程：https://www.bilibili.com/video/BV1th411z7sn?p=2&amp;amp;spm_id_from=pageDriver&amp;amp;vd_source=58fb33df0449f8258f0e273447aab712&lt;/p&gt;
+&lt;h2 id=&#34;片上资源&#34;&gt;片上资源&lt;/h2&gt;
+&lt;p&gt;首先，需要了解一下STM32芯片上面都有哪些可以使用的资源，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730152453142.png&#34; alt=&#34;image-20220730152453142&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;简单记忆一下各种资源/外设的缩写即可，后面会详细用到&lt;/p&gt;
+&lt;h2 id=&#34;引脚定义&#34;&gt;引脚定义&lt;/h2&gt;
+&lt;p&gt;引脚定义是学习一个单片机的核心，一般来说如果了解了引脚定义，这个单片机怎么用的基本就知道个八九不离十了。例子里面是STM32F103C8T6， 详细定义可以见下面的表。这里首先讲一下每个引脚的含义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;VBAT： 备用电源&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PC13-TAMPER-RTC：这个引脚有多重功能，分别是PC13（IO口）、TAMPER（侵入检测）、RTC（输出RTC校准时钟、秒脉冲等）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PC14-OSC32_IN：IO或接32KHZ的RTC晶振的IN&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PC15-OSC32_OUT：同上，只不过这个引脚是RTC晶振的OUT&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;OSC_IN和OSC_OUT：系统主晶振，一般是8MHZ（芯片里面会对这个频率进行倍频，比如生成72MHZ的频率作为芯片的主时钟）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;NRST：系统复位，N代表是低电平复位&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VSSA和VDDA：芯片内模拟部分的电源，VSS是负极（接GND），VDD正极（接3.3V）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PAx、PBx和PCx：都是IO，其中有一些特殊的或者有其他功能的，下面会详细讲。注意在表里面没有加粗的IO，都是不推荐作为IO使用的（因为这些IO有其他功能，除非IO实在是不够了，否则还是用那些加粗的IO）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;PA0-WKUP意味着PA0除了是IO之外，还有wakeup的功能&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PB2：看主功能栏，这个引脚除了IO之外还有BOOT的功能，即可以用来配置启动模式&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PA13/14/15、PB3/4：还可以作为调试端口。可以看到有两种调试模式：JTAG和SWD&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SWD调试需要两根线：SWDIO和SWCLK&lt;/p&gt;
+&lt;p&gt;JTAG则需要5根线：JTMS、JTCK、JTDI、JTDO、NJTRST&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;STLINK使用的SWD，因此只需要两根线。不过这5个IO，默认都不会被用来做普通IO。如果你是用SWD，且想使用剩下的三个IO，那么需要在程序里面配置。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;VSS_x和VDD_x：系统的主电源，同样，VSS负极，VDD正极。由于STM32是分区供电，因此可以有多个电源，这些电源正极/负极可以短接在一起，然后一起供电&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;BOOT0：和PB2/BOOT1一样，也是用来做启动配置&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730153247643.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;启动配置&#34;&gt;启动配置&lt;/h2&gt;
+&lt;p&gt;看完引脚图，大概有个印象即可。下面看一下启动配置。还记得之前表里的两个BOOT吗？BOOT0和PB2/BOOT1。这两个引脚可以用来设置模式：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730155932890.png&#34; alt=&#34;image-20220730155932890&#34; style=&#34;zoom:35%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;引脚为0就是接地GND的意思，1是高电平。默认都是使用flash作为启动区域。另外，下面那句话的意思就是，BOOT0和BOOT1只在刚开始上电之后的一瞬间（第四个上升沿）有用，后面就随便了。&lt;/p&gt;
+&lt;h2 id=&#34;最小系统电路&#34;&gt;最小系统电路&lt;/h2&gt;
+&lt;p&gt;最小系统电路就是能让芯片跑起来的最小电路。下面就看一下F103的最小电路：&lt;/p&gt;
+&lt;h3 id=&#34;供电&#34;&gt;供电&lt;/h3&gt;
+&lt;p&gt;首先看供电的部分。可以看到，所有的VDD都接了3.3V，然后VSS都接了GND。在所有的3.3V和GND之间都有一个电容，俗称滤波电容。滤波电容主要是保持供电电压的稳定，一般供电最好都来一个比较好。&lt;/p&gt;
+&lt;p&gt;另外，VBAT是备用的电源，如果需要用到就接，不用到就接3.3V或者悬空。如果用到VBAT，那就接一个3V的纽扣电池即可，电池正极VBAT，负极接地。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730162453379.png&#34; alt=&#34;image-20220730162453379&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到，整个供电还是很简单的。但是由于供电口比较多，所以走线可能有些麻烦。&lt;/p&gt;
+&lt;h3 id=&#34;晶振&#34;&gt;晶振&lt;/h3&gt;
+&lt;p&gt;STM32的主晶振一般都是8MHZ。晶振就连接芯片上的OSC_IN和OSC_OUT：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730163244776.png&#34; alt=&#34;image-20220730163244776&#34; style=&#34;zoom:67%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这两个电容是启震电容，另一端接地即可。&lt;/p&gt;
+&lt;h3 id=&#34;复位电路&#34;&gt;复位电路&lt;/h3&gt;
+&lt;p&gt;复位电路的原理稍微麻烦点。在上电的&lt;strong&gt;一瞬间&lt;/strong&gt;，电容是相当于短路的，因此就产生了一瞬间的低电平。芯片是低电平复位，所以可以理解为开机的一瞬间复位。之后，电容充电断开，在K1开关断开的情况下，NRST就和3.3V相连，一直是高电平不复位。按下复位开关，NRST接地，就完成了手动复位。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730163502567.png&#34; alt=&#34;image-20220730163502567&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;启动配置电路&#34;&gt;启动配置电路&lt;/h3&gt;
+&lt;p&gt;就是上面选的BOOT0/1选择启动配置的电路。在我们的411板子上，是这样的：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730212003630.png&#34; alt=&#34;image-20220730212003630&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到这是一个拨码开关，默认情况下开关处在123的位置，而456这一侧为ON，即默认情况下三个位置都没有接通。从图上可以看到，如果左右没有接通，则三个位置都断开。即BOOT0=0，而PB2/BOOT1悬空。&lt;/p&gt;
+&lt;p&gt;如果想把BOOT1设置为1，则需要同时把1-6和2-5连接起来，即上面两个开关拨向ON。把BOOT0置1则只需要拨动3-4开关到ON即可。&lt;/p&gt;
+&lt;h2 id=&#34;hello-world工程&#34;&gt;Hello World工程&lt;/h2&gt;
+&lt;p&gt;下面我们就来写一个最简单的工程来测试。首先我们的板子上，有一个PC13连接的LED，这个就是我们用来测试板子的灯，电路图在这里：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730214406025.png&#34; alt=&#34;image-20220730214406025&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到其中一个是常亮的pwr指示灯，另外一个是连接PC13端口的测试灯。&lt;/p&gt;
+&lt;p&gt;然后就是创建工程的步骤了，我们使用VSCode + PlatformIO + CubeMX创建我们的工程，具体可以参考这里：https://haobogu.github.io/posts/develop-stm32-using-vscode/。&lt;/p&gt;
+&lt;p&gt;OK，创建完工程之后，就可以开始写代码了。打开&lt;code&gt;main.c&lt;/code&gt;文件，找到主函数里面的&lt;code&gt;while(1)&lt;/code&gt;循环，发现里面什么都没有。因为默认生成的是空工程。这个时候如果编译下载之后，主板上的绿灯就直接灭了，因为我们啥都没写。那么我们第一个程序就从这里开始。&lt;/p&gt;
+&lt;h3 id=&#34;使用寄存器的方式点亮led&#34;&gt;使用寄存器的方式点亮LED&lt;/h3&gt;
+&lt;p&gt;STM32的编程一般有3种方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;寄存器编程：直接控制芯片中的寄存器，比较基础，速度快。但是由于STM32系列很复杂，寄存器非常多，因此这种方法后期比较麻烦&lt;/li&gt;
+&lt;li&gt;库函数编程：ST公司提供了可以直接对芯片做各种操作的库函数，可以理解为寄存器操作的封装，十分方便，可以作为主要的编程方式&lt;/li&gt;
+&lt;li&gt;HAL编程：可以理解为低代码编程，通过ST公司的对应软件里面的图形化界面完成编程。但是这种方式不利于对芯片底层的理解，不好开发进阶功能&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综上，我们主要会选择库函数编程的方式。当然寄存器编程也要了解。因此我们的第一个程序就从寄存器编程开始（这个章节如果看不懂，无所谓，就了解下）。&lt;/p&gt;
+&lt;h4 id=&#34;寄存器配置&#34;&gt;寄存器配置&lt;/h4&gt;
+&lt;p&gt;首先是RCC寄存器的时钟，这个可以理解为是GPIO的使能时钟。这里，出现了STM32F4和F1的不同：在F1中GPIO都是APB2的外设，而在F4中，GPIO是AHB1的外设。具体可以看下F411的手册：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730221626472.png&#34; alt=&#34;image-20220730221626472&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到在F411中，这些GPIO都是和AHB1相连的。这也是和视频中的不一样的地方。不过原理都是相同的，找到对应的使能时钟的RCC寄存器：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730221900311.png&#34; alt=&#34;image-20220730221900311&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到和视频中类似，有一堆GPIOxEN：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220730221932083.png&#34; alt=&#34;image-20220730221932083&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;我们要操作PC13上面的灯，那就GPIOCEN写入1即可：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// main.c中的主函数中，其他代码省略
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 首先打开GPIOC的时钟
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// 由于写入的是16进制，我们需要每4位转换一次，即
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RCC&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AHB1ENR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000004&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后找到对应IO的通用配置高寄存器&lt;code&gt;GPIOx_CRH&lt;/code&gt;，可以看到对应GPIOC有两个地方，CNF配置为00，即推挽模式，而MODE配置为11（这里F411还是和视频中不一样，我直接写F411的代码）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 配置输出寄存器  
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MODER&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0C000000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;OTYPER&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;	
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;往pc13端口写入高电平&#34;&gt;往PC13端口，写入高电平&lt;/h4&gt;
+&lt;p&gt;写出数据的寄存器叫&lt;code&gt;GPIOx_ODR&lt;/code&gt;，我们往PC13写出高电平，即：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GPIOC -&amp;gt; ODR = 0x00002000;   
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;OK，这就是寄存器编程的大概流程。我们在这里主要是简单了解一下编程的流程，即使能时钟、配置IO、输入输出。后面我们会使用HAL库来对STM32进行编程。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/keyboard/" term="keyboard" label="keyboard" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/develop-stm32-using-vscode/" />
             <id>https://haobogu.github.io/posts/develop-stm32-using-vscode/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2022-07-29T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -155,7 +490,7 @@
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tokio/" />
             <id>https://haobogu.github.io/posts/tokio/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -680,7 +1015,7 @@
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter-advanced/" />
             <id>https://haobogu.github.io/posts/tree-sitter-advanced/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1247,7 +1582,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter/" />
             <id>https://haobogu.github.io/posts/tree-sitter/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1712,7 +2047,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/rust-build-scripts/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1853,7 +2188,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/rust-bindgen/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2070,7 +2405,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tttttransformer/" />
             <id>https://haobogu.github.io/posts/tttttransformer/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2317,7 +2652,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2582,7 +2917,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/rusts-module-system/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2870,7 +3205,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/learning-rust-4/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3194,7 +3529,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/learning-rust-3/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3524,7 +3859,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/learning-rust-2/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3885,7 +4220,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/learning-rust-1/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4678,7 +5013,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/xlnet/" />
             <id>https://haobogu.github.io/posts/xlnet/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4809,7 +5144,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/intellicode-compose/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4916,7 +5251,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/dockerfile/" />
             <id>https://haobogu.github.io/posts/dockerfile/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5244,7 +5579,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5319,7 +5654,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5447,7 +5782,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/effective-go/" />
             <id>https://haobogu.github.io/posts/effective-go/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5797,7 +6132,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/git-commands/" />
             <id>https://haobogu.github.io/posts/git-commands/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5885,7 +6220,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/language-server-protocol/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6644,7 +6979,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/vs-code-extension/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6841,7 +7176,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-hugo/" />
             <id>https://haobogu.github.io/posts/learning-hugo/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7005,7 +7340,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/get-started-with-gremlin/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7181,7 +7516,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-python/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7377,7 +7712,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/ssh/" />
             <id>https://haobogu.github.io/posts/ssh/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7484,7 +7819,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-basics/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7587,7 +7922,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vim/" />
             <id>https://haobogu.github.io/posts/vim/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7716,7 +8051,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/get-started-with-hugo/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
+            <updated>2022-08-01T02:18:21&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7866,161 +8201,6 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
                                 <category scheme="https://haobogu.github.io/tags/hugo/" term="hugo" label="hugo" />
                             
                         
-                    
-                
-            
-        </entry>
-    
-        <entry>
-            <title type="text"></title>
-            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/stm32-2/" />
-            <id>https://haobogu.github.io/posts/stm32-2/</id>
-            <updated>2022-08-01T02:16:45&#43;00:00</updated>
-            <published>0001-01-01T00:00:00&#43;00:00</published>
-            <author>
-                    <name>Haobo Gu</name>
-                    <uri>haobogu.github.io</uri>
-                    <email>haobogu@outlook.com</email>
-                    </author>
-            <summary type="html">STM32 - 2 之前我们已经了解了一些STM32的基础知识，下面就开始正式的编程了。我们主要会…</summary>
-            
-                <content type="html">&lt;h1 id=&#34;stm32---2&#34;&gt;STM32 - 2&lt;/h1&gt;
-&lt;p&gt;之前我们已经了解了一些STM32的基础知识，下面就开始正式的编程了。我们主要会使用STM32的HAL库，这些库函数已经在创建工程的时候初始化好了，一般来说，直接使用即可。&lt;/p&gt;
-&lt;h2 id=&#34;gpio&#34;&gt;GPIO&lt;/h2&gt;
-&lt;h3 id=&#34;片上外设的使能时钟&#34;&gt;片上外设的使能时钟&lt;/h3&gt;
-&lt;p&gt;首先了解一下STM32的片上外设的使能时钟。STM32几乎所有的片上设备都有使能时钟，包括输入输出GPIO。不把使能时钟打开，对应的外设就不能用。STM32这么设计是为了降低功耗。&lt;/p&gt;
-&lt;p&gt;那怎么样启动使能时钟呢？以最小系统板上面的PC13为例，这个IO实际上就是GPIOC的13号引脚，那么我们就在&lt;code&gt;main.c&lt;/code&gt;里面使用如下代码就可以开启GPIOC的使能时钟：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;初始化gpio&#34;&gt;初始化GPIO&lt;/h3&gt;
-&lt;p&gt;在打开GPIO的使能时钟之后，就要初始化GPIO了。可以使用如下API初始化GPIO：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;其中，GPIOC就是GPIO的类型，而后面的那个&lt;code&gt;GPIO_InitStruct&lt;/code&gt;则是各种初始化参数，如输入输出模式、输入输出引脚等。下面是初始化设置的代码：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MX_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;// GPIO初始化设置
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitTypeDef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
-
-  &lt;span class=&#34;c1&#34;&gt;// 打开GPIOC的使能时钟
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;__HAL_RCC_GPIOC_CLK_ENABLE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
-
-  &lt;span class=&#34;c1&#34;&gt;// 设置GPIOC的13号引脚的输出Level
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_WritePin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_RESET&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-
-  &lt;span class=&#34;c1&#34;&gt;// 然后配置各种GPIO的设置，如引脚为13，模式为PP（推挽输出），没有上拉电阻，输出速率等等。
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Mode&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_MODE_OUTPUT_PP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pull&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_NOPULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_SPEED_FREQ_LOW&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;// 完成GPIO的初始化
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;HAL_GPIO_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIOC&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;向gpio写入值输出&#34;&gt;向GPIO写入值（输出）&lt;/h3&gt;
-&lt;p&gt;在初始化完毕之后，就可以使用&lt;code&gt;HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);&lt;/code&gt;向对应的GPIO写入值了。参数都很容易理解，最后一个参数，如果是&lt;code&gt;SET&lt;/code&gt;，那么就是写1；如果是&lt;code&gt;RESET&lt;/code&gt;，就是写0。&lt;/p&gt;
-&lt;p&gt;OK，到这里，一个最简单的亮灯程序就写完了。后面，我们就深入了解一下GPIO的各种设置属性。&lt;/p&gt;
-&lt;h3 id=&#34;gpio的设置&#34;&gt;GPIO的设置&lt;/h3&gt;
-&lt;p&gt;GPIO的设置主要是使用&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;来声明：&lt;code&gt;GPIO_InitTypeDef GPIO_InitStruct = {0};&lt;/code&gt;。&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;主要包含4个设置：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Mode：IO引脚的模式&lt;/p&gt;
-&lt;p&gt;我们在上面的示例代码中用到的，就是&lt;code&gt;GPIO_MODE_OUTPUT_PP&lt;/code&gt;，即输出推挽模式（Output Push-Pull Mode）。推挽模式就是高低电平均有驱动能力的输出模式。&lt;/p&gt;
-&lt;p&gt;此外，输出模式还有&lt;code&gt;GPIO_MODE_OUTPUT_OD&lt;/code&gt;，即输出开漏模式。开漏输出高电平相当于高阻态，是没有驱动能力的。&lt;/p&gt;
-&lt;p&gt;另外，还可以选择输入模式，即&lt;code&gt;GPIO_MODE_INPUT&lt;/code&gt;和&lt;code&gt;GPIO_MODE_AF_INPUT&lt;/code&gt;。具体这些模式的区别，可以参考下 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 15分钟左右的讲解，很详细&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Pin：就是第几号IO引脚&lt;/p&gt;
-&lt;p&gt;如果要设置第13号引脚，就可以使用：&lt;code&gt;GPIO_InitStruct.Pin = GPIO_PIN_13;&lt;/code&gt;，如果要设置多个引脚，可以使用&lt;code&gt;|&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 同时设置13和14号引脚
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GPIO_InitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Pin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_13&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GPIO_PIN_14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Pull：用在输入模式里面，即上拉/下拉电阻，用来设置输入悬空的时候，输入口是高电平（上拉电阻PULLUP）还是低电平（下拉电阻PULLDOWN）还是就把它悬空（NOPULL），详见 &lt;a href=&#34;https://www.bilibili.com/video/BV1th411z7sn&#34;&gt;https://www.bilibili.com/video/BV1th411z7sn&lt;/a&gt; 9分钟30秒左右的讲解&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Speed：设置IO引脚允许的最大速度&lt;/p&gt;
-&lt;p&gt;看f411的源代码可以到这里可以设置4个级别的IO速度，分别是2M、12.5M~50M、25M~100M和50M~200M。速度越快，IO的读取频率就越高，也就越耗电。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_LOW         0x00000000U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; IO works at 2 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_MEDIUM      0x00000001U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 12,5 MHz to 50 MHz, please refer to the product datasheet */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_HIGH        0x00000002U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 25 MHz to 100 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define  GPIO_SPEED_FREQ_VERY_HIGH   0x00000003U  &lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;/*!&amp;lt; range 50 MHz to 200 MHz, please refer to the product datasheet  */&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;最后，需要注意传进去的&lt;code&gt;GPIO_InitTypeDef&lt;/code&gt;是一个指针，所以需要使用&lt;code&gt;&amp;amp;GPIO_InitStruct &lt;/code&gt;传地址进去。&lt;/p&gt;
-&lt;h2 id=&#34;gpio输入&#34;&gt;GPIO输入&lt;/h2&gt;
-&lt;p&gt;我们就用最简单的开关来学习GPIO口的输入。&lt;/p&gt;
-&lt;p&gt;首先复习一下在配置输入模式的时候，有一个&lt;code&gt;Pull&lt;/code&gt;字段。这个字段代表着在输入悬空的时候，默认是上拉电阻还是下拉电阻或者是悬空。这玩意有什么用呢？我们看一下下面的开关电路：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;C:\Users\haobo\AppData\Roaming\Typora\typora-user-images\image-20220731203358393.png&#34; alt=&#34;image-20220731203358393&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;很好理解，开关按下的时候，GPIO输入就接地，即低电平0。那这个上下拉电阻有什么关系呢？&lt;/p&gt;
-&lt;p&gt;看下左边的图，如果开关断开，这个时候PA0输入就悬空了。如果这个时候GPIO口的配置为悬空，那这个引脚就真的悬空了，其输入就不确定。而如果这个时候，GPIO口的输入配置为下拉电阻，此时PA0悬空，输入就被下拉电阻拉到了低电平，那这个按键实际上就没用了。因此，在按键一边接地的时候，如果没有手动配置上拉电阻（右边的图），那就&lt;strong&gt;必须把GPIO的输入设置为上拉电阻模式（PULLUP），来保证开关断开时输入为高电平&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;当然，如果像右边一样，外面单独配置了上拉电阻，那么PA0的输入模式配置为上拉电阻模式或者悬空时都可以的。&lt;/p&gt;
-&lt;p&gt;❗ 注意：由于STM32系列并不是所有的开关都有下拉电阻模式，因此，在习惯上，只要是开关都采用低电平触发的方式，即&lt;strong&gt;一边接地&lt;/strong&gt;一边接GPIO。&lt;/p&gt;
-&lt;h3 id=&#34;按键消抖&#34;&gt;按键消抖&lt;/h3&gt;
-&lt;p&gt;一般来说，按下按键之后，按键会有一个5-10ms的抖动，然后才会稳定在高电平。消除抖动的策略很简单，在检测到按键之后，延迟20ms再进入完全按下时的那个while循环。然后就只要按下就一直在这个while循环里，直到松开按键，跳出while循环，然后再delay20ms。对于按键的要求比较高的场合，可能还需要后续的滤波。&lt;/p&gt;
-</content>
-            
-            
-            
-            
-            
-                
-                    
-                
                     
                 
             
