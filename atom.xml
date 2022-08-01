@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-08-01T02:18:25&#43;00:00</updated>
+    <updated>2022-08-01T09:15:15&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">STM32 - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/stm32-2/" />
             <id>https://haobogu.github.io/posts/stm32-2/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-07-31T20:22:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -150,11 +150,12 @@
 &lt;h2 id=&#34;gpio输入&#34;&gt;GPIO输入&lt;/h2&gt;
 &lt;p&gt;我们就用最简单的开关来学习GPIO口的输入。&lt;/p&gt;
 &lt;p&gt;首先复习一下在配置输入模式的时候，有一个&lt;code&gt;Pull&lt;/code&gt;字段。这个字段代表着在输入悬空的时候，默认是上拉电阻还是下拉电阻或者是悬空。这玩意有什么用呢？我们看一下下面的开关电路：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;C:\Users\haobo\AppData\Roaming\Typora\typora-user-images\image-20220731203358393.png&#34; alt=&#34;image-20220731203358393&#34; style=&#34;zoom:80%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220801171400974.png&#34; alt=&#34;image-20220801171400974&#34; style=&#34;zoom: 50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;很好理解，开关按下的时候，GPIO输入就接地，即低电平0。那这个上下拉电阻有什么关系呢？&lt;/p&gt;
 &lt;p&gt;看下左边的图，如果开关断开，这个时候PA0输入就悬空了。如果这个时候GPIO口的配置为悬空，那这个引脚就真的悬空了，其输入就不确定。而如果这个时候，GPIO口的输入配置为下拉电阻，此时PA0悬空，输入就被下拉电阻拉到了低电平，那这个按键实际上就没用了。因此，在按键一边接地的时候，如果没有手动配置上拉电阻（右边的图），那就&lt;strong&gt;必须把GPIO的输入设置为上拉电阻模式（PULLUP），来保证开关断开时输入为高电平&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;当然，如果像右边一样，外面单独配置了上拉电阻，那么PA0的输入模式配置为上拉电阻模式或者悬空时都可以的。&lt;/p&gt;
 &lt;p&gt;❗ 注意：由于STM32系列并不是所有的开关都有下拉电阻模式，因此，在习惯上，只要是开关都采用低电平触发的方式，即&lt;strong&gt;一边接地&lt;/strong&gt;一边接GPIO。&lt;/p&gt;
+&lt;h3 id=&#34;输入模式&#34;&gt;输入模式&lt;/h3&gt;
 &lt;h3 id=&#34;按键消抖&#34;&gt;按键消抖&lt;/h3&gt;
 &lt;p&gt;一般来说，按下按键之后，按键会有一个5-10ms的抖动，然后才会稳定在高电平。消除抖动的策略很简单，在检测到按键之后，延迟20ms再进入完全按下时的那个while循环。然后就只要按下就一直在这个while循环里，直到松开按键，跳出while循环，然后再delay20ms。对于按键的要求比较高的场合，可能还需要后续的滤波。&lt;/p&gt;
 </content>
@@ -183,7 +184,7 @@
             <title type="text">STM32</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/stm32/" />
             <id>https://haobogu.github.io/posts/stm32/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-07-30T15:23:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -355,7 +356,7 @@
             <title type="text">Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/develop-stm32-using-vscode/" />
             <id>https://haobogu.github.io/posts/develop-stm32-using-vscode/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-07-29T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -490,7 +491,7 @@
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tokio/" />
             <id>https://haobogu.github.io/posts/tokio/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1015,7 +1016,7 @@
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter-advanced/" />
             <id>https://haobogu.github.io/posts/tree-sitter-advanced/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1582,7 +1583,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tree-sitter/" />
             <id>https://haobogu.github.io/posts/tree-sitter/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2047,7 +2048,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/rust-build-scripts/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2188,7 +2189,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/rust-bindgen/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2405,7 +2406,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/tttttransformer/" />
             <id>https://haobogu.github.io/posts/tttttransformer/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2652,7 +2653,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2917,7 +2918,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/rusts-module-system/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3205,7 +3206,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/learning-rust-4/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3529,7 +3530,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/learning-rust-3/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3859,7 +3860,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/learning-rust-2/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4220,7 +4221,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/learning-rust-1/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5013,7 +5014,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/xlnet/" />
             <id>https://haobogu.github.io/posts/xlnet/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5144,7 +5145,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/intellicode-compose/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5251,7 +5252,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/dockerfile/" />
             <id>https://haobogu.github.io/posts/dockerfile/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5579,7 +5580,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5654,7 +5655,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5782,7 +5783,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/effective-go/" />
             <id>https://haobogu.github.io/posts/effective-go/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6132,7 +6133,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/git-commands/" />
             <id>https://haobogu.github.io/posts/git-commands/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6220,7 +6221,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/language-server-protocol/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6979,7 +6980,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/vs-code-extension/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7176,7 +7177,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/learning-hugo/" />
             <id>https://haobogu.github.io/posts/learning-hugo/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7340,7 +7341,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/get-started-with-gremlin/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7516,7 +7517,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-python/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7712,7 +7713,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/ssh/" />
             <id>https://haobogu.github.io/posts/ssh/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7819,7 +7820,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/alfred-workflow-basics/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7922,7 +7923,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/vim/" />
             <id>https://haobogu.github.io/posts/vim/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8051,7 +8052,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/get-started-with-hugo/</id>
-            <updated>2022-08-01T02:18:21&#43;00:00</updated>
+            <updated>2022-08-01T09:15:11&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
