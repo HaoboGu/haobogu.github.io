@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Mon, 01 Aug 2022 09:15:15 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 02 Aug 2022 03:07:47 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -165,6 +165,30 @@
 &lt;h3 id=&#34;输入模式&#34;&gt;输入模式&lt;/h3&gt;
 &lt;h3 id=&#34;按键消抖&#34;&gt;按键消抖&lt;/h3&gt;
 &lt;p&gt;一般来说，按下按键之后，按键会有一个5-10ms的抖动，然后才会稳定在高电平。消除抖动的策略很简单，在检测到按键之后，延迟20ms再进入完全按下时的那个while循环。然后就只要按下就一直在这个while循环里，直到松开按键，跳出while循环，然后再delay20ms。对于按键的要求比较高的场合，可能还需要后续的滤波。&lt;/p&gt;
+&lt;h2 id=&#34;gpio输出&#34;&gt;GPIO输出&lt;/h2&gt;
+&lt;p&gt;上面我们已经了解了GPIO输出模式的推挽模式（PP），即输出的时候，上下两个MOS管均可以导通（同时只有一个能通），然后输出就能够被下推到0V或上拉到3.3V，这样高低电平都有强驱动能力。&lt;/p&gt;
+&lt;p&gt;除了推挽模式之外，输出还有开漏模式（OD）。其实开漏模式和推挽模式的区别就在于，开漏模式的上面接高电平的MOS管一直是断开的。这样的话，只有下面的MOS可以导通，那就低电平有强驱动能力。而在输出1的时候，上下MOS均断开，输出就是一个高阻抗状态，就相当于这个输出直接断开了（不是输出高电平）。&lt;/p&gt;
+&lt;p&gt;两个输出模式的区别：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220802104324062.png&#34; alt=&#34;image-20220802104324062&#34; style=&#34;zoom:30%;&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;开漏模式的应用场景&#34;&gt;开漏模式的应用场景&lt;/h3&gt;
+&lt;h4 id=&#34;驱动ied&#34;&gt;驱动IED&lt;/h4&gt;
+&lt;p&gt;PP和OD模式都能驱动LED，驱动电路略有不同：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220802104639906.png&#34; alt=&#34;image-20220802104639906&#34; style=&#34;zoom:33%;&#34; /&gt;区别是除了电路不同之外，两个模式驱动LED还有如下区别：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;PP模式是输出1灯亮，而OD是输出0灯亮&lt;/li&gt;
+&lt;li&gt;PP模式是芯片向外供电，而OD是外面的电源供电，芯片吸电&lt;/li&gt;
+&lt;li&gt;OD模式相对于PP模式，理论上能够承载的最大电流多一些&lt;/li&gt;
+&lt;li&gt;OD模式能够降低芯片功耗&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;逻辑线与&#34;&gt;逻辑线与&lt;/h4&gt;
+&lt;p&gt;逻辑线与最多是用在I2C通信总线上。&lt;/p&gt;
+&lt;p&gt;I2C是一种通信总线，它有两个线：一个是SDA用于传数据，一个是SCL用于传时钟。其接线如图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220802105029636.png&#34; alt=&#34;image-20220802105029636&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I2C的所有SDA和SCL的IO都是OD模式，这样的话，只要有一个输出是0，那么对应的SDA就会被拉到0V输出低电平。而只有所有的SDA或者SCL全是1，由于是高阻态，对应输出的SDA或SCL就会被上拉电阻拉到VDD，输出高电平。这就是逻辑线与。&lt;/p&gt;
+&lt;h4 id=&#34;匹配不同电压等级&#34;&gt;匹配不同电压等级&lt;/h4&gt;
+&lt;p&gt;STM32输出的高电平一般是3.3V，但是如果我们想要去驱动需要5V输入的芯片应该如何做呢？下面就是使用开漏模式驱动5V输入的原理图：&lt;/p&gt;
+&lt;p&gt;可以看到，在STM32输出0的时候，那右边芯片的DIN输入就是0V低电平。如果STM32输出1的时候，由于输出口为高阻态，那么DIN就会被外接电源拉到5V，也就是右边芯片需要的高电平。这就实现了不同电压水平的匹配。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220802105423779.png&#34; alt=&#34;image-20220802105423779&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
 </description>
                 
                 
