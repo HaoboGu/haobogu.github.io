@@ -21,10 +21,140 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Sat, 13 Aug 2022 15:02:50 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sun, 14 Aug 2022 14:03:42 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
+        
+            <item>
+                <title>Learn QMK - 2</title>
+                <link>https://haobogu.github.io/posts/qmk-2/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/qmk-2/</guid>
+                <pubDate>Sun, 14 Aug 2022 15:38:55 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;qmk---2&#34;&gt;QMK - 2&lt;/h1&gt;
+&lt;p&gt;QMK&#39;s source code can be found at Github: &lt;a href=&#34;https://github.com/qmk/qmk_firmware&#34;&gt;https://github.com/qmk/qmk_firmware&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;learn-qmks-source-code&#34;&gt;Learn QMK&#39;s source code&lt;/h2&gt;
+&lt;h3 id=&#34;program-entry&#34;&gt;Program Entry&lt;/h3&gt;
+&lt;p&gt;Like other C programs, QMK&#39;s entry is a &lt;code&gt;main()&lt;/code&gt; function. QMK&#39;s main function is at &lt;code&gt;quantum/main.c&lt;/code&gt;, which is the entrance of all the QMK firmware.&lt;/p&gt;
+&lt;p&gt;QMK&#39;s &lt;code&gt;main()&lt;/code&gt; function is quite simple: setup platform/protocol/keyboard and then run the infinite main loop. The main loop will call &lt;code&gt;protocol_task()&lt;/code&gt;, then the &lt;code&gt;keyboard_task()&lt;/code&gt; in  &lt;a href=&#34;https://github.com/qmk/qmk_firmware/blob/0.15.13/quantum/keyboard.c#L377&#34;&gt;&lt;code&gt;quantum/keyboard.c&lt;/code&gt;&lt;/a&gt; is called. &lt;code&gt;keyboard_task()&lt;/code&gt; is where the keyboard specific functionality is dispatched, such as matrix scanning, mouse handling and controlling keyboard status LEDs.&lt;/p&gt;
+&lt;h3 id=&#34;matrix-scanning&#34;&gt;Matrix Scanning&lt;/h3&gt;
+&lt;p&gt;Matrix scanning is the core of a keyboard firmware. QMK provides built in scanning algorithm, you just need to define your matrix layout.&lt;/p&gt;
+&lt;p&gt;To declare your own key matrix, a C macro is used. For example, to define a 2*2 matrix, you can use the following code&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#define LAYOUT( \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;  k00, k01, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;  k10, k11 \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;) { \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;  {k00, k01}, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;  {k10, k11} \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;}
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Note that you may not have a key at every position in the matrix, you can use keycode &lt;code&gt;KC_NO&lt;/code&gt; in the second part of the macro. A typical numpad layout can be defined using the following code:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#define LAYOUT( \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    k00, k01, k02, k03, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    k10, k11, k12, k13, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    k20, k21, k22, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    k30, k31, k32, k33, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    k40,      k42 \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;) { \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    { k00, k01,   k02, k03   }, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    { k10, k11,   k12, k13   }, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    { k20, k21,   k22, KC_NO }, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    { k30, k31,   k32, k33   }, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;    { k40, KC_NO, k42, KC_NO } \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;}
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;In keymap, you can use this macro to map keycodes of actual physical keys to matrix keys:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PROGMEM&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;keymaps&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[][&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MATRIX_ROWS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;][&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MATRIX_COLS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LAYOUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;KC_NUM&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;KC_PSLS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KC_PAST&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KC_PMNS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;KC_P7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_PPLS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;KC_P4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;KC_P1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_P3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;   &lt;span class=&#34;n&#34;&gt;KC_PENT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;KC_P0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;            &lt;span class=&#34;n&#34;&gt;KC_PDOT&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;You can see the keymap has 3 dimensions. The first dimension is actual &lt;strong&gt;layer&lt;/strong&gt;. Each layer has &lt;code&gt;MATRIX_ROWS&lt;/code&gt; * &lt;code&gt;MATRIX_COLS&lt;/code&gt; keys. In the given example, we defined only one layer.&lt;/p&gt;
+&lt;h3 id=&#34;detect-key-strokes&#34;&gt;Detect key strokes&lt;/h3&gt;
+&lt;p&gt;At each matrix scanning loop, the matrix scanning function returns the current state of the matrix. QMK stores the result of last matrix scan, and compares with the current scanning result to determine which key is pressed or released. The the key code is dispatched to &lt;code&gt;process_record()&lt;/code&gt; function.&lt;/p&gt;
+&lt;h3 id=&#34;process-record&#34;&gt;Process Record&lt;/h3&gt;
+&lt;p&gt;Function &lt;code&gt;process_record()&lt;/code&gt; is not complex, it contains a chain of events(c functions). Many of then depends on rules defined in &lt;code&gt;rules.mk&lt;/code&gt;. The full events list is &lt;a href=&#34;https://docs.qmk.fm/#/zh-cn/understanding_qmk?id=process-record&#34;&gt;here&lt;/a&gt;. If any of them returns &lt;code&gt;false&lt;/code&gt;, the following functions won&#39;t be executed.&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/qmk/">qmk</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>STM32 - 2</title>
@@ -505,6 +635,325 @@
                                 
                                 
                                     <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
+                                
+                            
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title>Learn QMK</title>
+                <link>https://haobogu.github.io/posts/qmk/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/qmk/</guid>
+                <pubDate>Tue, 26 Jul 2022 13:59:37 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;qmk&#34;&gt;QMK&lt;/h1&gt;
+&lt;h2 id=&#34;whats-qmk&#34;&gt;What&#39;s QMK?&lt;/h2&gt;
+&lt;p&gt;QMK is a series of open source firmware for keyboard. Besides firmware, it also provides many useful tools for configuring your keyboard, such as &lt;a href=&#34;https://config.qmk.fm/#/&#34;&gt;QMK Configurator&lt;/a&gt;, &lt;a href=&#34;https://github.com/qmk/qmk_toolbox&#34;&gt;QMK toolbox&lt;/a&gt;, etc.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;To install QMK on Mac(Intel), you can just use &lt;code&gt;brew install qmk/qmk/qmk&lt;/code&gt;. But for M1 Macs, this installation might fail. Here is the reference for installing QMK through rosetta2: &lt;a href=&#34;https://www.reddit.com/r/olkb/comments/nh2fk9/guide_installing_qmk_on_m1_macbook/&#34;&gt;https://www.reddit.com/r/olkb/comments/nh2fk9/guide_installing_qmk_on_m1_macbook/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;After installation, you should use &lt;code&gt;qmk setup&lt;/code&gt; to set your QMK configuration. Then, you can use QMK to build firmware for your keyboard!&lt;/p&gt;
+&lt;h2 id=&#34;build-your-first-firmware&#34;&gt;Build your first firmware&lt;/h2&gt;
+&lt;p&gt;We can start from build a default keymap for your keyboard. To build the firmware with default keymap, you can use&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;qmk compile -kb &amp;lt;your_keyboard&amp;gt; -km default
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;This requires your keyboard is supported officially by QMK. If not, you can create a PR to add your keyboard to QMK repo.&lt;/p&gt;
+&lt;p&gt;If you see the message like following, your firmware is sucessfully built:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Linking: .build/clueboard_66_rev3_default.elf                                                       [OK]
+Creating load file for flashing: .build/clueboard_66_rev3_default.hex                               [OK]
+Copying clueboard_66_rev3_default.hex to qmk_firmware folder                                        [OK]
+Checking file size of clueboard_66_rev3_default.hex                                                 [OK]
+ * The firmware size is fine - 26356/28672 (2316 bytes free)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;create-your-first-firmware&#34;&gt;Create your first firmware&lt;/h2&gt;
+&lt;p&gt;In the last section, we just created a firmware for clueboard_66_rev3 with default keymap. Now we&#39;ll create a new keyboard and build the firmware with a customized keymap.&lt;/p&gt;
+&lt;h3 id=&#34;create-a-new-keyboard&#34;&gt;Create a new keyboard&lt;/h3&gt;
+&lt;p&gt;First of all, you can create your own qmk keyboard using&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;qmk new-keyboard
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then you&#39;ll asked to choose your keyboard&#39;s name, layout and MCU. Keyboard naming supports at most 4 folder levels, the generated keyboard folder will be placed under &lt;code&gt;keyboards&lt;/code&gt; folder:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Keyboard naming example, clueboard uses sub-folders for both organizations and revisions&lt;/span&gt;
+- qmk_firmware
+  - keyboards
+    - clueboard ← This is the organization folder, there’s no rules.mk file
+      - &lt;span class=&#34;m&#34;&gt;60&lt;/span&gt; ← This is a compilable keyboard, it has a rules.mk file
+      - &lt;span class=&#34;m&#34;&gt;66&lt;/span&gt; ← This is also compilable- it uses DEFAULT_FOLDER to specify rev3 as the default revision
+        - rev1 ← compilable: make clueboard/66/rev1
+        - rev2 ← compilable: make clueboard/66/rev2
+        - rev3 ← compilable: make clueboard/66/rev3 or make clueboard/66
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If a sub-folder has &lt;code&gt;rules.mk&lt;/code&gt;, it will be considered as a keyboard. The keyboard folder has the following files&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;readme.md&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;readme.md&lt;/code&gt; is needed in QMK configurator for basic information about this keyboard&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;info.json&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;info.json&lt;/code&gt; is used by QMK API, it contains the information and metadata about this keyboard. Here is the &lt;a href=&#34;https://docs.qmk.fm/#/reference_info_json&#34;&gt;reference&lt;/a&gt; about &lt;code&gt;info.json&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;config.h&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;config.h&lt;/code&gt; sets important hardware informations about the keyboard, such as matrix size, product name, USB VID/PID, etc. This file is required for all keyboards firmware. For most cases, information in &lt;code&gt;config.h&lt;/code&gt; should be consist with &lt;code&gt;info.json&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;rules.mk&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rules.mk&lt;/code&gt; means that this folder is a keyboard target and you can run &lt;code&gt;make&lt;/code&gt; command here. In this file, you can write the default configuration of your keyboard and enable QWK features.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;lt;keyboard_name&amp;gt;.c&lt;/p&gt;
+&lt;p&gt;You can write your own code here. There are some functions that you can write:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;void matrix_init_kb(void)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void matrix_scan_kb(void)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bool process_record_kb(uint16_t keycode, keyrecord_t *record)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;void led_set_kb(uint8_t usb_led)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;lt;keyboard_name&amp;gt;.h&lt;/p&gt;
+&lt;p&gt;You&#39;ll define the matrix for your keyboard and other variables which will be used in &lt;code&gt;&amp;lt;keyboard_name&amp;gt;.c&lt;/code&gt; here&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;create-a-new-keymap&#34;&gt;Create a new keymap&lt;/h3&gt;
+&lt;p&gt;After creating your keyboard, you can create a new keymap for your keyboard using&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;qmk new-keymap -kb &amp;lt;your_keyboard&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then, a &lt;code&gt;keymap.c&lt;/code&gt; file will be created at the keyboard folder. You can edit this file to customize your keymap as you want.&lt;/p&gt;
+&lt;h3 id=&#34;edit-your-keymap&#34;&gt;Edit your keymap&lt;/h3&gt;
+&lt;p&gt;Open &lt;code&gt;keymap.c&lt;/code&gt; using your favorite IDE/text editor, edit the file as you want. There are some keycodes reference here:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.qmk.fm/#/keycodes_basic&#34;&gt;Basic Keycodes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.qmk.fm/#/quantum_keycodes&#34;&gt;Quantum Keycodes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.qmk.fm/#/feature_grave_esc&#34;&gt;Grave/Escape&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.qmk.fm/#/feature_mouse_keys&#34;&gt;Mouse keys&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Remember to save your keymap after you edit it.&lt;/p&gt;
+&lt;h3 id=&#34;build-your-firmware&#34;&gt;Build your firmware&lt;/h3&gt;
+&lt;p&gt;After you edit your keymap, you can use &lt;code&gt;qmk compile&lt;/code&gt; command to complie your firmware:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;qmk compile -kb &amp;lt;your_keyboard&amp;gt; -km &amp;lt;your_keymap&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;If you see the output like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Linking: .build/lockr_fancer_default.elf                                                            [OK]
+Creating binary load file for flashing: .build/lockr_fancer_default.bin                             [OK]
+Creating load file for flashing: .build/lockr_fancer_default.hex                                    [OK]
+
+Size after:
+   text	   data	    bss	    dec	    hex	filename
+      0	  23028	      0	  23028	   59f4	lockr_fancer_default.bin
+
+Copying lockr_fancer_default.bin to qmk_firmware folder                                             [OK]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Congraduations! You&#39;ve done with your first customized keyboard and keymap using QMK.&lt;/p&gt;
+&lt;h3 id=&#34;flash-your-keyboard&#34;&gt;Flash your keyboard&lt;/h3&gt;
+&lt;p&gt;The last thing you need to do is to flash the firmware to your keyboard. There are some steps to flash the firmware:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Put your keyboard into DFU mode&lt;/p&gt;
+&lt;p&gt;It depends on the specific hardware and firmware. You can try the steps to enable DFU mode &lt;a href=&#34;https://docs.qmk.fm/#/newbs_flashing?id=put-your-keyboard-into-dfu-bootloader-mode&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Flash your firmware using QMK toolbox&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is the simplest way if you&#39;ve successfully enable DFU mode and QMK toolbox recognizes it. Simply load the &lt;code&gt;.hex&lt;/code&gt; or &lt;code&gt;.bin&lt;/code&gt; file you just compiled in QMK toolbox and click the &lt;code&gt;Flash&lt;/code&gt; button in QMK toolbox. If you see the following output:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*** DFU device connected: Atmel Corp. ATmega32U4 (03EB:2FF4:0000)
+*** Attempting to flash, please don&#39;t remove device
+&amp;gt;&amp;gt;&amp;gt; dfu-programmer.exe atmega32u4 erase --force
+    Erasing flash...  Success
+    Checking memory from 0x0 to 0x6FFF...  Empty.
+&amp;gt;&amp;gt;&amp;gt; dfu-programmer.exe atmega32u4 flash &amp;quot;D:\Git\qmk_firmware\gh60_satan_default.hex&amp;quot;
+    Checking memory from 0x0 to 0x3F7F...  Empty.
+    0%                            100%  Programming 0x3F80 bytes...
+    [&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;]  Success
+    0%                            100%  Reading 0x7000 bytes...
+    [&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;]  Success
+    Validating...  Success
+    0x3F80 bytes written into 0x7000 bytes memory (56.70%).
+&amp;gt;&amp;gt;&amp;gt; dfu-programmer.exe atmega32u4 reset
+    
+*** DFU device disconnected: Atmel Corp: ATmega32U4 (03EB:2FF4:0000)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;All things are done! Then test your keyboard.&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;(optional) Flash your keyboard from CLI&lt;/p&gt;
+&lt;p&gt;You can also flash your keyboard from QMK cli  tool, this is also quite simple:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;qmk flash
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;flash-stm32&#34;&gt;Flash STM32&lt;/h3&gt;
+&lt;p&gt;For most stm32 series MCUs, you have to enable DFU mode and then flash it. If you have a brand new stm32, you can enable DFU first using a hardware-way. STM32 series has three booting strategies, see the following table:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813210533934.png&#34; alt=&#34;image-20220813210533934&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;STM32 has a default bootloader in system memory, with enabling DFU mode. What you need to do is setting BOOT0 pin to 1, and BOOT1 pin to 0, reset the chip. Then open QMK toolbox to flash your firmware or using&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;qmk flash
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;command. If you see&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813211103598.png&#34; alt=&#34;image-20220813211103598&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;in QMK toolbox or the following output in your terminal:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Opening DFU capable USB device...
+Device ID 0483:df11
+Device DFU version 011a
+Claiming USB DFU Interface...
+Setting Alternate Interface #0 ...
+Determining device status...
+DFU state(10) = dfuERROR, status(10) = Device&#39;s firmware is corrupt. It cannot return to run-time (non-DFU) operations
+Clearing status
+Determining device status...
+DFU state(2) = dfuIDLE, status(0) = No error condition is present
+DFU mode device DFU version 011a
+Device returned transfer size 2048
+DfuSe interface name: &amp;quot;Internal Flash  &amp;quot;
+Downloading element to address = 0x08000000, size = 55316
+Erase   	[=========================] 100%        55316 bytes
+Erase    done.
+Download	[=========================] 100%        55316 bytes
+Download done.
+File downloaded successfully
+Submitting leave request...
+Transitioning to dfuMANIFEST state
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You&#39;ve successfully flash your STM32 MCU!&lt;/p&gt;
+&lt;h2 id=&#34;mcus&#34;&gt;MCUs&lt;/h2&gt;
+&lt;p&gt;注：&lt;/p&gt;
+&lt;p&gt;QMK支持的MCU列表，其中，支持lcd的有l4x3&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813211658361.png&#34; alt=&#34;image-20220813211658361&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;stm32g0系列&#34;&gt;stm32G0系列&lt;/h3&gt;
+&lt;p&gt;QMK只支持G0B1和G0C1，只看下G0B1CE&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; G0B1CE：512K/144K，48pin，没货&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;stm32g4系列&#34;&gt;stm32G4系列&lt;/h3&gt;
+&lt;p&gt;太贵，适合模拟外设&lt;/p&gt;
+&lt;h3 id=&#34;stm32f0系列&#34;&gt;stm32F0系列&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F030 - 【qmk不支持】&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F070CB/RB：128K/16K，封装不同，10/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F072RB：128K/16K，10/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F078xC：256K/32K，没货&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;stm32f1系列&#34;&gt;stm32F1系列&lt;/h3&gt;
+&lt;p&gt;基本上只有103可选，用在键盘上足够足够的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 103xB/x8：&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 103RCT6：256K/48K，64pin，3adc，30/片（QMK是否支持待定）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;stm32f3系列&#34;&gt;stm32F3系列&lt;/h3&gt;
+&lt;p&gt;新款，比较合适&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;del&gt;301：比较基础，只有1个12位adc&lt;/del&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302：2个12位adc，全速USB，QMK支持x8/xC/xE&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302CCT6：256K/40K，48pin，14/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302RET6：512K/40K，64pin，40/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 303：4个12位adc，全速USB&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 303RBT6：128K/40K，60pin，20/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 【qmk不支持】&lt;del&gt;378：有16位adc，低电压（1.8V）&lt;/del&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 【qmk不支持】&lt;del&gt;373：16位adc - qmk不支持&lt;/del&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;stm32f4系列&#34;&gt;stm32f4系列&lt;/h3&gt;
+&lt;p&gt;F4系列性能已经非常强了，用在键盘上比较过剩。如果有丰富的额外需求比如屏幕、控制、各种传感器，则可以视成本使用。即使这样，也只需要用401/410/411之类的基础型号，410主要用于音频，我们主要考虑401/411。缺点是贵。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 401RET6：512K/96K，1adc，45/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 411CEU6：512K/128K，1adc，大量数据获取模式（BAM），可能可以在屏幕上有用，35/片&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/qmk/">qmk</category>
                                 
                             
                         
