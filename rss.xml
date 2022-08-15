@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Sun, 14 Aug 2022 14:03:42 &#43;0000</lastBuildDate>
+        <lastBuildDate>Mon, 15 Aug 2022 13:09:34 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -39,6 +39,13 @@
                     <description>&lt;h1 id=&#34;qmk---2&#34;&gt;QMK - 2&lt;/h1&gt;
 &lt;p&gt;QMK&#39;s source code can be found at Github: &lt;a href=&#34;https://github.com/qmk/qmk_firmware&#34;&gt;https://github.com/qmk/qmk_firmware&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;learn-qmks-source-code&#34;&gt;Learn QMK&#39;s source code&lt;/h2&gt;
+&lt;h3 id=&#34;basic-project-structure&#34;&gt;Basic project structure&lt;/h3&gt;
+&lt;p&gt;There are three logic levels in QMK project:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Core(_quantum)
+    -- Keyboard/Revision(_kb)
+        -- Keymap(_user)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;In QMK, many custom functions have a &lt;code&gt;_kb&lt;/code&gt; or &lt;code&gt;_user&lt;/code&gt; suffix. By convention, when you customize your keyboard or a revision of your keyboard, using &lt;code&gt;_kb&lt;/code&gt; functions. And when you customize your keymap, use &lt;code&gt;_user&lt;/code&gt; functions.&lt;/p&gt;
+&lt;p&gt;Remember to call &lt;code&gt;_user&lt;/code&gt; function at the beginning of your &lt;code&gt;_kb&lt;/code&gt; functions. Otherwise, those &lt;code&gt;_user&lt;/code&gt; functions won&#39;t be execute any more.&lt;/p&gt;
 &lt;h3 id=&#34;program-entry&#34;&gt;Program Entry&lt;/h3&gt;
 &lt;p&gt;Like other C programs, QMK&#39;s entry is a &lt;code&gt;main()&lt;/code&gt; function. QMK&#39;s main function is at &lt;code&gt;quantum/main.c&lt;/code&gt;, which is the entrance of all the QMK firmware.&lt;/p&gt;
 &lt;p&gt;QMK&#39;s &lt;code&gt;main()&lt;/code&gt; function is quite simple: setup platform/protocol/keyboard and then run the infinite main loop. The main loop will call &lt;code&gt;protocol_task()&lt;/code&gt;, then the &lt;code&gt;keyboard_task()&lt;/code&gt; in  &lt;a href=&#34;https://github.com/qmk/qmk_firmware/blob/0.15.13/quantum/keyboard.c#L377&#34;&gt;&lt;code&gt;quantum/keyboard.c&lt;/code&gt;&lt;/a&gt; is called. &lt;code&gt;keyboard_task()&lt;/code&gt; is where the keyboard specific functionality is dispatched, such as matrix scanning, mouse handling and controlling keyboard status LEDs.&lt;/p&gt;
@@ -128,7 +135,371 @@
 &lt;p&gt;At each matrix scanning loop, the matrix scanning function returns the current state of the matrix. QMK stores the result of last matrix scan, and compares with the current scanning result to determine which key is pressed or released. The the key code is dispatched to &lt;code&gt;process_record()&lt;/code&gt; function.&lt;/p&gt;
 &lt;h3 id=&#34;process-record&#34;&gt;Process Record&lt;/h3&gt;
 &lt;p&gt;Function &lt;code&gt;process_record()&lt;/code&gt; is not complex, it contains a chain of events(c functions). Many of then depends on rules defined in &lt;code&gt;rules.mk&lt;/code&gt;. The full events list is &lt;a href=&#34;https://docs.qmk.fm/#/zh-cn/understanding_qmk?id=process-record&#34;&gt;here&lt;/a&gt;. If any of them returns &lt;code&gt;false&lt;/code&gt;, the following functions won&#39;t be executed.&lt;/p&gt;
-</description>
+&lt;h2 id=&#34;customize-keymap&#34;&gt;Customize keymap&lt;/h2&gt;
+&lt;p&gt;You can create your own key code with QMK. To create your key code, you need to define an enum in &lt;code&gt;keymap.c&lt;/code&gt; first:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;k&#34;&gt;enum&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_keycodes&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;FOO&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;SAFE_RANGE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;BAR&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;QMK provides a macro &lt;code&gt;SAFE_RANGE&lt;/code&gt; which ensure that you got a unique and correct key code.&lt;/p&gt;
+&lt;h3 id=&#34;program-a-key&#34;&gt;Program a key&lt;/h3&gt;
+&lt;p&gt;When you want to overwrite your key&#39;s function or define the functionality of your new keycode, you can use &lt;code&gt;process_record_kb()&lt;/code&gt; or &lt;code&gt;process_record_user()&lt;/code&gt;. Remember this &lt;code&gt;process_record()&lt;/code&gt; function? Your customized &lt;code&gt;process_record_kb/user()&lt;/code&gt; function is similar: return false if you want to overwrite this key or attach new functionality to the key, otherwise just return true. Here is an example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Example of process_record_
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;process_record_user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;keycode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;keyrecord_t&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;record&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;k&#34;&gt;switch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keycode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;FOO&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+      &lt;span class=&#34;c1&#34;&gt;// Set your new key
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;record&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;// 按下时做些什么
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;// 抬起时做些什么
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+      &lt;span class=&#34;c1&#34;&gt;// 覆盖已有功能
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 跳过此键的所有进一步处理
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;case&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;KC_ENTER&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+      &lt;span class=&#34;c1&#34;&gt;// 给回车增加新的功能
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;c1&#34;&gt;// 当按下回车时播放音符
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;record&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;PLAY_SONG&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tone_qwerty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+      &lt;span class=&#34;c1&#34;&gt;// 返回true则不覆盖其原来的功能，返回false则为覆盖
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 让QMK响应回车按下/抬起事件
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+      &lt;span class=&#34;c1&#34;&gt;// 其他键位都保持不变（返回true）
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;      &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// 正常响应其他键码
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The definition of input param &lt;code&gt;record&lt;/code&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;keyrecord_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;record&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;keyevent_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;keypos_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+      &lt;span class=&#34;n&#34;&gt;uint8_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;
+      &lt;span class=&#34;n&#34;&gt;uint8_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;row&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;     &lt;span class=&#34;n&#34;&gt;pressed&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;record&lt;/code&gt; has the input key&#39;s col/row, whether it&#39;s pressed and the press time.&lt;/p&gt;
+&lt;h2 id=&#34;keyboard-initialization&#34;&gt;Keyboard Initialization&lt;/h2&gt;
+&lt;p&gt;You can also customize the initialization process of the keyboard. There are 3 functions that you can overwrite:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;keyboard_pre_init_*&lt;/code&gt;: happens at the early start of the firmware&#39;s setup process, can be used to initialize your hardware&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;matrix_init_*&lt;/code&gt;: happens midway of the firmware&#39;s setup process. At this moment, hardware is initialized, but features may not be yet&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;keyboard_post_init_*&lt;/code&gt;: happens at the end of the firmware&#39;s setup process. Hardware and most features are ready, you should put most of your customization code here&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;keyboard-pre-initialization&#34;&gt;Keyboard Pre Initialization&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;keyboard_pre_init_*&lt;/code&gt; is used to initialize your own extra hardwares. Note that this process starts very early -- even earlier than the USB starts. The following is an example to set up LEDs using &lt;code&gt;keyboard_pre_init_*&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;keyboard_pre_init_user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// Call the keyboard pre init code.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// Set our LED pins as output
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;setPinOutput&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;B0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;setPinOutput&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;B1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;setPinOutput&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;B2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;setPinOutput&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;B3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+  &lt;span class=&#34;n&#34;&gt;setPinOutput&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;B4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;matrix-initialization-code&#34;&gt;Matrix Initialization Code&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;matrix_init_*&lt;/code&gt; is called when the matrix is initialized, you can overwrite the low-level matrix configuration here. If you want to change the default pin initialization method, you can use the following method:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;void matrix_init_pins(void)&lt;/code&gt;: GPIO pin initialization. By default it will initialize pins set in &lt;code&gt;MATRIX_ROW_PINS&lt;/code&gt; and &lt;code&gt;MATRIX_COL_PINS&lt;/code&gt;, and the setup method is defined using &lt;code&gt;ROW2COL&lt;/code&gt;, &lt;code&gt;COL2ROW&lt;/code&gt; or &lt;code&gt;DIRECT_PINS&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;keyboard-post-initialization-code&#34;&gt;Keyboard Post Initialization Code&lt;/h3&gt;
+&lt;p&gt;You most customization code should be wrote here. At this moment, most hardware and features are initialized, you can take changes to certain features as you want.&lt;/p&gt;
+&lt;p&gt;The following is an example about setting up RGB lights:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;keyboard_post_init_user&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;// Call the post init code.
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;rgblight_enable_noeeprom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// enables Rgb, without saving settings
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;rgblight_sethsv_noeeprom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;180&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// sets the color to teal/cyan without saving
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;rgblight_mode_noeeprom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RGBLIGHT_MODE_BREATHING&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;// sets mode to Fast breathing without saving
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;qmk-configuration-files&#34;&gt;QMK configuration files&lt;/h2&gt;
+&lt;p&gt;We&#39;ve already knew that there are some configuration files in QMK when you&#39;re going to create your own keyboard, such as &lt;code&gt;info.json&lt;/code&gt;, &lt;code&gt;rules.mk&lt;/code&gt;. In this section, we&#39;ll learn how to customize those files.&lt;/p&gt;
+&lt;h3 id=&#34;infojson&#34;&gt;info.json&lt;/h3&gt;
+&lt;p&gt;You can config the hardware and enabled features in &lt;code&gt;info.json&lt;/code&gt;. The full reference of &lt;code&gt;info.json&lt;/code&gt; can be found here: &lt;a href=&#34;https://docs.qmk.fm/#/reference_info_json&#34;&gt;https://docs.qmk.fm/#/reference_info_json&lt;/a&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;hardware-configuration&#34;&gt;Hardware configuration&lt;/h4&gt;
+&lt;p&gt;At the top of &lt;code&gt;info.json&lt;/code&gt;, there are some configs about the manufacturer and hardware that you can customize:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;keyboard_name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;your_keyboard_name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;manufacturer&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;You&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;maintainer&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;You&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;usb&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;vid&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;0xFEED&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;pid&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;0x0000&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;device_version&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;1.0.0&amp;#34;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;in which, the &lt;code&gt;manufacturer&lt;/code&gt; and &lt;code&gt;keyboard_name&lt;/code&gt; will be displayed in the list of USB devices on Windows and MacOS. You can also choose your USB&#39;s vid and pid.&lt;/p&gt;
+&lt;h4 id=&#34;matrix-configuration&#34;&gt;Matrix configuration&lt;/h4&gt;
+&lt;p&gt;You can also define the GPIO pins which are used for matrix scanning in &lt;code&gt;info.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;nt&#34;&gt;&amp;#34;matrix_pins&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;cols&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;C1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C3&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;C4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;rows&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;D1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;D2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;D3&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;D4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Then declare your diode direction in your PCB:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;diode_direction&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;ROW2COL&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;layout-configuration&#34;&gt;Layout configuration&lt;/h4&gt;
+&lt;p&gt;Next you can config the layout of your keyboard:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;layouts&amp;#34;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;nt&#34;&gt;&amp;#34;LAYOUT_fancer&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;layout&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;matrix&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;matrix&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;matrix&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;matrix&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;x&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;For more available configurations, see: &lt;a href=&#34;https://docs.qmk.fm/#/reference_info_json&#34;&gt;https://docs.qmk.fm/#/reference_info_json&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;configh&#34;&gt;config.h&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;config.h&lt;/code&gt; is the basic header of the firmware. All configurations here are persist over the whole project. There are lots of configurations available, see this &lt;a href=&#34;https://docs.qmk.fm/#/config_options?id=the-configh-file&#34;&gt;document&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I list some most commonly used configs in &lt;code&gt;config.h&lt;/code&gt; here:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// vendor id
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define VENDOR_ID 0x1234
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// product id
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define PRODUCT_ID 0x1234
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// device version(often used for revisions)
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define DEVICE_VER 0
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// manufacturer
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MANUFACTURER MY_LAB
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// keyboard name
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define PRODUCT fancer
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// number of rows/cols
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MATRIX_ROWS 2
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MATRIX_COLS 2
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// MCU pins of rows, from top to down(might be overwritten by user, see https://docs.qmk.fm/#/custom_quantum_functions?id=low-level-matrix-overrides)
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MATRIX_ROW_PINS { A1, A3 }
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// MCU pins of cols, from left to right(might be overwritten as well)
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MATRIX_COL_PINS { A2, A4 }
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// IO delay in ms between changing matrix pin and reading values
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define MATRIX_IO_DELAY 30
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// the direction of diode, COL2ROW means the black mark on your diode is facing to the rows
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define DIODE_DIRECTION COL2ROW
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// debounce threshold in ms
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define DEBOUNCE 5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;rulesmk&#34;&gt;rules.mk&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;rules.mk&lt;/code&gt; defines some built options when compiling the firmware. It&#39;s actually a &lt;strong&gt;makefile&lt;/strong&gt; which can be recognized with tools like &lt;code&gt;cmake&lt;/code&gt;. In &lt;code&gt;rules.mk&lt;/code&gt; you can set building configurations, MCU options and enable certain features.&lt;/p&gt;
+&lt;h4 id=&#34;build-options&#34;&gt;Build Options&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FIRMWARE_FORMAT&lt;/code&gt;: defines the compiled firmware&#39;s format, like &lt;code&gt;.hex&lt;/code&gt; or &lt;code&gt;.bin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SRC&lt;/code&gt;: added sources files for compilation/linking&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LAYOUTS&lt;/code&gt;: a list of layouts that this keyboard supports. See Matrix Scanning section.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LTO_ENABLE&lt;/code&gt;: add it to reduce the size of your firmware&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;feature-options&#34;&gt;Feature Options&lt;/h4&gt;
+&lt;p&gt;You can also enable/disable many features such as MAGIC Actions, AUDIO, RGBLIGHT, etc. in &lt;code&gt;rules.mk&lt;/code&gt;. The full list can be found here: &lt;a href=&#34;https://docs.qmk.fm/#/config_options?id=feature-options&#34;&gt;https://docs.qmk.fm/#/config_options?id=feature-options&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here is an example of &lt;code&gt;rules.mk&lt;/code&gt; of owlab suit80:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# MCU name
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;MCU&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; atmega32u4
+
+&lt;span class=&#34;c&#34;&gt;# Bootloader selection
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;BOOTLOADER&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; atmel-dfu
+
+&lt;span class=&#34;c&#34;&gt;# Build Options
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#   change yes to no to disable
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;#
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;BOOTMAGIC_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; yes      &lt;span class=&#34;c1&#34;&gt;# Enable Bootmagic Lite&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;MOUSEKEY_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; yes       &lt;span class=&#34;c1&#34;&gt;# Mouse keys&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;EXTRAKEY_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; yes       &lt;span class=&#34;c1&#34;&gt;# Audio control and System control&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;CONSOLE_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no         &lt;span class=&#34;c1&#34;&gt;# Console for debug&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;COMMAND_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no         &lt;span class=&#34;c1&#34;&gt;# Commands for debug and configuration&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;NKRO_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; yes           &lt;span class=&#34;c1&#34;&gt;# Enable N-Key Rollover&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;BACKLIGHT_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no       &lt;span class=&#34;c1&#34;&gt;# Enable keyboard backlight functionality&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;RGBLIGHT_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no        &lt;span class=&#34;c1&#34;&gt;# Enable keyboard RGB underglow&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;AUDIO_ENABLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; no           &lt;span class=&#34;c1&#34;&gt;# Audio output&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
                 
                 
                 
