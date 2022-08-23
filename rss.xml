@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 23 Aug 2022 07:37:41 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 23 Aug 2022 15:45:43 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -8982,6 +8982,64 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
                                     <category domain="https://haobogu.github.io/tags/hugo/">hugo</category>
                                 
                             
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/blender/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/blender/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;blender&#34;&gt;Blender&lt;/h1&gt;
+&lt;h2 id=&#34;坐标系&#34;&gt;坐标系&lt;/h2&gt;
+&lt;p&gt;在blender中，坐标系的选择在顶部这里（快捷键为&lt;code&gt;,&lt;/code&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220823232452033.png&#34; alt=&#34;image-20220823232452033&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;在这里我们有若干选择，下面分别说明。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;全局：就是固定不变的坐标系，类似于东南西北&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;局部：针对选中物体的朝向的坐标系，类似前后左右&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;法向：某个面的法线方向为主的坐标系&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;万向：其中两个轴是固定的，第三个轴可以旋转。想象一下万向轮，把x轴当成旋转轴，轮子就绕着x轴转；然后z轴是转向轴，转动的方向可以变&lt;/p&gt;
+&lt;p&gt;对于万向坐标系来说，在右侧的变换-模式中可以选择XYZ的类型。YXZ的意思就是，y轴绕x轴旋转，而xy轴绕z轴旋转。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;视图：以当前视窗（屏幕）为主的坐标轴。左右为x，上下为y，前后为z&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;游标：就是blender刚开始最中心的那个游标的坐标系。游标是可以移动的且有朝向的。如果选择了游标坐标系，那么当前物品的坐标系就和游标是一样的了&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;原点&#34;&gt;原点&lt;/h2&gt;
+&lt;p&gt;每个物品都有一个原点。对模型的操作，如缩放、旋转、归零等实际上都是基于原点的。一般来说是物体的质心。在Blender中可以随意移动原点，只需要在右上角的选项里面勾选仅影响原点即可：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220823234001595.png&#34; alt=&#34;image-20220823234001595&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;当然，如果你不小心移动了原点，也可以通过 选中物体 - 右键菜单 - 设置远点来重设原点&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220823234057281.png&#34; alt=&#34;image-20220823234057281&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;边界框中心&#34;&gt;边界框中心&lt;/h3&gt;
+&lt;p&gt;在blender里面，还有一个边界框中心比较容易和原点混淆。边界框中心是每个物体的边界框（立方体）的中心。&lt;/p&gt;
+&lt;h2 id=&#34;轴心点&#34;&gt;轴心点&lt;/h2&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
                         
                     
                 
