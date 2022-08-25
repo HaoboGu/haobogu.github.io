@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Wed, 24 Aug 2022 15:34:43 &#43;0000</lastBuildDate>
+        <lastBuildDate>Thu, 25 Aug 2022 13:06:50 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -8999,9 +8999,43 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
                 
                     <description>&lt;h1 id=&#34;blender&#34;&gt;Blender&lt;/h1&gt;
 &lt;h2 id=&#34;常用快捷键&#34;&gt;常用快捷键&lt;/h2&gt;
+&lt;h3 id=&#34;最常用&#34;&gt;最常用&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;g：移动&lt;/li&gt;
+&lt;li&gt;r：旋转&lt;/li&gt;
+&lt;li&gt;s：缩放&lt;/li&gt;
+&lt;li&gt;xyz：轴向。比如想要按照x轴移动，那么就gx即可；如果想要x轴不变，在yz轴向上移动，则用g shift+x&lt;/li&gt;
+&lt;li&gt;shift+r：重复上一步操作&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;模式切换&#34;&gt;模式切换&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;tab：进入网格编辑模式&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;游标&#34;&gt;游标&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;shift + s&lt;/code&gt;: 设定游标到当前位置&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;shift + s：设定游标到当前位置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;编辑模式&#34;&gt;编辑模式&lt;/h2&gt;
+&lt;p&gt;在物体模式（默认模式）下按&lt;code&gt;tab&lt;/code&gt;可以进入编辑模式之后，可以在左上角选择点线面模式。左上角会显示当前所处的模式，也可以手动切换：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220824234356987.png&#34; alt=&#34;image-20220824234356987&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以按shift同时选择点、线、面模式。&lt;/p&gt;
+&lt;h3 id=&#34;统计信息&#34;&gt;统计信息&lt;/h3&gt;
+&lt;p&gt;如果想看当前视图中选择了多少个点线面的统计，可以在&lt;strong&gt;视图叠加层&lt;/strong&gt;选择统计信息：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220824234020537.png&#34; alt=&#34;image-20220824234020537&#34; style=&#34;zoom:25%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;如果没有物体被选择显示的是所有物体的和。如果有物体被选择，那么进入编辑模式，就显示当前选中的所有物体的统计信息。&lt;/p&gt;
+&lt;h2 id=&#34;挤出&#34;&gt;挤出&lt;/h2&gt;
+&lt;p&gt;进入编辑模式，然后按快捷键E，即可挤出。&lt;/p&gt;
+&lt;p&gt;快速选择挤出的选项：alt(option)+E&lt;/p&gt;
+&lt;h2 id=&#34;倒角&#34;&gt;倒角&lt;/h2&gt;
+&lt;p&gt;默认快捷键是 ctrl/cmd + B，鼠标滚轮可以控制分段数。注意可以在边模式中单独对某个边做倒角。&lt;/p&gt;
+&lt;p&gt;在左键确认之后，会弹出菜单。菜单里面有一些倒角的选项。可以注意有3大主要参数：宽度、段数和形状。宽度就是倒角的范围，段数就是分成多少段，形状是0~1的参数。&lt;/p&gt;
+&lt;p&gt;参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;宽度类型：看下图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220825205719325.png&#34; alt=&#34;image-20220825205719325&#34; style=&#34;zoom:25%;&#34; /&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;坐标系&#34;&gt;坐标系&lt;/h2&gt;
 &lt;p&gt;在blender中，坐标系的选择在顶部这里（快捷键为&lt;code&gt;,&lt;/code&gt;）&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220823232452033.png&#34; alt=&#34;image-20220823232452033&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
