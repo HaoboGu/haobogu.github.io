@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 25 Aug 2022 13:06:50 &#43;0000</lastBuildDate>
+        <lastBuildDate>Fri, 26 Aug 2022 14:32:47 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -9027,7 +9027,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
 &lt;p&gt;进入编辑模式，然后按快捷键E，即可挤出。&lt;/p&gt;
 &lt;p&gt;快速选择挤出的选项：alt(option)+E&lt;/p&gt;
 &lt;h2 id=&#34;倒角&#34;&gt;倒角&lt;/h2&gt;
-&lt;p&gt;默认快捷键是 ctrl/cmd + B，鼠标滚轮可以控制分段数。注意可以在边模式中单独对某个边做倒角。&lt;/p&gt;
+&lt;p&gt;默认快捷键是 ctrl/cmd + B，鼠标滚轮可以控制分段数。注意可以在边模式中单独对某个边做倒角，在点模式可以对某个点/角做倒角。&lt;/p&gt;
 &lt;p&gt;在左键确认之后，会弹出菜单。菜单里面有一些倒角的选项。可以注意有3大主要参数：宽度、段数和形状。宽度就是倒角的范围，段数就是分成多少段，形状是0~1的参数。&lt;/p&gt;
 &lt;p&gt;参数：&lt;/p&gt;
 &lt;ul&gt;
@@ -9035,6 +9035,39 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
 &lt;p&gt;宽度类型：看下图&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220825205719325.png&#34; alt=&#34;image-20220825205719325&#34; style=&#34;zoom:25%;&#34; /&gt;&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;  材质：倒角的材质。默认-1会选择相邻的面的材质，大概是这样：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220826204842009.png&#34; alt=&#34;image-20220826204842009&#34; style=&#34;zoom:25%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;材质可以选择0123这样的数字，这个数字代表在材质界面的顺序。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;硬化倒角：光滑倒角。类似右键-平滑着色。可以让面发现大于xx度的倒角光滑起来&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;外斜接、内斜接：倒角和其他面相邻的时候的相交形状&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在倒角的时候，需要注意物体是否被缩放了。缩放有可能导致导致倒角的不均匀。如果确实需要有缩放的，在调整完之后可以右键-全部应用，这样可以看到左边的缩放都变成了1，这样再倒角就均匀了。&lt;/p&gt;
+&lt;h2 id=&#34;循环切割&#34;&gt;循环切割&lt;/h2&gt;
+&lt;h3 id=&#34;一些基础概念&#34;&gt;一些基础概念&lt;/h3&gt;
+&lt;h4 id=&#34;并排边&#34;&gt;并排边&lt;/h4&gt;
+&lt;p&gt;首先，只有四边形有并排边（即对边）。三角形没有，而多边形没有办法确定唯一的对边。因此在考虑并排边的时候只考虑四边形（四边面）。&lt;/p&gt;
+&lt;h4 id=&#34;循环边&#34;&gt;循环边&lt;/h4&gt;
+&lt;p&gt;在网格棋盘中，一条边可以往下传递，为循环边。一个边的循环边不能和当前边直接组成四边形（里面不包含其他边，如下图垂直的边都不行）。循环边遇到极点或边界边的时候会停止：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220826220734345.png&#34; alt=&#34;image-20220826220734345&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;白色光标的位置就是极点，可以看到从极点没办法往下传递了，因为系统不知道是选择直着传还是往右上角走。&lt;/p&gt;
+&lt;h3 id=&#34;循环边切割&#34;&gt;循环边切割&lt;/h3&gt;
+&lt;p&gt;在本质上，循环切割就是在对&lt;strong&gt;一对并排边进行细分&lt;/strong&gt;（分成两个边），然后连接两个点对当前面进行&lt;strong&gt;切割&lt;/strong&gt;，然后再对&lt;strong&gt;切割的这条边进行循环传递&lt;/strong&gt;就是循环切割。如下示意图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220826221438084.png&#34; alt=&#34;image-20220826221438084&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到橘黄色标注的边都是并排边，而亮黄色的就是循环边切割。切割的都是四边形。&lt;/p&gt;
+&lt;h3 id=&#34;环切工具&#34;&gt;环切工具&lt;/h3&gt;
+&lt;p&gt;首先还是快捷键：ctrl/cmd + R。按左键确认，然后可以调整边线。&lt;/p&gt;
+&lt;p&gt;在blender中，循环边切割工具还有其他的一些额外选项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;切割次数：就是切割多少次，切几刀。在预切割状态（按完cmd+R），可以使用鼠标的滚轮进行调整&lt;/li&gt;
+&lt;li&gt;平滑度、衰减、系数：切完之后会对形状有影响。这些参数就是调整切割后的形状的&lt;/li&gt;
+&lt;li&gt;钳制：强制系数在-1~1，即不会超过当前的物体边缘。否则可能会超过&lt;/li&gt;
+&lt;li&gt;均匀、翻转：有时候并排边并不是垂直的，使用这两个选项可以让切割线和左边或者右边一样。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;坐标系&#34;&gt;坐标系&lt;/h2&gt;
 &lt;p&gt;在blender中，坐标系的选择在顶部这里（快捷键为&lt;code&gt;,&lt;/code&gt;）&lt;/p&gt;
