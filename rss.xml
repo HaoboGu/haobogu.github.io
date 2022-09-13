@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 13 Sep 2022 08:23:35 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 13 Sep 2022 15:22:19 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -1142,7 +1142,9 @@ transport select hla_swd
 
 # Set target
 source [find target/stm32f4x.cfg]
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;添加svd文件&#34;&gt;添加SVD文件&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;注意&#34;&gt;注意&lt;/h4&gt;
+&lt;p&gt;在Windows下面，OpenOCD配置有个坑就是，我们需要使用sysprogs公司编译的OpenOCD，原因是VSCode中cortex-debug插件默认使用了VirtualGDB，而VirtualGDB就是sysprogs公司出品的。因此我们还需要使用该公司编译的OpenOCD才能正确下载。我们可以去&lt;a href=&#34;https://sysprogs.com/getfile/1364/openocd-20201228.7z&#34;&gt;这里&lt;/a&gt;下载对应的OpenOCD，解压并且添加到Path环境变量中。&lt;/p&gt;
+&lt;h3 id=&#34;添加svd文件&#34;&gt;添加SVD文件&lt;/h3&gt;
 &lt;p&gt;添加&lt;code&gt;.svd&lt;/code&gt;文件可以在调试的时候看到各个外设的状态，非常方便。首先在这里下载对应芯片的svd文件：https://github.com/posborne/cmsis-svd/&lt;/p&gt;
 &lt;p&gt;如果这里没有，可以去keil的官网（https://www.keil.com/dd2/pack/）下载对应开发包，解压之后去&lt;code&gt;CMSIS/SVD&lt;/code&gt;目录下找对应的SVD（网页很卡，小心）。&lt;/p&gt;
 &lt;p&gt;把SVD复制到项目根目录备用。&lt;/p&gt;
