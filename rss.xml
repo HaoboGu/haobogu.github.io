@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Wed, 21 Sep 2022 16:27:21 &#43;0000</lastBuildDate>
+        <lastBuildDate>Mon, 26 Sep 2022 14:36:55 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -9371,6 +9371,40 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
 &lt;p&gt;blender有如下若干个吸附选项。需要注意的是，&lt;strong&gt;吸附至&lt;/strong&gt;选项都是针对被吸附对象来说的：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220824205215017.png&#34; alt=&#34;image-20220824205215017&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;而&lt;strong&gt;吸附基准点&lt;/strong&gt;，是吸附对象的点如质心、边缘等。&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/spi/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/spi/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;spi--spi-flash&#34;&gt;SPI &amp;amp; SPI Flash&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;CubeMX里面的配置
+&lt;ul&gt;
+&lt;li&gt;Device size：23 -&amp;gt; 2^23 bytes -&amp;gt; 8M&lt;/li&gt;
+&lt;li&gt;Chip select high time: 看芯片时序&lt;/li&gt;
+&lt;li&gt;Clock Prescalar：时钟分频&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 </description>
                 
                 
