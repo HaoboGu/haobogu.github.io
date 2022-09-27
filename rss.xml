@@ -21,10 +21,324 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Mon, 26 Sep 2022 14:36:55 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 27 Sep 2022 14:18:47 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
+        
+            <item>
+                <title>Learn Makefile - part 1</title>
+                <link>https://haobogu.github.io/posts/makefile/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/makefile/</guid>
+                <pubDate>Mon, 26 Sep 2022 23:06:12 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;makefile&#34;&gt;Makefile&lt;/h1&gt;
+&lt;h2 id=&#34;程序的编译和链接&#34;&gt;程序的编译和链接&lt;/h2&gt;
+&lt;p&gt;首先需要了解一下程序的编译和链接。编译就是把源代码编译成目标（obj）文件，而链接是把所有的目标文件（包括函数、全局变量等）链接生成可执行文件。&lt;/p&gt;
+&lt;h2 id=&#34;makefile介绍&#34;&gt;Makefile介绍&lt;/h2&gt;
+&lt;p&gt;使用make命令就需要Makefile文件。Makefile文件会告诉make命令如何编译、链接程序。&lt;/p&gt;
+&lt;h3 id=&#34;makefile规则&#34;&gt;Makefile规则&lt;/h3&gt;
+&lt;p&gt;首先看一下Makefile中最基础的规则：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;目标：依赖
+  命令
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;规则很简单：当&lt;strong&gt;依赖&lt;/strong&gt;更新时，执行&lt;strong&gt;命令&lt;/strong&gt;生成&lt;strong&gt;目标&lt;/strong&gt;。这个简单的规则就是Makefile最核心的内容。下面稍微介绍一下这三个概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;目标：目标文件，可以是编译产物（obj）、链接产物（可执行文件），还可以是&lt;strong&gt;标签&lt;/strong&gt;（Label，后面会解释）&lt;/li&gt;
+&lt;li&gt;依赖：生成&lt;strong&gt;目标&lt;/strong&gt;所依赖的文件或者其他&lt;strong&gt;目标&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;命令：一般是shell命令，用于从依赖生成目标。make会比较目标和依赖的生成时间，如果依赖比较新，那么就会执行命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面是一个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 最终目标文件--可执行文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;edit &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;kbd&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;
+	cc -o edit main.o kbd.o
+
+&lt;span class=&#34;c&#34;&gt;# 中间目标文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;main.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;defs&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt;
+	cc -c main.c
+&lt;span class=&#34;nf&#34;&gt;kbd.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;kbd&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;defs&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;command&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt;
+	cc -c kbd.c
+
+&lt;span class=&#34;c&#34;&gt;# 伪目标文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;clean &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+	rm edit main.o kbd.o
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;可以看到里面定义的3个目标，第一个是生成&lt;code&gt;edit&lt;/code&gt;可执行文件，第二个是编译中间文件，第三个是&lt;code&gt;clean&lt;/code&gt;。需要提到的是，这里目标&lt;code&gt;clean&lt;/code&gt;并不是一个文件，而是一个label。可以看到这个目标没有任何依赖，那就说明只要运行&lt;code&gt;make clean&lt;/code&gt;，下面的命令一定会被执行。&lt;/p&gt;
+&lt;h3 id=&#34;make是如何工作的&#34;&gt;make是如何工作的&lt;/h3&gt;
+&lt;p&gt;在默认情况下， 直接执行&lt;code&gt;make&lt;/code&gt;那么：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;make会去找&lt;code&gt;Makefile&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Makefile&lt;/code&gt;中，找到&lt;strong&gt;第一个目标&lt;/strong&gt;，作为终极目标&lt;/li&gt;
+&lt;li&gt;然后嵌套地去根据终极目标的所有依赖去找其他目标，然后根据需要执行命令&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;需要注意的是，make不会管&lt;strong&gt;命令&lt;/strong&gt;的错误，它只管文件的依赖性，在依赖找不到的情况下直接报错退出，而命令报错则不会。&lt;/p&gt;
+&lt;h3 id=&#34;makefile中的变量&#34;&gt;Makefile中的变量&lt;/h3&gt;
+&lt;p&gt;和C语言的宏类似，在Makefile中可以定义变量，以提升Makefile的可读性和可维护性。变量的定义和使用很简单：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 定义objects变量
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;objects&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; main.o kbd.o
+&lt;span class=&#34;c&#34;&gt;# 使用objects变量
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;edit &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;make的自动推导&#34;&gt;make的自动推导&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;make&lt;/code&gt;有自动推导的能力，即它会记住前面的命令，这样就不用每次再写同样的命令了。
+另外，&lt;code&gt;make&lt;/code&gt;还有一个功能就是，每当&lt;code&gt;make&lt;/code&gt;看到一个&lt;code&gt;.o文件&lt;/code&gt;，它都会把对应的&lt;code&gt;.c文件&lt;/code&gt;加入到依赖里面。
+使用这两个特性，我们的Makefile就变成了这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 变量定义
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;objects&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; main.o kbd.o
+
+&lt;span class=&#34;c&#34;&gt;# 最终目标文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;edit &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;objects&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+		cc -o edit &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;objects&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# 中间目标文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;main.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;defs&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;kbd.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;defs&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;command&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;h&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# 伪目标文件
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;.PHONY &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clean&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;clean &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+		rm edit &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;objects&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;清空目标文件的规则&#34;&gt;清空目标文件的规则&lt;/h2&gt;
+&lt;p&gt;每个Makefile中都应该写一个清空目标文件（.o和执行文件）的规则，这不仅便于重编译，也很利于保持文件的清洁。还记的之前例子里面的&lt;code&gt;clean&lt;/code&gt;目标吗？没错就是这个。不过更好的写法是：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;.PHONY &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clean&lt;/span&gt;
+&lt;span class=&#34;nf&#34;&gt;clean &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+		-rm edit &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;objects&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里，&lt;code&gt;.PHONY&lt;/code&gt;表示&lt;code&gt;clean&lt;/code&gt;是一个&lt;strong&gt;伪目标&lt;/strong&gt;，而&lt;code&gt;rm&lt;/code&gt;前面的&lt;code&gt;-&lt;/code&gt;表示也许某些文件出现问题，但不要管，继续做后面的事。
+另外，还有一个不成文的规矩是，&lt;code&gt;clean&lt;/code&gt;一般都放在Makefile的&lt;strong&gt;最后&lt;/strong&gt;（相对应地，第一个目标是默认目标或者说终极目标）。&lt;/p&gt;
+&lt;h2 id=&#34;makefile总述&#34;&gt;Makefile总述&lt;/h2&gt;
+&lt;p&gt;上面介绍了关于&lt;code&gt;make&lt;/code&gt;和Makefile的基础知识，下面我们就深入了解Makefile。&lt;/p&gt;
+&lt;h3 id=&#34;选择执行的makefile&#34;&gt;选择执行的Makefile&lt;/h3&gt;
+&lt;p&gt;默认情况下， &lt;code&gt;make&lt;/code&gt;会使用当前目录下的&lt;code&gt;Makefile&lt;/code&gt;或者&lt;code&gt;makefile&lt;/code&gt;。当然你也可以手动地指定Makefile：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;make -f your_make_file
+make --file your_make_file
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;引用其他的makefile&#34;&gt;引用其他的Makefile&lt;/h3&gt;
+&lt;p&gt;在一个Makefile中，你也可以引用其它的Makefile，只需要使用&lt;code&gt;include&lt;/code&gt;关键字即可：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 引入其他makefile
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;foo.make&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;*.mk&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;many_makefiles&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# 如果文件不存在，也继续
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;-include&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;not_exist.make&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;被引入的Makefile会原样地放在这里（当然，也是递归地搜索所有依赖的Makefile）。如果在&lt;code&gt;include&lt;/code&gt;前面有一个&lt;code&gt;-&lt;/code&gt;，则说明即使有问题也继续（和上面命令里面的含义一样）。&lt;/p&gt;
+&lt;h3 id=&#34;makefile的书写规则&#34;&gt;Makefile的书写规则&lt;/h3&gt;
+&lt;p&gt;在Makefile里，规则的顺序是非常重要的，这是因为Makefile中只有一个&lt;strong&gt;终极目标&lt;/strong&gt;。一般来说，第一个规则里面的目标就是终极目标，如果第一个规则里有很多目标，那其中第一个目标是终极目标。整个&lt;code&gt;make&lt;/code&gt;命令所要完成的也是这个目标。
+在上面介绍中，我们已经介绍了规则的写法。实际上，规则还有一种写法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;targets &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prerequisites&lt;/span&gt; ; &lt;span class=&#34;n&#34;&gt;command&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;目标和依赖都可以是多个文件，以空格分隔。而命令如果和目标/依赖在同一行，那么必须分号隔开；如果不在同一行，那么新行必须以&lt;strong&gt;TAB&lt;/strong&gt;开头：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;targets &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prerequisites&lt;/span&gt;
+     &lt;span class=&#34;nb&#34;&gt;command&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# ↑ 注意这里是tab
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;通配符&#34;&gt;通配符&lt;/h3&gt;
+&lt;p&gt;Makefile支持3种通配符（wildcard）：&lt;code&gt;*&lt;/code&gt;, &lt;code&gt;?&lt;/code&gt;,&lt;code&gt;[...]&lt;/code&gt;。定义和linux里面一样，不再细说了。&lt;/p&gt;
+&lt;h3 id=&#34;伪目标&#34;&gt;伪目标&lt;/h3&gt;
+&lt;p&gt;在上面的代码中，我们提到了&lt;code&gt;.PHONY&lt;/code&gt;定义的是一个伪目标。为啥叫伪目标呢，这是因为实际上&lt;code&gt;clean&lt;/code&gt;那个命令并不是一个目标&lt;strong&gt;文件&lt;/strong&gt;，而只是一个标签。执行&lt;code&gt;make clean&lt;/code&gt;也不生成任何目标文件，所以叫伪目标。
+伪目标在Makefile中很有用，比如如果你想使用&lt;code&gt;make&lt;/code&gt;一下子生成好多文件，那么就可以这样写：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;all &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;1 &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;2 &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;3
+&lt;span class=&#34;nf&#34;&gt;.PHONY &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;
+
+&lt;span class=&#34;nf&#34;&gt;prog1 &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;1.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;utils&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;
+		cc -o prog1 prog1.o utils.o
+
+&lt;span class=&#34;nf&#34;&gt;prog2 &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;2.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;
+		cc -o prog2 prog2.o
+
+&lt;span class=&#34;nf&#34;&gt;prog3 &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prog&lt;/span&gt;3.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sort&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;utils&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;
+		cc -o prog3 prog3.o sort.o utils.o
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里，我们的终极目标&lt;code&gt;all&lt;/code&gt;实际上就是一个伪目标，然后它依赖了三个目标。这样，在执行&lt;code&gt;make all&lt;/code&gt;的时候，下面三个目标会总是被执行。&lt;/p&gt;
+&lt;h3 id=&#34;静态模式规则&#34;&gt;静态模式规则&lt;/h3&gt;
+&lt;p&gt;在很多时候，我们的目标和依赖都是很相似的，如下面的规则：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;a.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CC&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; -c &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CFLAGS&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; a.c -o a.o
+&lt;span class=&#34;nf&#34;&gt;b.o &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CC&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; -c &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CFLAGS&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; b.c -o b.o
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这个时候，我们就可以使用模式规则：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nf&#34;&gt;targets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target_pattern&lt;/span&gt; : &lt;span class=&#34;n&#34;&gt;prereq_pattern&lt;/span&gt;
+    commands
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里，目标还是保持不变，但是后面的依赖变为了由模式生成。一般最常用的就是&lt;code&gt;%.o: %.c&lt;/code&gt;，即把target中所有的&lt;code&gt;.o&lt;/code&gt;文件都替换成&lt;code&gt;.c&lt;/code&gt;文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nv&#34;&gt;objects&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; foo.o bar.o
+&lt;span class=&#34;nf&#34;&gt;$(objects)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; %.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;: %.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;结合Makefile中的&lt;code&gt;filter&lt;/code&gt;函数，就可以批量生成成千上万的&lt;code&gt;.o&lt;/code&gt;文件了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;nv&#34;&gt;files&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; foo.elc bar.o lose.o
+&lt;span class=&#34;nf&#34;&gt;$(filter %.o,$(files))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; %.&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;: %.&lt;span class=&#34;n&#34;&gt;c&lt;/span&gt;
+		&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CC&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; -c &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CFLAGS&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; $&amp;lt; -o &lt;span class=&#34;nv&#34;&gt;$@&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里，又有了三个新知识点：&lt;code&gt;filter&lt;/code&gt;函数、&lt;code&gt;$&amp;lt;&lt;/code&gt;和&lt;code&gt;$@&lt;/code&gt;。&lt;code&gt;filter&lt;/code&gt;是make自带的函数，而的和&lt;code&gt;$&amp;lt;&lt;/code&gt;和&lt;code&gt;$@&lt;/code&gt;则是自动化变量，&lt;code&gt;$&amp;lt;&lt;/code&gt;表示所有的依赖目标集（也就是&lt;code&gt;foo.c&lt;/code&gt;、&lt;code&gt;bar.c&lt;/code&gt;），&lt;code&gt;$@&lt;/code&gt;表示目标集（也就是&lt;code&gt;foo.o&lt;/code&gt;、&lt;code&gt;bar.o&lt;/code&gt;）。关于函数和自动化变量，我们后面还会详细说明。&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/makefile/">makefile</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/c/">c</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/c-/">c&#43;&#43;</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>Learn QMK - 2</title>
@@ -539,6 +853,201 @@
                                 
                                 
                                     <category domain="https://haobogu.github.io/tags/qmk/">qmk</category>
+                                
+                            
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title>STM32 - 3</title>
+                <link>https://haobogu.github.io/posts/stm32-3/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/stm32-3/</guid>
+                <pubDate>Mon, 01 Aug 2022 11:03:23 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;stm32---3&#34;&gt;STM32 - 3&lt;/h1&gt;
+&lt;p&gt;时钟和USB接口&lt;/p&gt;
+&lt;h2 id=&#34;时钟&#34;&gt;时钟&lt;/h2&gt;
+&lt;h3 id=&#34;一些缩写&#34;&gt;一些缩写&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;外部高速时钟：HSE&lt;/li&gt;
+&lt;li&gt;内部高速时钟：HSI&lt;/li&gt;
+&lt;li&gt;时钟和复位控制：RCC（Reset and Clock Control)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;stm32的时钟系统简介&#34;&gt;STM32的时钟系统简介&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220801172808525.png&#34; alt=&#34;image-20220801172808525&#34; style=&#34;zoom:30%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这个图是官方手册的时钟树的简化版，为了便于理解，可以从中间的SYSCLK，把整个时钟树分为两部分：左边为时钟源，右边为片上外设。&lt;/p&gt;
+&lt;h4 id=&#34;系统时钟来源选择&#34;&gt;系统时钟来源选择&lt;/h4&gt;
+&lt;p&gt;可以看到SYSCLK旁边的那个梯形，就是一个选择器，由他来选择STM32究竟用哪个时钟源。HSE、HSI就不再多说，中间的那个PLL叫锁相环，用来做倍频的，就是把HSI或HSE做一定的倍频之后再作为整个片上外设的时钟输入。&lt;/p&gt;
+&lt;h4 id=&#34;片上外设时钟&#34;&gt;片上外设时钟&lt;/h4&gt;
+&lt;p&gt;SYSCLK右边，会首先过一个AHB总线进行分频，把输入的时钟频率分成1/n，变成了HCLK。然后HCLK一分为二， 去供给片上外设。其中APB1的最大频率比APB2低一些，即APB2的时钟的最高频率搞一些，功耗也高一些，适合高频的片上外设。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;APB1和APB2是两条总线，都挂载在AHB总线上&lt;/li&gt;
+&lt;li&gt;驱动Cortex-M3内核的时钟是HCLK&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;stm32时钟编程接口&#34;&gt;STM32时钟编程接口&lt;/h3&gt;
+&lt;h4 id=&#34;api&#34;&gt;API&lt;/h4&gt;
+&lt;p&gt;首先了解两个API：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// 配置时钟来源，即上面图中的左半部分
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HAL_StatusTypeDef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;HAL_RCC_OscConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RCC_OscInitTypeDef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RCC_OscInitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;// 配置SYSCLK、HCLK、PCLK1、PCLK2时钟，即上面图中的右半部分
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HAL_StatusTypeDef&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;HAL_RCC_ClockConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RCC_ClkInitTypeDef&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RCC_ClkInitStruct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uint32_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Flatency&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;时钟配置&#34;&gt;时钟配置&lt;/h4&gt;
+&lt;p&gt;首先，我们需要去配置时钟来源。从上面的API可以看到，配置时钟源需要一个&lt;code&gt;RCC_OscInitTypeDef&lt;/code&gt;，其定义可以去看源码，现在我们就以外部时钟源+9倍频锁相环为例，看看怎么配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;RCC_OscInitTypeDef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 配置时钟类型为HSE
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;OscillatorType&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_OSCILLATORTYPE_HSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 配置HSE开启或关闭
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HSEState&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_HSE_ON&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 配置打开锁相环PLL
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLLState&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_PLL_ON&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 设置PLL的时钟来源
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLLSource&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_PLLSOURCE_HSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 设置PLL的倍频倍数为9倍频
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PLLMUL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_PLL_MUL9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;// 设置时钟源
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HAL_RCC_OscConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;oscInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;设置完时钟源之后，就可以设置后续的时钟了，代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;RCC_ClkInitTypeDef&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clkInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 被设置的时钟类型，我们选择SYSCLK和HCLK
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clkInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ClockType&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_CLOCKTYPE_SYSCLK&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_CLOCKTYPE_HCLK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 设置SYSCLK等于PLL时钟源
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clkInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SYSCLKSource&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_SYSCLKSOURCE_PLL&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;// 通过设置AHB分频器分频倍率为1，来设置HCLK=SYSCLK
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clkInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AHBCLKDivider&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RCC_SYSCLK_DIV1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;// 最后设置时钟
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HAL_RCC_ClockConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clkInit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FLASH_LATENCY_2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;最后一个参数的&lt;code&gt;FLASH_LATENCY&lt;/code&gt;配置，实际上和你设置的时钟SYSCLK有关系，具体多少频率的时钟对应多少&lt;code&gt;FLASH_LATENCY&lt;/code&gt;需要去库里面的代码里看注释。&lt;/p&gt;
+&lt;p&gt;到这里，时钟就配置完了。更多的时钟配置可以去看HAL库的源代码手册。&lt;/p&gt;
+&lt;h2 id=&#34;usb&#34;&gt;USB&lt;/h2&gt;
+&lt;h3 id=&#34;usb介绍&#34;&gt;USB介绍&lt;/h3&gt;
+&lt;p&gt;首先需要介绍下usb的基本概念和参数，这对于在stm32上使用usb设备有很大的帮助。&lt;/p&gt;
+&lt;p&gt;USB默认是个4pin设备，其中中间的D+和D-分别会接一个15K的下拉电阻：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220812140819445.png&#34; alt=&#34;image-20220812140819445&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;所以，默认D+和D-默认都是低电平。然而，在USB插头上面，D+会接一个1.5K的上拉电阻，这样的话一旦插入USB设备，D+就会被拉到高电平，产生一个中断表名设备已连接。&lt;/p&gt;
+&lt;p&gt;USB分为主机和设备，所有的通信都是由主机（比如PC）发起的，输入和输出也都是针对主机而言。&lt;/p&gt;
+&lt;h4 id=&#34;usb的传输类型&#34;&gt;USB的传输类型&lt;/h4&gt;
+&lt;p&gt;一共4种：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;控制：一般是用于初次连接的初始化，比如分配地址、获取USB设备信息等&lt;/li&gt;
+&lt;li&gt;中断：主机会定时询问是否有数据，这就是鼠标、键盘等设备的通信模式&lt;/li&gt;
+&lt;li&gt;批量：大文件传输&lt;/li&gt;
+&lt;li&gt;同步：数据同步，比如摄像头&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;usb供电&#34;&gt;USB供电&lt;/h4&gt;
+&lt;p&gt;USB可以给设备供电，这是通过VBUS来供电的。USB2.0给低功耗设备供电电流最多可以100ma。对于高功耗设备，最高不超过500ma。&lt;/p&gt;
+&lt;h4 id=&#34;usb配置描述符&#34;&gt;USB配置描述符&lt;/h4&gt;
+&lt;p&gt;上面说的这些配置，比如是否低功耗设备等，都是在最初连接的时候，设备通过USB配置描述符告诉主机的。下面是一个例子，可以参考下。具体所有的描述符建议去USB的官方查看官方文档：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220812141723154.png&#34; alt=&#34;image-20220812141723154&#34; style=&#34;zoom:33%;&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;usb-hid&#34;&gt;USB HID&lt;/h4&gt;
+&lt;p&gt;USB支持很多种设备类型，我们主要会用到HID，即Human Interface Device。&lt;/p&gt;
+&lt;h4 id=&#34;usb挂起模式&#34;&gt;USB挂起模式&lt;/h4&gt;
+&lt;p&gt;当USB主机连续3ms没有检测到USB设备有信号，就自动进入USB挂起模式。因此，为了避免进入挂起模式，设备需要周期性地发送Keep Alive或者SOF信号。&lt;/p&gt;
+&lt;h4 id=&#34;hid键盘的键值&#34;&gt;HID键盘的键值&lt;/h4&gt;
+&lt;p&gt;对于USB HID设备来说，其键盘的数据包包含8个字节。基本上可以分为3部分：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Byte0：功能键，如L/R-Ctrl、Shift、Alt、GUI等&lt;/li&gt;
+&lt;li&gt;Byte1：保留&lt;/li&gt;
+&lt;li&gt;Byte2-7：普通按键&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于普通按键来说，HID设备已经规定好了各个按键的键值，比如右箭头的键值为79（十六进制0x4F）。如果要向主机发送一个右箭头按键，那么在Byte2写个0x4F就行了。&lt;/p&gt;
+&lt;h3 id=&#34;stm32的usb配置&#34;&gt;STM32的USB配置&lt;/h3&gt;
+&lt;p&gt;默认情况下，STM32CubeMX生成的USB HID设备是鼠标，需要修改配置描述符来修改为键盘的键值。首先看一下STM32CubeMX配置USB的界面：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813155212053.png&#34; alt=&#34;image-20220813155212053&#34; style=&#34;zoom:23%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;左下角可以看到F411是USB_OTG_FS，意思是带OTF的全速USB设备。中间可以看到相关的配置项，对于键盘设备一般选Device Only即可。下面是休眠和供电的选项，选不选都可以。&lt;/p&gt;
+&lt;p&gt;然后，在middleware下选择USB_DEVICE，就可以看到作为USB设备的相关配置：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813155505269.png&#34; alt=&#34;image-20220813155505269&#34; style=&#34;zoom:25%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;中间的Class For FS IP就选择HID设备，下面的Device Descriptor设备描述符，就可以配置这个USB设备连接到电脑上之后的一些信息，比如厂家、设备名等等。然后生成代码即可。&lt;/p&gt;
+&lt;p&gt;默认情况下，CubeMX生成的HID设备是鼠标。在生成的代码中，找到&lt;code&gt;usbd_hid.c&lt;/code&gt;文件，找到这段代码：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813160051260.png&#34; alt=&#34;image-20220813160051260&#34; style=&#34;zoom:45%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到有一个&lt;code&gt;nInterfaceProtocol&lt;/code&gt;，在默认情况下值为0x02，即mouse。对于键盘我们把它改成0x01即可。此外，在下面还有一个&lt;code&gt;HID_MOUSE_REPORT_DESC_SIZE&lt;/code&gt;常量，指的是鼠标的回报描述符的大小，我们也需要把它改为键盘的大小：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813163009324.png&#34; alt=&#34;image-20220813163009324&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的是，这个DESC_SIZE有两处，都需要改为键盘。&lt;/p&gt;
+&lt;p&gt;改完上面三个地方之后，我们的代码就可以作为键盘的USBHID设备连接到电脑上了。&lt;/p&gt;
+&lt;h3 id=&#34;数据传输&#34;&gt;数据传输&lt;/h3&gt;
+&lt;p&gt;最后的最后，在代码中只需要调用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;USBD_HID_SendReport&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hUsbDeviceHS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data_length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;即可向USB主机端发送数据。当然，data和data_length都必须符合USB的描述以及配置。具体请参见USB的文档：https://www.usb.org&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
                                 
                             
                         
