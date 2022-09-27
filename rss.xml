@@ -21,15 +21,15 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 27 Sep 2022 14:22:33 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 27 Sep 2022 14:29:50 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
         
             <item>
                 <title>Learn Makefile - part 1</title>
-                <link>https://haobogu.github.io/posts/makefile/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/makefile/</guid>
+                <link>https://haobogu.github.io/posts/engineering/makefile/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/makefile/</guid>
                 <pubDate>Mon, 26 Sep 2022 23:06:12 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -341,51 +341,9 @@ make --file your_make_file
             </item>
         
             <item>
-                <title>TouchGFX</title>
-                <link>https://haobogu.github.io/posts/test/test/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/test/test/</guid>
-                <pubDate>Sun, 18 Sep 2022 00:03:23 &#43;0800</pubDate>
-                
-                    <author>haobogu@outlook.com (Haobo Gu)</author>
-                
-                
-                
-                    <description>&lt;h1 id=&#34;touchgfx&#34;&gt;TouchGFX&lt;/h1&gt;
-&lt;h2 id=&#34;subtitle&#34;&gt;subtitle&lt;/h2&gt;
-&lt;h3 id=&#34;subtitle-1&#34;&gt;subtitle&lt;/h3&gt;
-&lt;h2 id=&#34;subtitle2&#34;&gt;subtitle2&lt;/h2&gt;
-</description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                            
-                                
-                                
-                                
-                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
-                                
-                            
-                                
-                                
-                                
-                                    <category domain="https://haobogu.github.io/tags/stm32/">stm32</category>
-                                
-                            
-                        
-                    
-                
-            </item>
-        
-            <item>
                 <title>Learn QMK - 2</title>
-                <link>https://haobogu.github.io/posts/qmk-2/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/qmk-2/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/qmk-2/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/qmk-2/</guid>
                 <pubDate>Sun, 14 Aug 2022 15:38:55 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -904,8 +862,8 @@ make --file your_make_file
         
             <item>
                 <title>STM32 - 3</title>
-                <link>https://haobogu.github.io/posts/stm32-3/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/stm32-3/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/stm32-3/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/stm32-3/</guid>
                 <pubDate>Mon, 01 Aug 2022 11:03:23 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -1099,8 +1057,8 @@ make --file your_make_file
         
             <item>
                 <title>STM32 - 2</title>
-                <link>https://haobogu.github.io/posts/stm32-2/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/stm32-2/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/stm32-2/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/stm32-2/</guid>
                 <pubDate>Sun, 31 Jul 2022 20:22:12 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -1284,8 +1242,8 @@ make --file your_make_file
         
             <item>
                 <title>STM32</title>
-                <link>https://haobogu.github.io/posts/stm32/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/stm32/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/stm32/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/stm32/</guid>
                 <pubDate>Sat, 30 Jul 2022 15:23:40 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -1453,8 +1411,8 @@ make --file your_make_file
         
             <item>
                 <title>Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
-                <link>https://haobogu.github.io/posts/develop-stm32-using-vscode/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/develop-stm32-using-vscode/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</guid>
                 <pubDate>Fri, 29 Jul 2022 19:57:40 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -1845,8 +1803,8 @@ source [find target/stm32f4x.cfg]
         
             <item>
                 <title>Learn QMK</title>
-                <link>https://haobogu.github.io/posts/qmk/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/qmk/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/qmk/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/qmk/</guid>
                 <pubDate>Tue, 26 Jul 2022 13:59:37 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -2164,8 +2122,8 @@ Transitioning to dfuMANIFEST state
         
             <item>
                 <title>Get Started With Tokio</title>
-                <link>https://haobogu.github.io/posts/tokio/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/tokio/</guid>
+                <link>https://haobogu.github.io/posts/engineering/tokio/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/tokio/</guid>
                 <pubDate>Sat, 18 Jun 2022 17:48:45 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -2686,8 +2644,8 @@ Transitioning to dfuMANIFEST state
         
             <item>
                 <title>Basics of Vue</title>
-                <link>https://haobogu.github.io/posts/vue/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/vue/</guid>
+                <link>https://haobogu.github.io/posts/engineering/vue/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/vue/</guid>
                 <pubDate>Mon, 25 Apr 2022 19:57:40 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -3348,8 +3306,8 @@ Transitioning to dfuMANIFEST state
         
             <item>
                 <title>Tree sitter - advanced parsing</title>
-                <link>https://haobogu.github.io/posts/tree-sitter-advanced/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/tree-sitter-advanced/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</guid>
                 <pubDate>Thu, 27 Jan 2022 23:06:12 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -3912,8 +3870,8 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
         
             <item>
                 <title>Tree sitter - basics</title>
-                <link>https://haobogu.github.io/posts/tree-sitter/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/tree-sitter/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/tree-sitter/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/tree-sitter/</guid>
                 <pubDate>Fri, 21 Jan 2022 23:06:12 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -4374,8 +4332,8 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
         
             <item>
                 <title>Rust Build Scripts</title>
-                <link>https://haobogu.github.io/posts/rust-build-scripts/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/rust-build-scripts/</guid>
+                <link>https://haobogu.github.io/posts/engineering/rust-build-scripts/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/rust-build-scripts/</guid>
                 <pubDate>Fri, 12 Nov 2021 17:27:44 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -4512,8 +4470,8 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
         
             <item>
                 <title>Rust bindgen</title>
-                <link>https://haobogu.github.io/posts/rust-bindgen/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/rust-bindgen/</guid>
+                <link>https://haobogu.github.io/posts/engineering/rust-bindgen/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/rust-bindgen/</guid>
                 <pubDate>Thu, 11 Nov 2021 16:06:12 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -4726,8 +4684,8 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
         
             <item>
                 <title>From Transformer to Transformer-XL</title>
-                <link>https://haobogu.github.io/posts/tttttransformer/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/tttttransformer/</guid>
+                <link>https://haobogu.github.io/posts/deep-learning/tttttransformer/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/deep-learning/tttttransformer/</guid>
                 <pubDate>Sat, 09 Oct 2021 15:06:33 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -4970,8 +4928,8 @@ $$&lt;/p&gt;
         
             <item>
                 <title>A Survey of Machine Learning for Big Code and Naturalness</title>
-                <link>https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/a-survey-of-machine-learning-for-big-code-and-naturalness/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</guid>
                 <pubDate>Mon, 16 Aug 2021 17:38:34 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -5232,8 +5190,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Rust&#39;s Module System</title>
-                <link>https://haobogu.github.io/posts/rusts-module-system/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/rusts-module-system/</guid>
+                <link>https://haobogu.github.io/posts/engineering/rusts-module-system/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/rusts-module-system/</guid>
                 <pubDate>Wed, 21 Jul 2021 10:19:31 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -5517,8 +5475,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Learning Rust - 4</title>
-                <link>https://haobogu.github.io/posts/learning-rust-4/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/learning-rust-4/</guid>
+                <link>https://haobogu.github.io/posts/engineering/learning-rust-4/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/learning-rust-4/</guid>
                 <pubDate>Fri, 09 Jul 2021 10:18:19 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -5838,8 +5796,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Learning Rust - 3</title>
-                <link>https://haobogu.github.io/posts/learning-rust-3/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/learning-rust-3/</guid>
+                <link>https://haobogu.github.io/posts/engineering/learning-rust-3/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/learning-rust-3/</guid>
                 <pubDate>Thu, 08 Jul 2021 11:29:31 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -6165,8 +6123,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Learning Rust - 2</title>
-                <link>https://haobogu.github.io/posts/learning-rust-2/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/learning-rust-2/</guid>
+                <link>https://haobogu.github.io/posts/engineering/learning-rust-2/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/learning-rust-2/</guid>
                 <pubDate>Wed, 07 Jul 2021 16:55:48 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -6523,8 +6481,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Learning Rust - 1</title>
-                <link>https://haobogu.github.io/posts/learning-rust-1/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/learning-rust-1/</guid>
+                <link>https://haobogu.github.io/posts/engineering/learning-rust-1/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/learning-rust-1/</guid>
                 <pubDate>Wed, 07 Jul 2021 10:28:08 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -7313,8 +7271,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>XLNet</title>
-                <link>https://haobogu.github.io/posts/xlnet/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/xlnet/</guid>
+                <link>https://haobogu.github.io/posts/deep-learning/xlnet/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/deep-learning/xlnet/</guid>
                 <pubDate>Fri, 11 Jun 2021 14:15:10 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -7441,8 +7399,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>IntelliCode Compose</title>
-                <link>https://haobogu.github.io/posts/intellicode-compose/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/intellicode-compose/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</guid>
                 <pubDate>Wed, 10 Feb 2021 17:28:08 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -7545,8 +7503,8 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
         
             <item>
                 <title>Get Started with Docker &amp; Dockerfile</title>
-                <link>https://haobogu.github.io/posts/dockerfile/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/dockerfile/</guid>
+                <link>https://haobogu.github.io/posts/engineering/dockerfile/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/dockerfile/</guid>
                 <pubDate>Thu, 22 Oct 2020 17:41:25 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -7870,8 +7828,8 @@ docker build -t nginx:v3 .
         
             <item>
                 <title>Pythia: AI Assisted Code Completion System</title>
-                <link>https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/pythia-ai-assisted-code-completion-system/</guid>
+                <link>https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</guid>
                 <pubDate>Fri, 04 Sep 2020 17:59:37 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -7942,8 +7900,8 @@ docker build -t nginx:v3 .
         
             <item>
                 <title>A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
-                <link>https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</guid>
                 <pubDate>Thu, 16 Jul 2020 15:16:28 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -8067,8 +8025,8 @@ docker build -t nginx:v3 .
         
             <item>
                 <title>Effective Go</title>
-                <link>https://haobogu.github.io/posts/effective-go/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/effective-go/</guid>
+                <link>https://haobogu.github.io/posts/engineering/effective-go/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/effective-go/</guid>
                 <pubDate>Fri, 10 Apr 2020 17:28:08 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -8414,8 +8372,8 @@ docker build -t nginx:v3 .
         
             <item>
                 <title>Powerful Git Commands</title>
-                <link>https://haobogu.github.io/posts/git-commands/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/git-commands/</guid>
+                <link>https://haobogu.github.io/posts/others/git-commands/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/git-commands/</guid>
                 <pubDate>Wed, 18 Dec 2019 19:47:24 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -8499,8 +8457,8 @@ e - manually edit the current hunk
         
             <item>
                 <title>Language Server Protocol</title>
-                <link>https://haobogu.github.io/posts/language-server-protocol/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/language-server-protocol/</guid>
+                <link>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</guid>
                 <pubDate>Fri, 25 Oct 2019 14:18:50 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -9255,8 +9213,8 @@ e - manually edit the current hunk
         
             <item>
                 <title>VS Code Extension Development(1) - Get Started</title>
-                <link>https://haobogu.github.io/posts/vs-code-extension/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/vs-code-extension/</guid>
+                <link>https://haobogu.github.io/posts/engineering/vs-code-extension/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/vs-code-extension/</guid>
                 <pubDate>Sat, 12 Oct 2019 17:09:33 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -9449,8 +9407,8 @@ e - manually edit the current hunk
         
             <item>
                 <title>Learning Hugo(1)</title>
-                <link>https://haobogu.github.io/posts/learning-hugo/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/learning-hugo/</guid>
+                <link>https://haobogu.github.io/posts/others/learning-hugo/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/learning-hugo/</guid>
                 <pubDate>Fri, 23 Aug 2019 15:35:00 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -9610,8 +9568,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>Get Started With Gremlin</title>
-                <link>https://haobogu.github.io/posts/get-started-with-gremlin/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/get-started-with-gremlin/</guid>
+                <link>https://haobogu.github.io/posts/others/get-started-with-gremlin/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/get-started-with-gremlin/</guid>
                 <pubDate>Wed, 21 Aug 2019 19:22:24 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -9783,8 +9741,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>Alfred Workflow Python Development</title>
-                <link>https://haobogu.github.io/posts/alfred-workflow-python/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/alfred-workflow-python/</guid>
+                <link>https://haobogu.github.io/posts/others/alfred-workflow-python/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/alfred-workflow-python/</guid>
                 <pubDate>Tue, 20 Aug 2019 11:33:02 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -9976,8 +9934,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>SSH on Mac OS</title>
-                <link>https://haobogu.github.io/posts/ssh/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/ssh/</guid>
+                <link>https://haobogu.github.io/posts/engineering/ssh/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/engineering/ssh/</guid>
                 <pubDate>Mon, 19 Aug 2019 14:26:42 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -10080,8 +10038,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>Alfred Workflow Basics</title>
-                <link>https://haobogu.github.io/posts/alfred-workflow-basics/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/alfred-workflow-basics/</guid>
+                <link>https://haobogu.github.io/posts/others/alfred-workflow-basics/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/alfred-workflow-basics/</guid>
                 <pubDate>Mon, 19 Aug 2019 14:25:50 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -10180,8 +10138,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>Vim 命令</title>
-                <link>https://haobogu.github.io/posts/vim/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/vim/</guid>
+                <link>https://haobogu.github.io/posts/others/vim/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/vim/</guid>
                 <pubDate>Thu, 15 Aug 2019 22:16:15 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -10306,8 +10264,8 @@ https://example.com/posts/index.html
         
             <item>
                 <title>Get Started with Hugo</title>
-                <link>https://haobogu.github.io/posts/get-started-with-hugo/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/get-started-with-hugo/</guid>
+                <link>https://haobogu.github.io/posts/others/get-started-with-hugo/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/others/get-started-with-hugo/</guid>
                 <pubDate>Wed, 14 Aug 2019 19:57:40 &#43;0800</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
@@ -10462,8 +10420,8 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
         
             <item>
                 <title></title>
-                <link>https://haobogu.github.io/posts/blender/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/blender/</guid>
+                <link>https://haobogu.github.io/posts/keyboard/blender/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/blender/</guid>
                 <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
                 
                     <author>haobogu@outlook.com (Haobo Gu)</author>
