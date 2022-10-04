@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 04 Oct 2022 09:53:42 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 04 Oct 2022 09:54:35 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -118,8 +118,31 @@ flash write_image erase build/h7b0.elf
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;program: OpenOCD提供了program命令，相当于是flash命令的高级封装。可以直接使用如下一条命令，完成初始化、停止、烧录、重启、退出等一系列命令可以完成的事情：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;program build/h7b0.elf verify reset exit
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 一条命令完成烧写&lt;/span&gt;
+program build/h7b0.elf verify reset &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt;
+  
+&lt;span class=&#34;c1&#34;&gt;# 下面一堆命令也一样&lt;/span&gt;
+init
+halt
+flash write_image erase build/h7b0.elf
+reset
+shutdown
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;stmqspi&#34;&gt;stmqspi&lt;/h2&gt;
 &lt;p&gt;OpenOCD支持stm32系列MCU的qual-spi和octo-spi，可以使用spi把外部flash映射到内部的地址空间，这些flash可以自动地被OpenOCD检测到。在这种模式下，MCU可以直接读取对应的内存，执行flash里面的代码。不过需要注意的是，&lt;strong&gt;MCU不能直接从外置flash区域启动&lt;/strong&gt;。因此，在具体的实现代码里面，&lt;strong&gt;必须在内置flash区（或者说boot代码里面），配置好qspi或者ospi的memory mapping&lt;/strong&gt;。这样OpenOCD才能使用地址映射去操作这部分内存。下面是测试命令：&lt;/p&gt;
