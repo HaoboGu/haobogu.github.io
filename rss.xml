@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 04 Oct 2022 09:54:35 &#43;0000</lastBuildDate>
+        <lastBuildDate>Mon, 17 Oct 2022 14:33:09 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -10764,6 +10764,139 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
 &lt;p&gt;blender有如下若干个吸附选项。需要注意的是，&lt;strong&gt;吸附至&lt;/strong&gt;选项都是针对被吸附对象来说的：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220824205215017.png&#34; alt=&#34;image-20220824205215017&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;而&lt;strong&gt;吸附基准点&lt;/strong&gt;，是吸附对象的点如质心、边缘等。&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;使用openocdvscode一键烧录bootapp程序到内置ospi-flash&#34;&gt;使用OpenOCD+VSCode一键烧录Boot+App程序到内置+OSPI flash&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;时钟配置和bl中的时钟一致&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;LD配置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;openocd cfg GPIO配置，ospi寄存器配置&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;disable ospi in app&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;用program命令， hex类型&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;检查 flash probe&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;qpi模式，先在bl验证，读写没问题，然后打开mm&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;mm之后命令失效&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;dummy clk&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;cube配置、openocd配置、flash配置要一致&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;gpio 模拟&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;多文件debug&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;合并hex&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <link>https://haobogu.github.io/posts/keyboard/ospi/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/ospi/</guid>
+                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;openocd配置&#34;&gt;openocd配置&lt;/h1&gt;
+&lt;p&gt;在openocd里面配置ospi，只能直接写寄存器。因此需要首先了解一下寄存器的配置&lt;/p&gt;
+&lt;h2 id=&#34;ospi1的起始位置是&#34;&gt;ospi1的起始位置是&lt;/h2&gt;
+&lt;p&gt;0x58005000&lt;/p&gt;
+&lt;h2 id=&#34;octospi_cr寄存器&#34;&gt;OCTOSPI_CR寄存器&lt;/h2&gt;
+&lt;p&gt;CR即control register。是ospi最基础的配置。&lt;/p&gt;
+&lt;p&gt;Address offset: 0x0000 Reset value: 0x0000 0000&lt;/p&gt;
+&lt;p&gt;一共32Bit&lt;/p&gt;
+&lt;p&gt;其中比较重要的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FMODE：28-29，配置了ospi的模式，有
+&lt;ul&gt;
+&lt;li&gt;00： Indirect-write mode&lt;/li&gt;
+&lt;li&gt;01: Indirect-read mode&lt;/li&gt;
+&lt;li&gt;10: Automatic status-polling mode&lt;/li&gt;
+&lt;li&gt;11: Memory-mapped mode&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在使用ospi flash的时候，使用11&lt;/p&gt;
+&lt;p&gt;配置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;mww 0x52005000 0x30400003         &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;octospi_dcr1&#34;&gt;(OCTOSPI_DCR1&lt;/h2&gt;
+&lt;p&gt;Device configuration register 1，设备配置寄存器1&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;mww 0x52005008 0x01160100				&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# OCTOSPI_DCR1: MTYP=0x1, FSIZE=0x19, CSHT=0x01, CKMODE=0, DLYBYP=0&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;MTYP: 001: Macronix mode&lt;/p&gt;
+&lt;p&gt;DEVSIZE: Number of bytes in device = 2[DEVSIZE+1]. 因此，在我们这里使用8M的情况下，应该是2^23，即devsize=22=0x16&lt;/p&gt;
+&lt;h2 id=&#34;ctospi-communication-configuration-register-octospi_ccr&#34;&gt;CTOSPI communication configuration register (OCTOSPI_CCR)&lt;/h2&gt;
+&lt;p&gt;DMODE: 011 data 4line mode&lt;/p&gt;
 </description>
                 
                 
