@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-10-17T14:33:09&#43;00:00</updated>
+    <updated>2022-10-20T13:39:35&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">OpenOCD</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-10-03T19:54:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -213,6 +213,164 @@ flash1 &lt;span class=&#34;s1&#34;&gt;&amp;#39;win w25q64fv/jv&amp;#39;&lt;/span
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;可以看到，OpenOCD甚至连外部flash的芯片型号（w25q64）都能都读取到。除了&lt;code&gt;list&lt;/code&gt;和&lt;code&gt;info&lt;/code&gt;命令外，还可以使用&lt;code&gt;banks&lt;/code&gt;和&lt;code&gt;probe&lt;/code&gt;命令：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png&#34; alt=&#34;image-20221003222853401&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这里需要注意的是，在OpenOCD进行烧录的时候，通常不会启动芯片。因此对于外置SPI Flash，一般还需要通过手动写寄存器的方式来进行时钟的初始化和SPI外设的初始化。如果你使用的芯片在OpenOCD已经内置，那么一般可以使用现成的，直接&lt;code&gt;source&lt;/code&gt;即可。如果没有或者你有自己的设置（比如SPI配置不同），那么就需要自己写了。下面是一个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;75
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-tcl&#34; data-lang=&#34;tcl&#34;&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI 初始化
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;proc&lt;/span&gt; octospi_init &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;octo&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; a b
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024540&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x000006FF&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_AHB4ENR |= GPIOAEN-GPIOKEN (enable clocks)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024534&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00284000&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_AHB3ENR |= IOMNGREN, OSPI2EN, OSPI1EN (enable clocks)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;									&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# Wait for clock startup
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200B404&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x03010111&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPIM_P1CR: assign Port 1 to OCTOSPI1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200B408&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPIM_P2CR: disable Port 2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# AF mapping can be found in datasheet. For h7b0, see DS13196, page 54
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# PB02: OCSPI1_CLK, PB06: OCSPI1_NCS, PD11: OCSPI1_IO0, PD12: OCSPI1_IO1, PE2: OCSPI1_IO2, PD13: OCSPI1_IO3
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Generate the GPIO config: perl resources/gpio_gen.pl -c &amp;#34;PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# mmw command: &amp;#34;memory modify word, modify only given bits&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# usage: mmw &amp;#34;address setbits clearbits&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port B: PB06:AF10:V, PB02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00002020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00001010&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020408&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00003030&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802040C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00003030&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020420&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0A000900&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x05000600&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRL
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port D: PD13:AF09:V, PD12:AF09:V, PD11:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C00&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0A800000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x05400000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C08&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0FC00000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C0C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0FC00000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C24&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00999000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00666000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRH
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port E: PE02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000010&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021008&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000030&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802100C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000030&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000900&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000600&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRL
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# OCTOSPI1: memory-mapped 4-line read mode with 3-byte(24bits) addresses
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005130&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00001000&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_LPTR: deactivate CS after 4096 clocks when FIFO is full
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Enter Memory mapped mode 
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x3040000B&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=0
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005008&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00160100&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_DCR1: MTYP=0x0, FSIZE=0x16=22=2^(22+1), CSHT=0x00, CKMODE=0, DLYBYP=0
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200500C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000001&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_DCR2: WRAPSIZE=0x00, PRESCALER=0+1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005108&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000008&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_TCR: SSHIFT=0, DHQC=0, DCYC=0x8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005100&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x03002303&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_CCR: SIOO=0, DMODE=011, ABMODE=0x0, ADSIZE=10, ADMODE=011, ISIZE=0x0, IMODE=011
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005110&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x000000EB&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_IR: INSTR=FastRead, 0xeb
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;flash&lt;/span&gt; probe &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;							&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# load configuration from CR, TCR, CCR, IR register values
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# RCC时钟配置，然后调用octospi_init
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$_CHIPNAME.cpu0&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;configure&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;event reset-init &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; OCTOSPI1
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; OCTOSPI2
+
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52002000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000004&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0000000B&lt;/span&gt;	&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# FLASH_ACR: 4 WS for  64MHZ HCLK
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000001&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000018&lt;/span&gt;	&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CR: HSIDIV=1, HSI on
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024418&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CDCFGR1: CDCPRE=1, CDPPRE=2, HPRE=1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802441C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000440&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CDCFGR2: CDPPRE2=2, CDPPRE1=2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024420&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_SRDCFGR: SRDPPRE=2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024428&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00404040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLLCKSELR: DIVM3=4, DIVM2=4, DIVM1=4, PLLSRC=HSI
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802442C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01ff0ccc&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLLCFGR: PLLxRGE=8MHz to 16MHz, PLLxVCOSEL=wide
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024430&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL1DIVR: 64MHz: DIVR1=2, DIVQ1=2, DIVP1=2, DIVN1=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024438&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL2DIVR: 64MHz: DIVR2=2, DIVQ2=2, DIVP2=2, DIVN2=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024440&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL3DIVR: 64MHz: DIVR3=2, DIVQ3=2, DIVP3=2, DIVN3=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01000000&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CR: PLL1ON=1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024410&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000003&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CFGR: PLL1 as system clock
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+
+	&lt;span class=&#34;nv&#34;&gt;adapter&lt;/span&gt; speed &lt;span class=&#34;mi&#34;&gt;4000&lt;/span&gt;
+
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$OCTOSPI1&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+		&lt;span class=&#34;nv&#34;&gt;octospi_init&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;OpenOCD官方有提供根据你的Pin的配置自动生成SPI GPIO配置的工具，在官方库的&lt;code&gt;gpio_gen.pl&lt;/code&gt;文件中，需要perl执行。这样就不用对照着手册一个一个地自己去算寄存器的值了，非常的方便。&lt;/p&gt;
 </content>
             
             
@@ -245,7 +403,7 @@ flash1 &lt;span class=&#34;s1&#34;&gt;&amp;#39;win w25q64fv/jv&amp;#39;&lt;/span
             <title type="text">Learn Makefile - part 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/makefile/" />
             <id>https://haobogu.github.io/posts/engineering/makefile/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-09-26T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -562,7 +720,7 @@ make --file your_make_file
             <title type="text">Learn QMK - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk-2/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk-2/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-08-14T15:38:55&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1085,7 +1243,7 @@ make --file your_make_file
             <title type="text">STM32 - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-3/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-3/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-08-01T11:03:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1283,7 +1441,7 @@ make --file your_make_file
             <title type="text">STM32 - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-2/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-2/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-07-31T20:22:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1471,7 +1629,7 @@ make --file your_make_file
             <title type="text">STM32</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-07-30T15:23:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1643,7 +1801,7 @@ make --file your_make_file
             <title type="text">Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/" />
             <id>https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-07-29T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2038,7 +2196,7 @@ source [find target/stm32f4x.cfg]
             <title type="text">Learn QMK</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-07-26T13:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2360,7 +2518,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/tokio/" />
             <id>https://haobogu.github.io/posts/engineering/tokio/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2885,7 +3043,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Basics of Vue</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vue/" />
             <id>https://haobogu.github.io/posts/engineering/vue/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-04-25T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3550,7 +3708,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4117,7 +4275,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4582,7 +4740,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/engineering/rust-build-scripts/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4723,7 +4881,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/engineering/rust-bindgen/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4940,7 +5098,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/tttttransformer/" />
             <id>https://haobogu.github.io/posts/deep-learning/tttttransformer/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5187,7 +5345,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5452,7 +5610,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/engineering/rusts-module-system/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5740,7 +5898,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-4/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6064,7 +6222,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-3/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6394,7 +6552,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-2/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6755,7 +6913,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-1/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7548,7 +7706,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/xlnet/" />
             <id>https://haobogu.github.io/posts/deep-learning/xlnet/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7679,7 +7837,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7786,7 +7944,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/dockerfile/" />
             <id>https://haobogu.github.io/posts/engineering/dockerfile/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8114,7 +8272,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8189,7 +8347,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8317,7 +8475,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/effective-go/" />
             <id>https://haobogu.github.io/posts/engineering/effective-go/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8667,7 +8825,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/git-commands/" />
             <id>https://haobogu.github.io/posts/others/git-commands/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8755,7 +8913,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9514,7 +9672,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/engineering/vs-code-extension/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9711,7 +9869,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/learning-hugo/" />
             <id>https://haobogu.github.io/posts/others/learning-hugo/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9875,7 +10033,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-gremlin/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10051,7 +10209,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-python/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10247,7 +10405,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/ssh/" />
             <id>https://haobogu.github.io/posts/engineering/ssh/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10354,7 +10512,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-basics/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10457,7 +10615,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/vim/" />
             <id>https://haobogu.github.io/posts/others/vim/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10586,7 +10744,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-hugo/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10745,7 +10903,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/blender/" />
             <id>https://haobogu.github.io/posts/keyboard/blender/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10886,7 +11044,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10955,7 +11113,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/ospi/" />
             <id>https://haobogu.github.io/posts/keyboard/ospi/</id>
-            <updated>2022-10-17T14:33:06&#43;00:00</updated>
+            <updated>2022-10-20T13:39:30&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
