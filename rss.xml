@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 20 Oct 2022 13:39:35 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sun, 23 Oct 2022 13:25:16 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -220,7 +220,7 @@ flash1 &lt;span class=&#34;s1&#34;&gt;&amp;#39;win w25q64fv/jv&amp;#39;&lt;/span
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;可以看到，OpenOCD甚至连外部flash的芯片型号（w25q64）都能都读取到。除了&lt;code&gt;list&lt;/code&gt;和&lt;code&gt;info&lt;/code&gt;命令外，还可以使用&lt;code&gt;banks&lt;/code&gt;和&lt;code&gt;probe&lt;/code&gt;命令：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png&#34; alt=&#34;image-20221003222853401&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;这里需要注意的是，在OpenOCD进行烧录的时候，通常不会启动芯片。因此对于外置SPI Flash，一般还需要通过手动写寄存器的方式来进行时钟的初始化和SPI外设的初始化。如果你使用的芯片在OpenOCD已经内置，那么一般可以使用现成的，直接&lt;code&gt;source&lt;/code&gt;即可。如果没有或者你有自己的设置（比如SPI配置不同），那么就需要自己写了。下面是一个例子：&lt;/p&gt;
+&lt;p&gt;这里需要注意的是，在OpenOCD进行烧录的时候，通常不会启动芯片。因此对于外置SPI Flash，一般还需要通过手动写寄存器的方式来进行时钟的初始化和SPI外设的初始化。这样才能让OpenOCD正确地识别到目标芯片。如果你使用的芯片在OpenOCD已经内置，那么一般可以直接使用，直接&lt;code&gt;source&lt;/code&gt;即可。如果没有内置或者你有自己的设置（比如SPI GPIO配置不同），那么就需要自己写了。下面是一个例子：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
