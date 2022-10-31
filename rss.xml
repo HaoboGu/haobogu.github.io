@@ -21,10 +21,755 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Mon, 24 Oct 2022 02:47:39 &#43;0000</lastBuildDate>
+        <lastBuildDate>Mon, 31 Oct 2022 03:55:32 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
+        
+            <item>
+                <title>使用OpenOCD&#43;VSCode一键烧录Boot&#43;App到内置&#43;外置flash</title>
+                <link>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</guid>
+                <pubDate>Mon, 31 Oct 2022 11:53:23 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;h1 id=&#34;使用openocdvscode一键烧录bootapp到内置外置flash&#34;&gt;使用OpenOCD+VSCode一键烧录Boot+App到内置+外置flash&lt;/h1&gt;
+&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;在开发stm32系列的时候，大多数情况下会使用Windows系统+MDK/IAR来开发。不过对于主力是MacOS+Windows的我来说，一套兼容两个系统的开发方案就成了刚需。在中文互联网上面类似的资料非常稀少，不过实际上，使用gcc+OpenOCD的方案实际上已经非常成熟了，在此就记录一下我的折腾历程。&lt;/p&gt;
+&lt;h2 id=&#34;最终效果&#34;&gt;最终效果&lt;/h2&gt;
+&lt;p&gt;在讲具体配置步骤之前，先看一下最终的效果：&lt;/p&gt;
+&lt;p&gt;VSCode中，&lt;code&gt;shift+cmd+b&lt;/code&gt;，选择&lt;code&gt;flash merged firmware&lt;/code&gt;，然后VSCode会帮你把搞定以下所有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;自动编译App+Bootloader两个工程&lt;/li&gt;
+&lt;li&gt;使用srec_cat合并bootloader.hex和application.hex（同时兼容MacOS和Windows）&lt;/li&gt;
+&lt;li&gt;把bootloader.hex烧写到stm32内置Flash，把application.hex烧写到外置OSPI Flash&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一键搞完，相当爽：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png&#34; alt=&#34;image-20221028110201986&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;如果你选择&lt;code&gt;flash bootloader&lt;/code&gt;或者&lt;code&gt;flash application&lt;/code&gt;，也一样，VSCode会首先编译对应的hex，然后自动烧录到对应Flash。&lt;/p&gt;
+&lt;h3 id=&#34;debug&#34;&gt;Debug&lt;/h3&gt;
+&lt;p&gt;按F5就可以开始debug，如果默认配置的是Debug Bootloader，那么会先编译烧录bootloader，然后开始debug；Debug Application也一样。且VSCode会自动地在bootloader和application之间跳转：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028111055464.png&#34; alt=&#34;image-20221028111055464&#34; style=&#34;zoom:30%;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;开发环境配置&#34;&gt;开发环境配置&lt;/h2&gt;
+&lt;p&gt;首先，开发环境的配置可以参考这里：https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/。需要注意的是我们需要选择gcc+makefile的方案而不是PlatformIO。&lt;/p&gt;
+&lt;p&gt;需要注意的是，如果你想要安装最新版的OpenOCD，在Mac上面可以直接使用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;brew install openocd --HEAD
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;另外，还需要使用homebrew安装srecord备用：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;brew install srecord
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在Windows下，这两者都需要手动安装，srecord需要一个&lt;code&gt;srec_cat.exe&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;创建工程&#34;&gt;创建工程&lt;/h2&gt;
+&lt;p&gt;由于我们的工程是App + Bootloader形式的，因此需要在根目录下创建两个工程。创建完之后，可以把打包编译都加到VSCode的task里。然后，直接使用&lt;code&gt;shift+cmd+b&lt;/code&gt;快捷键就可以选择任务：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028105511254.png&#34; alt=&#34;image-20221028105511254&#34; style=&#34;zoom:40%;&#34; /&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;下面是一个我的task.json，供参考&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;  1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 75
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 76
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 77
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 78
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 79
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 80
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 81
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 82
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 83
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 84
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 85
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 86
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 87
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 88
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 89
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 90
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 91
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 92
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 93
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 94
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 95
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 96
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 97
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 98
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 99
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;100
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;101
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;102
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;103
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;104
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;105
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;106
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;107
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;108
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;109
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;110
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;111
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;112
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;113
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;114
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;115
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;116
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;117
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;118
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;119
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;120
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;121
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;See&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;https://go.microsoft.com/fwlink/?LinkId=733558&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;documentation&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;about&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;tasks.json&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;format&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;version&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;2.0.0&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;tasks&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;make bootloader&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd bootloader &amp;amp;&amp;amp; make all -j 16&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;problemMatcher&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;owner&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cpp&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;fileLocation&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;relative&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;${workspaceFolder}/application&amp;#34;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;regexp&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;line&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;column&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;severity&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;make application&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd application &amp;amp;&amp;amp; make all -j 16&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;problemMatcher&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;owner&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cpp&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;fileLocation&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;relative&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;${workspaceFolder}/application&amp;#34;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+                &lt;span class=&#34;nt&#34;&gt;&amp;#34;pattern&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;regexp&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;line&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;column&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;severity&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;make all&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd application &amp;amp;&amp;amp; make all -j 16 &amp;amp;&amp;amp; cd ../bootloader &amp;amp;&amp;amp; make all -j 16&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;make clean&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd bootloader &amp;amp;&amp;amp; make clean &amp;amp;&amp;amp; cd ../application &amp;amp;&amp;amp; make clean&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;flash bootloader&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd bootloader &amp;amp;&amp;amp; openocd -f openocd.cfg -c \&amp;#34;program build/bootloader.elf preverify verify reset exit\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOn&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;make bootloader&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOrder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;sequence&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;flash application&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cd application &amp;amp;&amp;amp; openocd -f openocd.cfg -c \&amp;#34;program build/application.hex preverify verify reset exit 0x00000000\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOn&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;make application&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOrder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;sequence&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;flash merged firmware&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;build&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;openocd -f bootloader/openocd.cfg -c \&amp;#34;program firmware.hex preverify verify reset exit\&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOn&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;make all&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;merge hex&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;dependsOrder&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;sequence&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;merge hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;group&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;shell&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;resources/srec_cat.exe&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;args&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;-o&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;firmware.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;osx&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:{&lt;/span&gt;
+                &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;needs&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;`brew&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;srecord`&lt;/span&gt;
+               &lt;span class=&#34;nt&#34;&gt;&amp;#34;command&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;srec_cat&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+               &lt;span class=&#34;nt&#34;&gt;&amp;#34;args&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;-o&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;firmware.hex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                    &lt;span class=&#34;s2&#34;&gt;&amp;#34;-Intel&amp;#34;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;problemMatcher&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;debug-1&#34;&gt;Debug&lt;/h3&gt;
+&lt;p&gt;Debug的配置也类似，只不过是配置&lt;code&gt;launch.json&lt;/code&gt;，具体可以参考上面环境配置的文章。下面是我的&lt;code&gt;launch.json&lt;/code&gt;，供参考：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;使用&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;IntelliSense&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;了解相关属性。&lt;/span&gt; 
+    &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;悬停以查看现有属性的描述。&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;//&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;欲了解更多信息，请访问:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;https://go.microsoft.com/fwlink/?linkid=830387&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;version&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;0.2.0&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;nt&#34;&gt;&amp;#34;configurations&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Debug Bootloader&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;cwd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${workspaceFolder}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;executable&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;loadFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.elf&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;symbolFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.elf&amp;#34;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;request&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;launch&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cortex-debug&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;runToEntryPoint&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;main&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;servertype&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;openocd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;showDevDebugOutput&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;parsed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;configFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/openocd.cfg&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;svdFile&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/STM32H7B0x.svd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;stlink&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;preLaunchTask&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;flash bootloader&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Debug Application&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;cwd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${workspaceFolder}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;executable&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;loadFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.elf&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;symbolFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/build/bootloader.elf&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+                    &lt;span class=&#34;nt&#34;&gt;&amp;#34;file&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;application/build/application.elf&amp;#34;&lt;/span&gt;
+                &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;request&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;launch&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;type&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;cortex-debug&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;runToEntryPoint&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;main&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;servertype&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;openocd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;showDevDebugOutput&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;parsed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;configFiles&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+                &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/openocd.cfg&amp;#34;&lt;/span&gt;
+            &lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;svdFile&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;bootloader/STM32H7B0x.svd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;device&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;stlink&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+            &lt;span class=&#34;nt&#34;&gt;&amp;#34;preLaunchTask&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;flash application&amp;#34;&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;linker-script配置&#34;&gt;Linker Script配置&lt;/h2&gt;
+&lt;p&gt;由于我们的application运行在外置的OSPI Flash，要想让OpenOCD默认把application烧录到OSPI Flash，需要首先修改一下Linker Script。其实修改也非常简单，就是把Flash区域的地址由修改到0x90000000，大小修改为4096K（即Flash的大小设置为了4M，这个可以根据你使用的spi flash芯片来定）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028112019836.png&#34; alt=&#34;image-20221028112019836&#34; style=&#34;zoom:35%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;为什么需要把Flash区域的地址修改到0x90000000呢？其实这一点和使用MDK/IAR并没有什么不同，简单来说就是stm32要想在直接在OSPI内运行（即XIP），那么OSPI必须运行在memory mapped模式下。而memory mapped模式下的默认地址就是0x90000000。&lt;/p&gt;
+&lt;p&gt;注意这里有个坑就是，在OSPI Flash打开memory mapped模式之后，正常的OSPI Flash的读写通信就全都会失败。如果你想使用驱动里面的读写或者其他函数（比如ReadID），那么必须关掉memory mapped模式。&lt;/p&gt;
+&lt;h2 id=&#34;openocd的配置&#34;&gt;OpenOCD的配置&lt;/h2&gt;
+&lt;p&gt;下面就来到了重点，也是最难的地方：OpenOCD的配置。&lt;/p&gt;
+&lt;p&gt;对于大部分程序来说，其实只需要使用OpenOCD官方提供的默认配置就行了。但是，由于我们要在OSPI Flash上面XIP运行程序，官方的配置大概率是不能用的，就需要我们自己写&lt;code&gt;openocd.cfg&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;openocd.cfg&lt;/code&gt;中，实际上需要做以下几件事：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;指定debugger，在这里我们使用的是stlink&lt;/li&gt;
+&lt;li&gt;指定芯片，source芯片的基础配置&lt;/li&gt;
+&lt;li&gt;配置时钟&lt;/li&gt;
+&lt;li&gt;配置GPIO&lt;/li&gt;
+&lt;li&gt;配置ospi&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中，1和2都比较简单，不再展开，参考下面的代码即可。那为什么在OpenOCD中还需要配置时钟、GPIO和OSPI呢？这是因为我们想要直接把application烧录到OSPI Flash，在OpenOCD烧录的过程中，它需要知道你的OSPI的GPIO配置，以及OSPI Flash的配置，这样OpenOCD才能正确地和OSPI Flash通信，从而进行烧录。&lt;/p&gt;
+&lt;p&gt;3/4/5的配置，本质上就是配置stm32的寄存器。在OpenOCD中可以使用&lt;code&gt;mww&lt;/code&gt;和&lt;code&gt;mmw&lt;/code&gt;对寄存器进行设置，&lt;code&gt;mww&lt;/code&gt;命令在OpenOCD文档里面就有，而&lt;code&gt;mmw&lt;/code&gt;是OpenOCD额外封装的一个命令，具体逻辑可以去OpenOCD的&lt;code&gt;scripts&lt;/code&gt;里面找到。配置代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;58
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;59
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;60
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;61
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;62
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;63
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;64
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;65
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;66
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;67
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;68
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;69
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;70
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;71
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;72
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;73
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;74
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;75
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;76
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;77
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;78
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;79
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;80
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;81
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;82
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;83
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;84
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;85
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;86
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;87
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;88
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;89
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;90
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;91
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;92
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;93
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;94
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;95
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;96
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;97
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;98
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-tcl&#34; data-lang=&#34;tcl&#34;&gt;&lt;span class=&#34;err&#34;&gt;、&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# Choose debugger
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;find&lt;/span&gt; interface&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;stlink.cfg&lt;span class=&#34;k&#34;&gt;]&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# Choose transport interfance 
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;transport&lt;/span&gt; select hla_swd
+
+&lt;span class=&#34;c&#34;&gt;# Set chip name
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;set&lt;/span&gt; CHIPNAME stm32h7b0xx
+
+&lt;span class=&#34;c&#34;&gt;# Enable stmqspi
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;info&lt;/span&gt; exists OCTOSPI1&lt;span class=&#34;k&#34;&gt;]}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;set&lt;/span&gt; OCTOSPI1 &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;set&lt;/span&gt; OCTOSPI2 &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# Use built-in stm32h7 openocd configs
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;find&lt;/span&gt; target&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;stm32h7x.cfg&lt;span class=&#34;k&#34;&gt;]&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# OCTOSPI initialization
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;proc&lt;/span&gt; octospi_init &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;octo&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; a b
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024540&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x000006FF&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_AHB4ENR |= GPIOAEN-GPIOKEN (enable clocks)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024534&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00284000&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_AHB3ENR |= IOMNGREN, OSPI2EN, OSPI1EN (enable clocks)
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;									&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# Wait for clock startup
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200B404&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x03010111&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPIM_P1CR: assign Port 1 to OCTOSPI1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200B408&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPIM_P2CR: disable Port 2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# AF mapping can be found in datasheet. For h7b0, see DS13196, page 54
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# PB02: OCSPI1_CLK, PB06: OCSPI1_NCS, PD11: OCSPI1_IO0, PD12: OCSPI1_IO1, PE2: OCSPI1_IO2, PD13: OCSPI1_IO3
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Generate the GPIO config: perl resources/gpio_gen.pl -c &amp;#34;PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# mmw command: &amp;#34;memory modify word, modify only given bits&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# usage: mmw &amp;#34;address setbits clearbits&amp;#34;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port B: PB06:AF10:V, PB02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00002020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00001010&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020408&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00003030&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802040C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00003030&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020420&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0A000900&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x05000600&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRL
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port D: PD13:AF09:V, PD12:AF09:V, PD11:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C00&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0A800000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x05400000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C08&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0FC00000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C0C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0FC00000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58020C24&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00999000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00666000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRH
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Port E: PE02:AF09:V
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000010&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# MODER
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021008&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000030&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OSPEEDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802100C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000030&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# PUPDR
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58021020&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000900&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000600&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# AFRL
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# OCTOSPI1: memory-mapped 4-line read mode with 3-byte(24bits) addresses
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005130&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00001000&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_LPTR: deactivate CS after 4096 clocks when FIFO is full
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;c&#34;&gt;# Enter Memory mapped mode 
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x3040000B&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=0
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005008&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00160100&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_DCR1: MTYP=0x0, FSIZE=0x16=22=2^(22+1), CSHT=0x00, CKMODE=0, DLYBYP=0
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5200500C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000001&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_DCR2: WRAPSIZE=0x00, PRESCALER=0+1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005108&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000008&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_TCR: SSHIFT=0, DHQC=0, DCYC=0x8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005100&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x03002303&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_CCR: SIOO=0, DMODE=011, ABMODE=0x0, ADSIZE=10, ADMODE=011, ISIZE=0x0, IMODE=011
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52005110&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x000000EB&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# OCTOSPI_IR: INSTR=FastRead, 0xeb
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+
+	&lt;span class=&#34;nv&#34;&gt;flash&lt;/span&gt; probe &lt;span class=&#34;nv&#34;&gt;$a&lt;/span&gt;							&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# load configuration from CR, TCR, CCR, IR register values
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# RCC配置，然后调用octospi_init
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$_CHIPNAME.cpu0&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;configure&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;event reset-init &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; OCTOSPI1
+	&lt;span class=&#34;k&#34;&gt;global&lt;/span&gt; OCTOSPI2
+
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x52002000&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000004&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x0000000B&lt;/span&gt;	&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# FLASH_ACR: 4 WS for  64MHZ HCLK
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000001&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000018&lt;/span&gt;	&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CR: HSIDIV=1, HSI on
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024418&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CDCFGR1: CDCPRE=1, CDPPRE=2, HPRE=1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802441C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000440&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CDCFGR2: CDPPRE2=2, CDPPRE1=2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024420&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_SRDCFGR: SRDPPRE=2
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024428&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00404040&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLLCKSELR: DIVM3=4, DIVM2=4, DIVM1=4, PLLSRC=HSI
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x5802442C&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01ff0ccc&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLLCFGR: PLLxRGE=8MHz to 16MHz, PLLxVCOSEL=wide
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024430&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL1DIVR: 64MHz: DIVR1=2, DIVQ1=2, DIVP1=2, DIVN1=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024438&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL2DIVR: 64MHz: DIVR2=2, DIVQ2=2, DIVP2=2, DIVN2=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mww&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024440&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01010207&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_PLL3DIVR: 64MHz: DIVR3=2, DIVQ3=2, DIVP3=2, DIVN3=8
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024400&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x01000000&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CR: PLL1ON=1
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;nv&#34;&gt;mmw&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x58024410&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x00000003&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;				&lt;span class=&#34;k&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# RCC_CFGR: PLL1 as system clock
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;nv&#34;&gt;sleep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+
+	&lt;span class=&#34;nv&#34;&gt;adapter&lt;/span&gt; speed &lt;span class=&#34;mi&#34;&gt;4000&lt;/span&gt;
+
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$OCTOSPI1&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;{&lt;/span&gt;
+		&lt;span class=&#34;nv&#34;&gt;octospi_init&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;nv&#34;&gt;reset_config&lt;/span&gt; none separate
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;首先看&lt;code&gt;$_CHIPNAME.cpu0 configure -event reset-init&lt;/code&gt;部分，这里是时钟的配置。具体哪一条命令配置的是哪个寄存器，注释里面已经很明白了。这里时钟最好和Bootloader里面配置的时钟一致，否则可能出现奇怪的问题（比如OSPI Flash获取不到ID之类的）。&lt;/p&gt;
+&lt;p&gt;在时钟配置完毕之后，会判断是否开启了&lt;code&gt;OCTOSPI1&lt;/code&gt;，如果开启，则使用&lt;code&gt;octospi_init&lt;/code&gt;函数对OSPI进行配置。而OSPI的配置在上面&lt;code&gt;proc octospi_init { octo }&lt;/code&gt;函数里。&lt;/p&gt;
+&lt;p&gt;然后就是OSPI的具体配置了。OSPI的配置分两步，GPIO配置和OSPI本身的寄存器配置。对于GPIO配置，OpenOCD官方提供了一个perl脚本可以直接生成对应引脚的GPIO，perl脚本的链接在&lt;a href=&#34;https://github.com/openocd-org/openocd/blob/36597636f2a0e9fbf7b44f2c02fb85632d4dc063/contrib/loaders/flash/stmqspi/gpio_conf_stm32.pl&#34;&gt;这里&lt;/a&gt;。具体使用可以参考我上面写的注释，需要配置好对应的接口和AF。而OSPI配置没有什么技巧，就是对照着OSPI的寄存器一个一个地配置。需要注意的是，这里的OSPI Flash的配置必须和Bootloader里面的OSPI Flash的配置完全一致，这样的话在烧录完Bootloader之后，OpenOCD才能够正确地使用这个配置去烧写Application到OSPI Flash。总而言之，在Cube里面的配置、OpenOCD的配置和Flash的配置最好都要一致，才不会出现奇怪的问题。&lt;/p&gt;
+&lt;h3 id=&#34;验证配置&#34;&gt;验证配置&lt;/h3&gt;
+&lt;p&gt;在配置完毕OpenOCD之后，可以手动验证一下配置。这一步非常重要，防止后面出问题不知道去哪里排查。首先进入你的application文件夹，然后使用命令打开OpenOCD监听4444端口：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;openocd -f openocd.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后，使用&lt;code&gt;telnet&lt;/code&gt;(windows/linux)或者&lt;code&gt;nc&lt;/code&gt;连接到OpenOCD：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Windows/Linux
+telnet localhost 4444
+# MacOS
+nc localhost 4444
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;连接到之后，就可以任意输入OpenOCD的命令了，在这里我们使用&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;flash probe &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;来查看OSPI Flash的信息（你也可以尝试一下&lt;code&gt;flash probe 0&lt;/code&gt;，看看输出的信息）：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; flash probe 1
+flash probe 1
+valid SFDP detected
+flash1 &#39;sfdp&#39; id = 0x333333 size = 8192 KiB
+flash &#39;stmqspi&#39; found at 0x90000000
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以看到OpenOCD已经识别出了在0x90000000位置的stmqspi。然后我们可以使用&lt;code&gt;flash info 1&lt;/code&gt;来查看Flash的详细信息：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221031113620913.png&#34; alt=&#34;image-20221031113620913&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以验证一下下面的Flash信息配置和你使用的Flash的DataSheet中的配置是否一致。如果一致，那么应该是没有问题的。&lt;/p&gt;
+&lt;p&gt;看到这里，你可能会有一个问题就是，为什么这里的Flash名称显示的是&lt;code&gt;sfdp&lt;/code&gt;，而前面烧录的时候会正确显示Flash的名称&lt;code&gt;w25q64jv&lt;/code&gt;？&lt;/p&gt;
+&lt;p&gt;这里原理我也没有弄明白，但是我猜测是因为OSPI的Memory mapped模式已经打开，这样的话GetID的命令就会失效。不过这个时候，OpenOCD只需要读取sfdp的寄存器就可以知道用那些命令操作Flash了。&lt;/p&gt;
+&lt;h2 id=&#34;编译工程合并hex烧录&#34;&gt;编译工程，合并Hex，烧录&lt;/h2&gt;
+&lt;p&gt;由于我们是Bootloader + Application两个工程，在编译的时候需要两个工程一起编译，编译出来是两个固件文件。想要实现一键烧录，有两个方案：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;分别烧录两个固件到对应位置&lt;/li&gt;
+&lt;li&gt;把两个固件合并成一个烧录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其实两个方案没太大区别，为了后续发布简单，我选择了方案2。方案2有一个问题就是，不能使用bin格式的固件。这是因为bin格式在内存上是连续的，而我们的固件实际上是烧录在两个位置：内置Flash（0x08000000)和OSPI Flash（0x90000000）。如果使用bin格式的话，在合并之后，就会产生一个好几个G的超大固件，这显然是不对的。所以在这里我们使用hex格式，hex格式在文件内有存储每一个块烧录的内存位置，因此我们只需要使用三方工具把Application和Bootloader的固件合并成一个，然后在烧录的时候就会自动地把Bootloader烧录到0x08000000，把OSPI Flash烧录到0x90000000。&lt;/p&gt;
+&lt;p&gt;我们选择的合并工具是&lt;code&gt;srecord&lt;/code&gt;，也是非常著名的hex合并工具，全平台都有对应版本。安装上面已经讲过，不再赘述。想要合并hex，使用以下命令即可：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;srec_cat bootloader.hex -Intel application.hex -Intel -o merged.hex -Intel
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;代码实际上都写在了VSCode的task中，执行task就会自动完成hex的合并。&lt;/p&gt;
+&lt;p&gt;烧录就简单了：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;openocd -f bootloader/openocd.cfg -c &lt;span class=&#34;se&#34;&gt;\&amp;#34;&lt;/span&gt;program firmware.hex preverify verify reset exit&lt;span class=&#34;se&#34;&gt;\&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里需要注意的有两点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用的是bootloader文件夹下的openocd.cfg，bootloader和application的openocd.cfg最好保持一致&lt;/li&gt;
+&lt;li&gt;使用的是OpenOCD的&lt;code&gt;program&lt;/code&gt;命令，而不是很常见的&lt;code&gt;flash erase_xxxx&lt;/code&gt;。&lt;code&gt;program&lt;/code&gt;命令是对&lt;code&gt;flash&lt;/code&gt;命令的额外一层封装，还提供了预校验、烧写之后的校验、自动退出重启等功能，强烈建议使用。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/stm32/">stm32</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/embedding/">embedding</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>OpenOCD</title>
@@ -10922,72 +11667,6 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
 &lt;p&gt;blender有如下若干个吸附选项。需要注意的是，&lt;strong&gt;吸附至&lt;/strong&gt;选项都是针对被吸附对象来说的：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220824205215017.png&#34; alt=&#34;image-20220824205215017&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;而&lt;strong&gt;吸附基准点&lt;/strong&gt;，是吸附对象的点如质心、边缘等。&lt;/p&gt;
-</description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
-        
-            <item>
-                <title></title>
-                <link>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</link>
-                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</guid>
-                <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-                
-                    <author>haobogu@outlook.com (Haobo Gu)</author>
-                
-                
-                
-                    <description>&lt;h1 id=&#34;使用openocdvscode一键烧录bootapp程序到内置ospi-flash&#34;&gt;使用OpenOCD+VSCode一键烧录Boot+App程序到内置+OSPI flash&lt;/h1&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;时钟配置和bl中的时钟一致&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;LD配置&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;openocd cfg GPIO配置，ospi寄存器配置&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;disable ospi in app&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;用program命令， hex类型&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;检查 flash probe&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;qpi模式，先在bl验证，读写没问题，然后打开mm&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;mm之后命令失效&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;dummy clk&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;cube配置、openocd配置、flash配置要一致&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;gpio 模拟&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;多文件debug&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;合并hex&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
 </description>
                 
                 

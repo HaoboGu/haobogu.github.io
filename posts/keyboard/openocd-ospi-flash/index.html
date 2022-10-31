@@ -12,7 +12,7 @@
     
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title> | Haobo&#39;s Blog</title>
+    <title>使用OpenOCD&#43;VSCode一键烧录Boot&#43;App到内置&#43;外置flash | Haobo&#39;s Blog</title>
 
     <link rel="stylesheet" href="https://haobogu.github.io/css/meme.min.bff275fae6b50a6e4b3cad6db8bebea3861c02c3d3c16bda4193a1de9746c367.css" integrity="sha256-v/J1&#43;ua1Cm5LPK1tuL6&#43;o4YcAsPTwWvaQZOh3pdGw2c=" />
 
@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
         <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
 
-    <meta name="author" content="Haobo Gu" /><meta name="description" content="使用OpenOCD&#43;VSCode一键烧录Boot&#43;App程序到内置&#43;OSPI flash 时钟配…" />
+    <meta name="author" content="Haobo Gu" /><meta name="description" content="OpenOCD &#43; gcc &#43; VSCode, YES!" />
 
     <link rel="shortcut icon" href="https://haobogu.github.io/favicon.ico" type="image/x-icon" />
     <link rel="mask-icon" href="https://haobogu.github.io/icons/safari-pinned-tab.svg" color="#2a6df4" />
@@ -53,15 +53,15 @@
     {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "datePublished": "2019-07-20T20:17:43+00:00",
-        "dateModified": "2022-10-24T02:47:36+00:00",
+        "datePublished": "2022-10-31T11:53:23+08:00",
+        "dateModified": "2022-10-31T03:55:28+00:00",
         "url": "https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/",
-        "headline": "",
-        "description": "使用OpenOCD+VSCode一键烧录Boot+App程序到内置+OSPI flash 时钟配…",
+        "headline": "使用OpenOCD+VSCode一键烧录Boot+App到内置+外置flash",
+        "description": "OpenOCD + gcc + VSCode, YES!",
         "inLanguage" : "en",
         "articleSection": "posts",
-        "wordCount":  176 ,
-        "image": "https://haobogu.github.io/images/avatar.png",
+        "wordCount":  5140 ,
+        "image": ["https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028111055464.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028105511254.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028112019836.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221031113620913.png"],
         "author": {
             "@type": "Person",
             "email": "haobogu@outlook.com",
@@ -90,14 +90,14 @@
 
 
 
-<meta property="og:title" content="" />
-<meta property="og:description" content="使用OpenOCD&#43;VSCode一键烧录Boot&#43;App程序到内置&#43;OSPI flash 时钟配…" />
+<meta property="og:title" content="使用OpenOCD&#43;VSCode一键烧录Boot&#43;App到内置&#43;外置flash" />
+<meta property="og:description" content="OpenOCD &#43; gcc &#43; VSCode, YES!" />
 <meta property="og:url" content="https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/" />
 <meta property="og:site_name" content="Haobo&#39;s Blog" />
-<meta property="og:locale" content="en" /><meta property="og:image" content="https://haobogu.github.io/images/avatar.png" />
-    <meta property="og:type" content="article" />
-    <meta property="article:published_time" content="2019-07-20T20:17:43&#43;00:00" />
-    <meta property="article:modified_time" content="2022-10-24T02:47:36&#43;00:00" />
+<meta property="og:locale" content="en" /><meta property="og:image" content="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png" />
+<meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2022-10-31T11:53:23&#43;08:00" />
+    <meta property="article:modified_time" content="2022-10-31T03:55:28&#43;00:00" />
     
     <meta property="article:section" content="posts" />
 
@@ -190,7 +190,7 @@
 
         <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
 
-            <h1 class="post-title p-name"></h1>
+            <h1 class="post-title p-name">使用OpenOCD+VSCode一键烧录Boot+App到内置+外置flash</h1>
 
             
 
@@ -203,6 +203,9 @@
 
 <div class="post-meta">
     
+        
+        <time datetime="2022-10-31T11:53:23&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2022.10.31</time>
+    
     
     
     
@@ -214,11 +217,11 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;176</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;5140</span>
     
     
         
-        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;1&nbsp;min</span>
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;11&nbsp;mins</span>
     
     
     
@@ -227,47 +230,706 @@
             
 
             <div class="post-body e-content">
-              <h1 id="使用openocdvscode一键烧录bootapp程序到内置ospi-flash"><a href="#使用openocdvscode一键烧录bootapp程序到内置ospi-flash" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>使用OpenOCD+VSCode一键烧录Boot+App程序到内置+OSPI flash</h1>
+              <h1 id="使用openocdvscode一键烧录bootapp到内置外置flash"><a href="#使用openocdvscode一键烧录bootapp到内置外置flash" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>使用OpenOCD+VSCode一键烧录Boot+App到内置+外置flash</h1>
+<h2 id="背景"><a href="#背景" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>背景</h2>
+<p>在开发stm32系列的时候，大多数情况下会使用Windows系统+MDK/IAR来开发。不过对于主力是MacOS+Windows的我来说，一套兼容两个系统的开发方案就成了刚需。在中文互联网上面类似的资料非常稀少，不过实际上，使用gcc+OpenOCD的方案实际上已经非常成熟了，在此就记录一下我的折腾历程。</p>
+<h2 id="最终效果"><a href="#最终效果" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>最终效果</h2>
+<p>在讲具体配置步骤之前，先看一下最终的效果：</p>
+<p>VSCode中，<code>shift+cmd+b</code>，选择<code>flash merged firmware</code>，然后VSCode会帮你把搞定以下所有：</p>
 <ol>
-<li>
-<p>时钟配置和bl中的时钟一致</p>
-</li>
-<li>
-<p>LD配置</p>
-</li>
-<li>
-<p>openocd cfg GPIO配置，ospi寄存器配置</p>
-</li>
-<li>
-<p>disable ospi in app</p>
-</li>
-<li>
-<p>用program命令， hex类型</p>
-</li>
-<li>
-<p>检查 flash probe</p>
-</li>
-<li>
-<p>qpi模式，先在bl验证，读写没问题，然后打开mm</p>
-</li>
-<li>
-<p>mm之后命令失效</p>
-</li>
-<li>
-<p>dummy clk</p>
-</li>
-<li>
-<p>cube配置、openocd配置、flash配置要一致</p>
-</li>
-<li>
-<p>gpio 模拟</p>
-</li>
-<li>
-<p>多文件debug</p>
-</li>
-<li>
-<p>合并hex</p>
-</li>
+<li>自动编译App+Bootloader两个工程</li>
+<li>使用srec_cat合并bootloader.hex和application.hex（同时兼容MacOS和Windows）</li>
+<li>把bootloader.hex烧写到stm32内置Flash，把application.hex烧写到外置OSPI Flash</li>
+</ol>
+<p>一键搞完，相当爽：</p>
+<p><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png" alt="image-20221028110201986" style="zoom:50%;" /></p>
+<p>如果你选择<code>flash bootloader</code>或者<code>flash application</code>，也一样，VSCode会首先编译对应的hex，然后自动烧录到对应Flash。</p>
+<h3 id="debug"><a href="#debug" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>Debug</h3>
+<p>按F5就可以开始debug，如果默认配置的是Debug Bootloader，那么会先编译烧录bootloader，然后开始debug；Debug Application也一样。且VSCode会自动地在bootloader和application之间跳转：</p>
+<p><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028111055464.png" alt="image-20221028111055464" style="zoom:30%;" /></p>
+<h2 id="开发环境配置"><a href="#开发环境配置" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>开发环境配置</h2>
+<p>首先，开发环境的配置可以参考这里：https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/。需要注意的是我们需要选择gcc+makefile的方案而不是PlatformIO。</p>
+<p>需要注意的是，如果你想要安装最新版的OpenOCD，在Mac上面可以直接使用</p>
+<pre><code>brew install openocd --HEAD
+</code></pre><p>另外，还需要使用homebrew安装srecord备用：</p>
+<pre><code>brew install srecord
+</code></pre><p>在Windows下，这两者都需要手动安装，srecord需要一个<code>srec_cat.exe</code>。</p>
+<h2 id="创建工程"><a href="#创建工程" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>创建工程</h2>
+<p>由于我们的工程是App + Bootloader形式的，因此需要在根目录下创建两个工程。创建完之后，可以把打包编译都加到VSCode的task里。然后，直接使用<code>shift+cmd+b</code>快捷键就可以选择任务：</p>
+<p><strong><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028105511254.png" alt="image-20221028105511254" style="zoom:40%;" /></strong></p>
+<p>下面是一个我的task.json，供参考</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="err">//</span> <span class="err">See</span> <span class="err">https://go.microsoft.com/fwlink/?LinkId=733558</span>
+    <span class="err">//</span> <span class="err">for</span> <span class="err">the</span> <span class="err">documentation</span> <span class="err">about</span> <span class="err">the</span> <span class="err">tasks.json</span> <span class="err">format</span>
+    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;2.0.0&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;tasks&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;make bootloader&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd bootloader &amp;&amp; make all -j 16&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;problemMatcher&#34;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;cpp&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;fileLocation&#34;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&#34;relative&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;${workspaceFolder}/application&#34;</span>
+                <span class="p">],</span>
+                <span class="nt">&#34;pattern&#34;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&#34;regexp&#34;</span><span class="p">:</span> <span class="s2">&#34;^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$&#34;</span><span class="p">,</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&#34;line&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="nt">&#34;column&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="nt">&#34;severity&#34;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="mi">5</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;make application&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd application &amp;&amp; make all -j 16&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;problemMatcher&#34;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&#34;owner&#34;</span><span class="p">:</span> <span class="s2">&#34;cpp&#34;</span><span class="p">,</span>
+                <span class="nt">&#34;fileLocation&#34;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&#34;relative&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;${workspaceFolder}/application&#34;</span>
+                <span class="p">],</span>
+                <span class="nt">&#34;pattern&#34;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&#34;regexp&#34;</span><span class="p">:</span> <span class="s2">&#34;^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$&#34;</span><span class="p">,</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&#34;line&#34;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="nt">&#34;column&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="nt">&#34;severity&#34;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                    <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="mi">5</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;make all&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd application &amp;&amp; make all -j 16 &amp;&amp; cd ../bootloader &amp;&amp; make all -j 16&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;make clean&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd bootloader &amp;&amp; make clean &amp;&amp; cd ../application &amp;&amp; make clean&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;flash bootloader&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd bootloader &amp;&amp; openocd -f openocd.cfg -c \&#34;program build/bootloader.elf preverify verify reset exit\&#34;&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;dependsOn&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;make bootloader&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;dependsOrder&#34;</span><span class="p">:</span> <span class="s2">&#34;sequence&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;flash application&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;cd application &amp;&amp; openocd -f openocd.cfg -c \&#34;program build/application.hex preverify verify reset exit 0x00000000\&#34;&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;dependsOn&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;make application&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;dependsOrder&#34;</span><span class="p">:</span> <span class="s2">&#34;sequence&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;flash merged firmware&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;build&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;openocd -f bootloader/openocd.cfg -c \&#34;program firmware.hex preverify verify reset exit\&#34;&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;dependsOn&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;make all&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;merge hex&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;dependsOrder&#34;</span><span class="p">:</span> <span class="s2">&#34;sequence&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;label&#34;</span><span class="p">:</span> <span class="s2">&#34;merge hex&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;group&#34;</span><span class="p">:</span> <span class="s2">&#34;none&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;shell&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;resources/srec_cat.exe&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;args&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;bootloader/build/bootloader.hex&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;-Intel&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;application/build/application.hex&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;-Intel&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;-o&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;firmware.hex&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;-Intel&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;osx&#34;</span><span class="p">:{</span>
+                <span class="err">//</span> <span class="err">needs</span> <span class="err">`brew</span> <span class="err">install</span> <span class="err">srecord`</span>
+               <span class="nt">&#34;command&#34;</span><span class="p">:</span> <span class="s2">&#34;srec_cat&#34;</span><span class="p">,</span>
+               <span class="nt">&#34;args&#34;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="s2">&#34;bootloader/build/bootloader.hex&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;-Intel&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;application/build/application.hex&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;-Intel&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;-o&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;firmware.hex&#34;</span><span class="p">,</span>
+                    <span class="s2">&#34;-Intel&#34;</span>
+                <span class="p">]</span>
+            <span class="p">},</span>
+            <span class="nt">&#34;problemMatcher&#34;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h3 id="debug-1"><a href="#debug-1" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>Debug</h3>
+<p>Debug的配置也类似，只不过是配置<code>launch.json</code>，具体可以参考上面环境配置的文章。下面是我的<code>launch.json</code>，供参考：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="err">//</span> <span class="err">使用</span> <span class="err">IntelliSense</span> <span class="err">了解相关属性。</span> 
+    <span class="err">//</span> <span class="err">悬停以查看现有属性的描述。</span>
+    <span class="err">//</span> <span class="err">欲了解更多信息，请访问:</span> <span class="err">https://go.microsoft.com/fwlink/?linkid=830387</span>
+    <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;0.2.0&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;configurations&#34;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Debug Bootloader&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;cwd&#34;</span><span class="p">:</span> <span class="s2">&#34;${workspaceFolder}&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;executable&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;loadFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;application/build/application.elf&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;symbolFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="s2">&#34;application/build/application.elf&#34;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="s2">&#34;launch&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;cortex-debug&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;runToEntryPoint&#34;</span><span class="p">:</span> <span class="s2">&#34;main&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;servertype&#34;</span><span class="p">:</span> <span class="s2">&#34;openocd&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;showDevDebugOutput&#34;</span><span class="p">:</span> <span class="s2">&#34;parsed&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;configFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;bootloader/openocd.cfg&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;svdFile&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/STM32H7B0x.svd&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;device&#34;</span><span class="p">:</span> <span class="s2">&#34;stlink&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;preLaunchTask&#34;</span><span class="p">:</span> <span class="s2">&#34;flash bootloader&#34;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Debug Application&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;cwd&#34;</span><span class="p">:</span> <span class="s2">&#34;${workspaceFolder}&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;executable&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;loadFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+                <span class="s2">&#34;application/build/application.elf&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;symbolFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/build/bootloader.elf&#34;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&#34;file&#34;</span><span class="p">:</span> <span class="s2">&#34;application/build/application.elf&#34;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;request&#34;</span><span class="p">:</span> <span class="s2">&#34;launch&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;cortex-debug&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;runToEntryPoint&#34;</span><span class="p">:</span> <span class="s2">&#34;main&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;servertype&#34;</span><span class="p">:</span> <span class="s2">&#34;openocd&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;showDevDebugOutput&#34;</span><span class="p">:</span> <span class="s2">&#34;parsed&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;configFiles&#34;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&#34;bootloader/openocd.cfg&#34;</span>
+            <span class="p">],</span>
+            <span class="nt">&#34;svdFile&#34;</span><span class="p">:</span> <span class="s2">&#34;bootloader/STM32H7B0x.svd&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;device&#34;</span><span class="p">:</span> <span class="s2">&#34;stlink&#34;</span><span class="p">,</span>
+            <span class="nt">&#34;preLaunchTask&#34;</span><span class="p">:</span> <span class="s2">&#34;flash application&#34;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><h2 id="linker-script配置"><a href="#linker-script配置" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>Linker Script配置</h2>
+<p>由于我们的application运行在外置的OSPI Flash，要想让OpenOCD默认把application烧录到OSPI Flash，需要首先修改一下Linker Script。其实修改也非常简单，就是把Flash区域的地址由修改到0x90000000，大小修改为4096K（即Flash的大小设置为了4M，这个可以根据你使用的spi flash芯片来定）。</p>
+<p><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028112019836.png" alt="image-20221028112019836" style="zoom:35%;" /></p>
+<p>为什么需要把Flash区域的地址修改到0x90000000呢？其实这一点和使用MDK/IAR并没有什么不同，简单来说就是stm32要想在直接在OSPI内运行（即XIP），那么OSPI必须运行在memory mapped模式下。而memory mapped模式下的默认地址就是0x90000000。</p>
+<p>注意这里有个坑就是，在OSPI Flash打开memory mapped模式之后，正常的OSPI Flash的读写通信就全都会失败。如果你想使用驱动里面的读写或者其他函数（比如ReadID），那么必须关掉memory mapped模式。</p>
+<h2 id="openocd的配置"><a href="#openocd的配置" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>OpenOCD的配置</h2>
+<p>下面就来到了重点，也是最难的地方：OpenOCD的配置。</p>
+<p>对于大部分程序来说，其实只需要使用OpenOCD官方提供的默认配置就行了。但是，由于我们要在OSPI Flash上面XIP运行程序，官方的配置大概率是不能用的，就需要我们自己写<code>openocd.cfg</code>。</p>
+<p>在<code>openocd.cfg</code>中，实际上需要做以下几件事：</p>
+<ol>
+<li>指定debugger，在这里我们使用的是stlink</li>
+<li>指定芯片，source芯片的基础配置</li>
+<li>配置时钟</li>
+<li>配置GPIO</li>
+<li>配置ospi</li>
+</ol>
+<p>其中，1和2都比较简单，不再展开，参考下面的代码即可。那为什么在OpenOCD中还需要配置时钟、GPIO和OSPI呢？这是因为我们想要直接把application烧录到OSPI Flash，在OpenOCD烧录的过程中，它需要知道你的OSPI的GPIO配置，以及OSPI Flash的配置，这样OpenOCD才能正确地和OSPI Flash通信，从而进行烧录。</p>
+<p>3/4/5的配置，本质上就是配置stm32的寄存器。在OpenOCD中可以使用<code>mww</code>和<code>mmw</code>对寄存器进行设置，<code>mww</code>命令在OpenOCD文档里面就有，而<code>mmw</code>是OpenOCD额外封装的一个命令，具体逻辑可以去OpenOCD的<code>scripts</code>里面找到。配置代码如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-tcl" data-lang="tcl"><span class="err">、</span>
+<span class="c"># Choose debugger
+</span><span class="c"></span><span class="nb">source</span> <span class="k">[</span><span class="nv">find</span> interface<span class="o">/</span>stlink.cfg<span class="k">]</span>
+
+<span class="c"># Choose transport interfance 
+</span><span class="c"></span><span class="nv">transport</span> select hla_swd
+
+<span class="c"># Set chip name
+</span><span class="c"></span><span class="k">set</span> CHIPNAME stm32h7b0xx
+
+<span class="c"># Enable stmqspi
+</span><span class="c"></span><span class="k">if</span> <span class="k">{</span><span class="o">!</span><span class="k">[</span><span class="nb">info</span> exists OCTOSPI1<span class="k">]}</span> <span class="k">{</span>
+	<span class="k">set</span> OCTOSPI1 <span class="mi">1</span>
+	<span class="k">set</span> OCTOSPI2 <span class="mi">0</span>
+<span class="k">}</span>
+
+<span class="c"># Use built-in stm32h7 openocd configs
+</span><span class="c"></span><span class="nb">source</span> <span class="k">[</span><span class="nv">find</span> target<span class="o">/</span>stm32h7x.cfg<span class="k">]</span>
+
+<span class="c"># OCTOSPI initialization
+</span><span class="c"></span><span class="k">proc</span> octospi_init <span class="k">{</span> <span class="nv">octo</span> <span class="k">}</span> <span class="k">{</span>
+	<span class="k">global</span> a b
+	<span class="nv">mmw</span> <span class="mh">0x58024540</span> <span class="mh">0x000006FF</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB4ENR |= GPIOAEN-GPIOKEN (enable clocks)
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024534</span> <span class="mh">0x00284000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB3ENR |= IOMNGREN, OSPI2EN, OSPI1EN (enable clocks)
+</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>									<span class="k">;</span><span class="c"># Wait for clock startup
+</span><span class="c">
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B404</span> <span class="mh">0x03010111</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P1CR: assign Port 1 to OCTOSPI1
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B408</span> <span class="mh">0x00000000</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P2CR: disable Port 2
+</span><span class="c">
+</span><span class="c"></span>	<span class="c"># AF mapping can be found in datasheet. For h7b0, see DS13196, page 54
+</span><span class="c"></span>	<span class="c"># PB02: OCSPI1_CLK, PB06: OCSPI1_NCS, PD11: OCSPI1_IO0, PD12: OCSPI1_IO1, PE2: OCSPI1_IO2, PD13: OCSPI1_IO3
+</span><span class="c"></span>	<span class="c"># Generate the GPIO config: perl resources/gpio_gen.pl -c &#34;PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V&#34;
+</span><span class="c">
+</span><span class="c"></span>	<span class="c"># mmw command: &#34;memory modify word, modify only given bits&#34;
+</span><span class="c"></span>	<span class="c"># usage: mmw &#34;address setbits clearbits&#34;
+</span><span class="c">
+</span><span class="c"></span>	<span class="c"># PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V
+</span><span class="c"></span>	<span class="c"># Port B: PB06:AF10:V, PB02:AF09:V
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020400</span> <span class="mh">0x00002020</span> <span class="mh">0x00001010</span>    <span class="k">;</span><span class="c"># MODER
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020408</span> <span class="mh">0x00003030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802040C</span> <span class="mh">0x00000000</span> <span class="mh">0x00003030</span>    <span class="k">;</span><span class="c"># PUPDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020420</span> <span class="mh">0x0A000900</span> <span class="mh">0x05000600</span>    <span class="k">;</span><span class="c"># AFRL
+</span><span class="c"></span>	<span class="c"># Port D: PD13:AF09:V, PD12:AF09:V, PD11:AF09:V
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C00</span> <span class="mh">0x0A800000</span> <span class="mh">0x05400000</span>    <span class="k">;</span><span class="c"># MODER
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C08</span> <span class="mh">0x0FC00000</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C0C</span> <span class="mh">0x00000000</span> <span class="mh">0x0FC00000</span>    <span class="k">;</span><span class="c"># PUPDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C24</span> <span class="mh">0x00999000</span> <span class="mh">0x00666000</span>    <span class="k">;</span><span class="c"># AFRH
+</span><span class="c"></span>	<span class="c"># Port E: PE02:AF09:V
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021000</span> <span class="mh">0x00000020</span> <span class="mh">0x00000010</span>    <span class="k">;</span><span class="c"># MODER
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021008</span> <span class="mh">0x00000030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802100C</span> <span class="mh">0x00000000</span> <span class="mh">0x00000030</span>    <span class="k">;</span><span class="c"># PUPDR
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021020</span> <span class="mh">0x00000900</span> <span class="mh">0x00000600</span>    <span class="k">;</span><span class="c"># AFRL
+</span><span class="c">
+</span><span class="c"></span>	<span class="c"># OCTOSPI1: memory-mapped 4-line read mode with 3-byte(24bits) addresses
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005130</span> <span class="mh">0x00001000</span>				<span class="k">;</span><span class="c"># OCTOSPI_LPTR: deactivate CS after 4096 clocks when FIFO is full
+</span><span class="c"></span>	<span class="c"># Enter Memory mapped mode 
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005000</span> <span class="mh">0x3040000B</span>				<span class="k">;</span><span class="c"># OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=0
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005008</span> <span class="mh">0x00160100</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR1: MTYP=0x0, FSIZE=0x16=22=2^(22+1), CSHT=0x00, CKMODE=0, DLYBYP=0
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200500C</span> <span class="mh">0x00000001</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR2: WRAPSIZE=0x00, PRESCALER=0+1
+</span><span class="c">
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005108</span> <span class="mh">0x00000008</span>				<span class="k">;</span><span class="c"># OCTOSPI_TCR: SSHIFT=0, DHQC=0, DCYC=0x8
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005100</span> <span class="mh">0x03002303</span>				<span class="k">;</span><span class="c"># OCTOSPI_CCR: SIOO=0, DMODE=011, ABMODE=0x0, ADSIZE=10, ADMODE=011, ISIZE=0x0, IMODE=011
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005110</span> <span class="mh">0x000000EB</span>				<span class="k">;</span><span class="c"># OCTOSPI_IR: INSTR=FastRead, 0xeb
+</span><span class="c">
+</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
+
+	<span class="nv">flash</span> probe <span class="nv">$a</span>							<span class="k">;</span><span class="c"># load configuration from CR, TCR, CCR, IR register values
+</span><span class="c"></span><span class="k">}</span>
+
+<span class="c"># RCC配置，然后调用octospi_init
+</span><span class="c"></span><span class="nv">$_CHIPNAME.cpu0</span> <span class="nv">configure</span> <span class="o">-</span>event reset-init <span class="k">{</span>
+	<span class="k">global</span> OCTOSPI1
+	<span class="k">global</span> OCTOSPI2
+
+	<span class="nv">mmw</span> <span class="mh">0x52002000</span> <span class="mh">0x00000004</span> <span class="mh">0x0000000B</span>	<span class="k">;</span><span class="c"># FLASH_ACR: 4 WS for  64MHZ HCLK
+</span><span class="c">
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x00000001</span> <span class="mh">0x00000018</span>	<span class="k">;</span><span class="c"># RCC_CR: HSIDIV=1, HSI on
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024418</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR1: CDCPRE=1, CDPPRE=2, HPRE=1
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802441C</span> <span class="mh">0x00000440</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR2: CDPPRE2=2, CDPPRE1=2
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024420</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_SRDCFGR: SRDPPRE=2
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024428</span> <span class="mh">0x00404040</span>				<span class="k">;</span><span class="c"># RCC_PLLCKSELR: DIVM3=4, DIVM2=4, DIVM1=4, PLLSRC=HSI
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802442C</span> <span class="mh">0x01ff0ccc</span>				<span class="k">;</span><span class="c"># RCC_PLLCFGR: PLLxRGE=8MHz to 16MHz, PLLxVCOSEL=wide
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024430</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL1DIVR: 64MHz: DIVR1=2, DIVQ1=2, DIVP1=2, DIVN1=8
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024438</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL2DIVR: 64MHz: DIVR2=2, DIVQ2=2, DIVP2=2, DIVN2=8
+</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024440</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL3DIVR: 64MHz: DIVR3=2, DIVQ3=2, DIVP3=2, DIVN3=8
+</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x01000000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CR: PLL1ON=1
+</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
+	<span class="nv">mmw</span> <span class="mh">0x58024410</span> <span class="mh">0x00000003</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CFGR: PLL1 as system clock
+</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
+
+	<span class="nv">adapter</span> speed <span class="mi">4000</span>
+
+	<span class="k">if</span> <span class="k">{</span> <span class="nv">$OCTOSPI1</span> <span class="k">}</span> <span class="k">{</span>
+		<span class="nv">octospi_init</span> <span class="mi">0</span>
+	<span class="k">}</span>
+<span class="k">}</span>
+
+<span class="nv">reset_config</span> none separate
+</code></pre></td></tr></table></div>
+</div>
+</div><p>首先看<code>$_CHIPNAME.cpu0 configure -event reset-init</code>部分，这里是时钟的配置。具体哪一条命令配置的是哪个寄存器，注释里面已经很明白了。这里时钟最好和Bootloader里面配置的时钟一致，否则可能出现奇怪的问题（比如OSPI Flash获取不到ID之类的）。</p>
+<p>在时钟配置完毕之后，会判断是否开启了<code>OCTOSPI1</code>，如果开启，则使用<code>octospi_init</code>函数对OSPI进行配置。而OSPI的配置在上面<code>proc octospi_init { octo }</code>函数里。</p>
+<p>然后就是OSPI的具体配置了。OSPI的配置分两步，GPIO配置和OSPI本身的寄存器配置。对于GPIO配置，OpenOCD官方提供了一个perl脚本可以直接生成对应引脚的GPIO，perl脚本的链接在<a href="https://github.com/openocd-org/openocd/blob/36597636f2a0e9fbf7b44f2c02fb85632d4dc063/contrib/loaders/flash/stmqspi/gpio_conf_stm32.pl" target="_blank" rel="noopener">这里</a>。具体使用可以参考我上面写的注释，需要配置好对应的接口和AF。而OSPI配置没有什么技巧，就是对照着OSPI的寄存器一个一个地配置。需要注意的是，这里的OSPI Flash的配置必须和Bootloader里面的OSPI Flash的配置完全一致，这样的话在烧录完Bootloader之后，OpenOCD才能够正确地使用这个配置去烧写Application到OSPI Flash。总而言之，在Cube里面的配置、OpenOCD的配置和Flash的配置最好都要一致，才不会出现奇怪的问题。</p>
+<h3 id="验证配置"><a href="#验证配置" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>验证配置</h3>
+<p>在配置完毕OpenOCD之后，可以手动验证一下配置。这一步非常重要，防止后面出问题不知道去哪里排查。首先进入你的application文件夹，然后使用命令打开OpenOCD监听4444端口：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">openocd -f openocd.cfg
+</code></pre></td></tr></table></div>
+</div>
+</div><p>然后，使用<code>telnet</code>(windows/linux)或者<code>nc</code>连接到OpenOCD：</p>
+<pre><code># Windows/Linux
+telnet localhost 4444
+# MacOS
+nc localhost 4444
+</code></pre><p>连接到之后，就可以任意输入OpenOCD的命令了，在这里我们使用</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">flash probe <span class="m">1</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>来查看OSPI Flash的信息（你也可以尝试一下<code>flash probe 0</code>，看看输出的信息）：</p>
+<pre><code>&gt; flash probe 1
+flash probe 1
+valid SFDP detected
+flash1 'sfdp' id = 0x333333 size = 8192 KiB
+flash 'stmqspi' found at 0x90000000
+</code></pre><p>可以看到OpenOCD已经识别出了在0x90000000位置的stmqspi。然后我们可以使用<code>flash info 1</code>来查看Flash的详细信息：</p>
+<p><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221031113620913.png" alt="image-20221031113620913"></p>
+<p>可以验证一下下面的Flash信息配置和你使用的Flash的DataSheet中的配置是否一致。如果一致，那么应该是没有问题的。</p>
+<p>看到这里，你可能会有一个问题就是，为什么这里的Flash名称显示的是<code>sfdp</code>，而前面烧录的时候会正确显示Flash的名称<code>w25q64jv</code>？</p>
+<p>这里原理我也没有弄明白，但是我猜测是因为OSPI的Memory mapped模式已经打开，这样的话GetID的命令就会失效。不过这个时候，OpenOCD只需要读取sfdp的寄存器就可以知道用那些命令操作Flash了。</p>
+<h2 id="编译工程合并hex烧录"><a href="#编译工程合并hex烧录" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>编译工程，合并Hex，烧录</h2>
+<p>由于我们是Bootloader + Application两个工程，在编译的时候需要两个工程一起编译，编译出来是两个固件文件。想要实现一键烧录，有两个方案：</p>
+<ol>
+<li>分别烧录两个固件到对应位置</li>
+<li>把两个固件合并成一个烧录</li>
+</ol>
+<p>其实两个方案没太大区别，为了后续发布简单，我选择了方案2。方案2有一个问题就是，不能使用bin格式的固件。这是因为bin格式在内存上是连续的，而我们的固件实际上是烧录在两个位置：内置Flash（0x08000000)和OSPI Flash（0x90000000）。如果使用bin格式的话，在合并之后，就会产生一个好几个G的超大固件，这显然是不对的。所以在这里我们使用hex格式，hex格式在文件内有存储每一个块烧录的内存位置，因此我们只需要使用三方工具把Application和Bootloader的固件合并成一个，然后在烧录的时候就会自动地把Bootloader烧录到0x08000000，把OSPI Flash烧录到0x90000000。</p>
+<p>我们选择的合并工具是<code>srecord</code>，也是非常著名的hex合并工具，全平台都有对应版本。安装上面已经讲过，不再赘述。想要合并hex，使用以下命令即可：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">srec_cat bootloader.hex -Intel application.hex -Intel -o merged.hex -Intel
+</code></pre></td></tr></table></div>
+</div>
+</div><p>代码实际上都写在了VSCode的task中，执行task就会自动完成hex的合并。</p>
+<p>烧录就简单了：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">openocd -f bootloader/openocd.cfg -c <span class="se">\&#34;</span>program firmware.hex preverify verify reset exit<span class="se">\&#34;</span>
+</code></pre></td></tr></table></div>
+</div>
+</div><p>这里需要注意的有两点：</p>
+<ol>
+<li>使用的是bootloader文件夹下的openocd.cfg，bootloader和application的openocd.cfg最好保持一致</li>
+<li>使用的是OpenOCD的<code>program</code>命令，而不是很常见的<code>flash erase_xxxx</code>。<code>program</code>命令是对<code>flash</code>命令的额外一层封装，还提供了预校验、烧写之后的校验、自动退出重启等功能，强烈建议使用。</li>
 </ol>
 
             </div>
@@ -296,9 +958,9 @@
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2022-10-24 02:47:36 UTC" style="cursor:help">
+        <span title="Updated @ 2022-10-31 03:55:28 UTC" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-10-24</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-10-24</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-10-31</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-10-31</text></g></svg>
         </span></div>
 
 
@@ -315,56 +977,56 @@
             
                 <div class="share-item twitter">
                     
-                    <a href="https://twitter.com/share?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;text=&amp;hashtags=&amp;via=%25!s%28%3cnil%3e%29" title="Share on Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                    <a href="https://twitter.com/share?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;text=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;hashtags=keyboard,stm32,embedding,&amp;via=%25!s%28%3cnil%3e%29" title="Share on Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item facebook">
                     
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;hashtag=%23" title="Share on Facebook" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;hashtag=%23keyboard" title="Share on Facebook" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item linkedin">
                     
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=&amp;summary=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e7%a8%8b%e5%ba%8f%e5%88%b0%e5%86%85%e7%bd%ae&#43;OSPI%20flash%20%e6%97%b6%e9%92%9f%e9%85%8d%e2%80%a6&amp;source=Haobo%27s%20Blog" title="Share on LinkedIn" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;summary=OpenOCD%20&#43;%20gcc%20&#43;%20VSCode,%20YES!&amp;source=Haobo%27s%20Blog" title="Share on LinkedIn" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item telegram">
                     
-                    <a href="https://t.me/share/url?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;text=" title="Share on Telegram" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                    <a href="https://t.me/share/url?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;text=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash" title="Share on Telegram" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item weibo">
                     
-                    <a href="https://service.weibo.com/share/share.php?&amp;url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=&amp;pic=https://haobogu.github.io/images/avatar.png&amp;searchPic=false" title="Share on Weibo" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon weibo-icon"><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></a>
+                    <a href="https://service.weibo.com/share/share.php?&amp;url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;pic=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png&amp;searchPic=false" title="Share on Weibo" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon weibo-icon"><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item douban">
                     
-                    <a href="https://www.douban.com/share/service?href=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;name=&amp;text=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e7%a8%8b%e5%ba%8f%e5%88%b0%e5%86%85%e7%bd%ae&#43;OSPI%20flash%20%e6%97%b6%e9%92%9f%e9%85%8d%e2%80%a6" title="Share on Douban" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon douban-icon"><path d="M.643.92v2.412h22.714V.92H.643zm1.974 4.926v9.42h18.764v-9.42H2.617zm2.72 2.408H18.69v4.605H5.338V8.254zm1.657 7.412l-2.512.938c1.037 1.461 1.87 2.825 2.512 4.091H0v2.385h24v-2.385h-6.678c.818-1.176 1.589-2.543 2.303-4.091l-2.73-.938a29.952 29.952 0 01-2.479 5.03h-4.75c-.786-1.962-1.677-3.641-2.672-5.03Z"/></svg></a>
+                    <a href="https://www.douban.com/share/service?href=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;name=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;text=OpenOCD%20&#43;%20gcc%20&#43;%20VSCode,%20YES!" title="Share on Douban" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon douban-icon"><path d="M.643.92v2.412h22.714V.92H.643zm1.974 4.926v9.42h18.764v-9.42H2.617zm2.72 2.408H18.69v4.605H5.338V8.254zm1.657 7.412l-2.512.938c1.037 1.461 1.87 2.825 2.512 4.091H0v2.385h24v-2.385h-6.678c.818-1.176 1.589-2.543 2.303-4.091l-2.73-.938a29.952 29.952 0 01-2.479 5.03h-4.75c-.786-1.962-1.677-3.641-2.672-5.03Z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item qq">
                     
-                    <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=&amp;summary=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e7%a8%8b%e5%ba%8f%e5%88%b0%e5%86%85%e7%bd%ae&#43;OSPI%20flash%20%e6%97%b6%e9%92%9f%e9%85%8d%e2%80%a6&amp;pics=https://haobogu.github.io/images/avatar.png&amp;site=Haobo%27s%20Blog" title="Share on QQ" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
+                    <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;summary=OpenOCD%20&#43;%20gcc%20&#43;%20VSCode,%20YES!&amp;pics=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png&amp;site=Haobo%27s%20Blog" title="Share on QQ" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
                 </div>
             
 
             
                 <div class="share-item qzone">
                     
-                    <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=&amp;summary=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e7%a8%8b%e5%ba%8f%e5%88%b0%e5%86%85%e7%bd%ae&#43;OSPI%20flash%20%e6%97%b6%e9%92%9f%e9%85%8d%e2%80%a6&amp;pics=https://haobogu.github.io/images/avatar.png&amp;site=Haobo%27s%20Blog" title="Share on Qzone" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
+                    <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/&amp;title=%e4%bd%bf%e7%94%a8OpenOCD&#43;VSCode%e4%b8%80%e9%94%ae%e7%83%a7%e5%bd%95Boot&#43;App%e5%88%b0%e5%86%85%e7%bd%ae&#43;%e5%a4%96%e7%bd%aeflash&amp;summary=OpenOCD%20&#43;%20gcc%20&#43;%20VSCode,%20YES!&amp;pics=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221028110201986.png&amp;site=Haobo%27s%20Blog" title="Share on Qzone" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
                 </div>
             
 
@@ -396,10 +1058,65 @@
         
     
     
+        <div class="related-posts">
+            <h2 class="related-title">See Also:<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg></h2>
+            <ul class="related-list">
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/keyboard/openocd/" class="related-link">OpenOCD</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/keyboard/qmk-2/" class="related-link">Learn QMK - 2</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/keyboard/stm32-3/" class="related-link">STM32 - 3</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/keyboard/stm32-2/" class="related-link">STM32 - 2</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="https://haobogu.github.io/posts/keyboard/stm32/" class="related-link">STM32</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
 
 
         
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="https://haobogu.github.io/tags/keyboard/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>keyboard</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="https://haobogu.github.io/tags/stm32/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>stm32</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="https://haobogu.github.io/tags/embedding/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>embedding</a>
+                
+            
+        </div>
     
 
 
@@ -420,13 +1137,9 @@
     
         <ul class="post-nav">
             
-                <li class="post-nav-prev">
-                    <a href="https://haobogu.github.io/posts/keyboard/blender/" rel="prev">&lt; </a>
-                </li>
-            
             
                 <li class="post-nav-next">
-                    <a href="https://haobogu.github.io/posts/keyboard/ospi/" rel="next"> &gt;</a>
+                    <a href="https://haobogu.github.io/posts/keyboard/openocd/" rel="next">OpenOCD &gt;</a>
                 </li>
             
         </ul>
