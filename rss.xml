@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Mon, 31 Oct 2022 03:55:32 &#43;0000</lastBuildDate>
+        <lastBuildDate>Thu, 03 Nov 2022 13:43:43 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -2904,6 +2904,8 @@ source [find target/stm32f4x.cfg]
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;需要注意的是，在&lt;code&gt;executable&lt;/code&gt;下，需要填写你自己的固件路径。然后设置&lt;code&gt;svdFile&lt;/code&gt;为你刚刚下载的那个SVD文件。然后点击F5就可以愉快地debug了。在设置了SVD之后，还可以在Debug页面下看到各个外设和寄存器的状态：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220913162207367.png&#34; alt=&#34;image-20220913162207367&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;iap&#34;&gt;IAP&lt;/h2&gt;
+&lt;p&gt;在产出的&lt;code&gt;.bin&lt;/code&gt;文件末尾追加4bytes的CRC校验值，然后在bootloader中，首先从USB读取文件到一块Flash的临时区域，然后根据文件的长度，计算&lt;code&gt;.bin&lt;/code&gt;文件的CRC校验和并且和&lt;code&gt;.bin&lt;/code&gt;文件末尾的值作比较，如果一样，则正式把结果烧写到Flash的程序运行区域。否则直接退出。这样可以防止在复制固件的过程中出现错误，从而让系统变砖。&lt;/p&gt;
 </description>
                 
                 
