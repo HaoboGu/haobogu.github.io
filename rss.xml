@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 08 Nov 2022 13:26:31 &#43;0000</lastBuildDate>
+        <lastBuildDate>Thu, 10 Nov 2022 03:40:46 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -3147,78 +3147,8 @@ Transitioning to dfuMANIFEST state
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;You&#39;ve successfully flash your STM32 MCU!&lt;/p&gt;
 &lt;h2 id=&#34;mcus&#34;&gt;MCUs&lt;/h2&gt;
 &lt;p&gt;注：&lt;/p&gt;
-&lt;p&gt;QMK支持的MCU列表，其中，支持lcd的有l4x3&lt;/p&gt;
+&lt;p&gt;QMK默认支持的MCU列表&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20220813211658361.png&#34; alt=&#34;image-20220813211658361&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
-&lt;h3 id=&#34;stm32g0系列&#34;&gt;stm32G0系列&lt;/h3&gt;
-&lt;p&gt;QMK只支持G0B1和G0C1，只看下G0B1CE&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; G0B1CE：512K/144K，48pin，没货&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;stm32g4系列&#34;&gt;stm32G4系列&lt;/h3&gt;
-&lt;p&gt;太贵，适合模拟外设&lt;/p&gt;
-&lt;h3 id=&#34;stm32f0系列&#34;&gt;stm32F0系列&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F030 - 【qmk不支持】&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F070CB/RB：128K/16K，封装不同，10/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F072RB：128K/16K，10/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; F078xC：256K/32K，没货&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;stm32f1系列&#34;&gt;stm32F1系列&lt;/h3&gt;
-&lt;p&gt;基本上只有103可选，用在键盘上足够足够的：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 103xB/x8：&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 103RCT6：256K/48K，64pin，3adc，30/片（QMK是否支持待定）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;stm32f3系列&#34;&gt;stm32F3系列&lt;/h3&gt;
-&lt;p&gt;新款，比较合适&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;del&gt;301：比较基础，只有1个12位adc&lt;/del&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302：2个12位adc，全速USB，QMK支持x8/xC/xE&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302CCT6：256K/40K，48pin，14/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 302RET6：512K/40K，64pin，40/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 303：4个12位adc，全速USB&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 303RBT6：128K/40K，60pin，20/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 【qmk不支持】&lt;del&gt;378：有16位adc，低电压（1.8V）&lt;/del&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 【qmk不支持】&lt;del&gt;373：16位adc - qmk不支持&lt;/del&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;stm32f4系列&#34;&gt;stm32f4系列&lt;/h3&gt;
-&lt;p&gt;F4系列性能已经非常强了，用在键盘上比较过剩。如果有丰富的额外需求比如屏幕、控制、各种传感器，则可以视成本使用。即使这样，也只需要用401/410/411之类的基础型号，410主要用于音频，我们主要考虑401/411。缺点是贵。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 401RET6：512K/96K，1adc，45/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 411CEU6：512K/128K，1adc，大量数据获取模式（BAM），可能可以在屏幕上有用，35/片&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
                 
                 
