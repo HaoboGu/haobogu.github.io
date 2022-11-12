@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2022-11-11T15:27:17&#43;00:00</updated>
+    <updated>2022-11-12T15:22:25&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -17,10 +17,265 @@
     
     <generator uri="https://gohugo.io/" version="0.76.5">Hugo</generator>
         <entry>
+            <title type="text">RTOS</title>
+            <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/rtos/" />
+            <id>https://haobogu.github.io/posts/keyboard/rtos/</id>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
+            <published>2022-11-11T23:59:37&#43;08:00</published>
+            <author>
+                    <name>Haobo Gu</name>
+                    <uri>haobogu.github.io</uri>
+                    <email>haobogu@outlook.com</email>
+                    </author>
+            <summary type="html">Learn RTOS</summary>
+            
+                <content type="html">&lt;h1 id=&#34;rtos&#34;&gt;RTOS&lt;/h1&gt;
+&lt;h2 id=&#34;什么是rtos&#34;&gt;什么是RTOS&lt;/h2&gt;
+&lt;p&gt;RTOS指实时操作系统（Real-Time Operation System）。是广泛用在嵌入式中的操作系统，其主要的特征是基于优先级的任务执行，以及快速、实时的响应。&lt;/p&gt;
+&lt;h2 id=&#34;azure-rtos&#34;&gt;Azure RTOS&lt;/h2&gt;
+&lt;p&gt;Azure RTOS的前身是ThreadX，是微软收购并且开源的一个RTOS。Azure RTOS包含一整套的嵌入式系统，实现了全家桶式的嵌入式RTOS解决方案。Azure RTOS主要包括如下组件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ThreadX: 高性能实时操作系统&lt;/li&gt;
+&lt;li&gt;NetX: 嵌入式网络协议栈&lt;/li&gt;
+&lt;li&gt;FileX: 嵌入式FAT文件系统&lt;/li&gt;
+&lt;li&gt;LevelX: NAND 和 NOR 闪存磨损均衡&lt;/li&gt;
+&lt;li&gt;GuiX: 嵌入式图形库&lt;/li&gt;
+&lt;li&gt;USBX: 嵌入式USB协议栈&lt;/li&gt;
+&lt;li&gt;TraceX: 基于主机的嵌入式分析工具&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;RTOS有很多，为什么我会选择Azure RTOS作为我学习使用的对象呢？原因主要有如下三点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我主要使用STM32，ST官方支持比较好的RTOS只有FreeRTOS和AzureRTOS（ThreadX）&lt;/li&gt;
+&lt;li&gt;ThreadX的设计很棒，代码写得非常好，且非常规范。如所有ThreadX相关的函数都是&lt;code&gt;tx_&lt;/code&gt;开头，更加符合我的代码审美&lt;/li&gt;
+&lt;li&gt;官方提供完善的&lt;strong&gt;中文文档&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;提供了从文件系统、USB到网络协议栈的全家桶，并且全都可以使用CubeMX生成和配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当然，其他RTOS如FreeRTOS也是非常好的选择，选自己喜欢的就行，一通百通。&lt;/p&gt;
+&lt;p&gt;我们主要会用到ThreadX、FileX、LevelX、USBX等，下面我们会从Azure RTOS的核心，ThreadX，开始讲起。&lt;/p&gt;
+&lt;h2 id=&#34;threadx&#34;&gt;ThreadX&lt;/h2&gt;
+&lt;p&gt;中文文档：https://learn.microsoft.com/zh-cn/azure/rtos/threadx&lt;/p&gt;
+&lt;p&gt;下面我们会学习整个ThreadX的中文文档。文档主要有6个章节，分别是：&lt;/p&gt;
+&lt;p&gt;第 1 章 - 简要概述 Azure RTOS ThreadX 及其与实时嵌入式开发的关系&lt;/p&gt;
+&lt;p&gt;第 2 章 - 介绍在应用程序中安装和使用 Azure RTOS ThreadX 的基本步骤（开箱即用）&lt;/p&gt;
+&lt;p&gt;第 3 章 - 详细介绍 Azure RTOS ThreadX（高性能实时内核）的功能操作&lt;/p&gt;
+&lt;p&gt;第 4 章 - 详细介绍如何将应用程序的接口应用到 Azure RTOS ThreadX&lt;/p&gt;
+&lt;p&gt;第 5 章 - 介绍如何编写 Azure RTOS ThreadX 应用程序的 I/O 驱动程序&lt;/p&gt;
+&lt;p&gt;第 6 章 - 介绍随每个 Azure RTOS ThreadX 处理器支持包一起提供的演示应用程序&lt;/p&gt;
+&lt;h3 id=&#34;threadx简介&#34;&gt;ThreadX简介&lt;/h3&gt;
+&lt;p&gt;首先了解一些基础概念。&lt;/p&gt;
+&lt;p&gt;首先是实时软件的概念。实时软件实际上就是需要实时地和外部进行交互的软件，大多数嵌入式软件都属于实时软件。在出现RTOS之前，大多数实时软件都是使用C main函数内部的主循环来分配各个任务的处理时间（现在在一些简单的程序中仍然是这么做的）。这么做的问题在于由于每个事件的响应时间不一，对于大型或者复杂的程序，其时序特性就会发生变化，整个程序就会变得不稳定、难以维护。&lt;/p&gt;
+&lt;p&gt;而RTOS的引入可以解决这个问题，基于优先级的响应方式可以让重要的外部事件处理变得确定和快速。当然，现代操作系统基于进程和线程的调度方式是实时操作系统的进一步延伸，不过对于嵌入式系统，一般来说RTOS已经足够用了。&lt;/p&gt;
+&lt;p&gt;第二是线程的概念。由于在ThreadX中，并没有复杂的线程、进程之分，因此为了避免混淆，ThreadX统一使用“线程”来描述一项程序任务。&lt;/p&gt;
+&lt;h3 id=&#34;安装threadx&#34;&gt;安装ThreadX&lt;/h3&gt;
+&lt;p&gt;有两种方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;直接克隆源码&lt;/li&gt;
+&lt;li&gt;CubeMX&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们主要是使用CubeMX的方式。参见下面的文章：https://blog.csdn.net/wallace89/article/details/114941859。大多数的配置保持默认即可，唯一需要注意的是，&lt;code&gt;TX_TIMER_TICKS_PER_SECOND&lt;/code&gt;需要改为1000，即系统Tick的时间为&lt;strong&gt;1ms&lt;/strong&gt;，这也是大多数RTOS的默认设置。然后Memory Pool大小，即堆栈大小设置大一些就可以了。&lt;/p&gt;
+&lt;p&gt;在设置了FileX和USBX之后，生成的代码会把CubeMX自带的FatFS和USB生成的代码覆盖掉，说明在ThreadX系统中，会由FileX和USBX替代对应的模块。注意可能需要重新移植一下对应的接口。&lt;/p&gt;
+&lt;h3 id=&#34;第一个threadx程序&#34;&gt;第一个ThreadX程序&lt;/h3&gt;
+&lt;p&gt;在使用CubeMX生成了ThreadX代码之后，我们首先看一下&lt;code&gt;main.c&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111212205232.png&#34; alt=&#34;image-20221111212205232&#34;&gt;&lt;/p&gt;
+&lt;p&gt;可以看到CubeMX在主循环之前增加了一个&lt;code&gt;MX_ThreadX_Init()&lt;/code&gt;，并且增加了一句提示，说&lt;code&gt;MX_ThreadX_Init()&lt;/code&gt;后面的代码永远不会执行。这就说明从&lt;code&gt;MX_ThreadX_Init()&lt;/code&gt;这个函数，系统就进入了ThreadX的实时操作系统中。点进&lt;code&gt;MX_ThreadX_Init()&lt;/code&gt;看看代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;  &lt;span class=&#34;cm&#34;&gt;/**
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;  * @brief  MX_ThreadX_Init
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;  * @param  None
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;  * @retval None
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt;  */&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;MX_ThreadX_Init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;cm&#34;&gt;/* USER CODE BEGIN  Before_Kernel_Start */&lt;/span&gt;
+
+  &lt;span class=&#34;cm&#34;&gt;/* USER CODE END  Before_Kernel_Start */&lt;/span&gt;
+
+  &lt;span class=&#34;n&#34;&gt;tx_kernel_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+
+  &lt;span class=&#34;cm&#34;&gt;/* USER CODE BEGIN  Kernel_Start_Error */&lt;/span&gt;
+
+  &lt;span class=&#34;cm&#34;&gt;/* USER CODE
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;可以看到实际上，只调用了一个ThreadX的函数&lt;code&gt;tx_kernel_enter()&lt;/code&gt;，这就是ThreadX的入口。这个函数相当于是裸机程序的主循环，它永远不会返回。&lt;/p&gt;
+&lt;p&gt;OK，我们现在知道了ThreadX的入口在哪里。那么下一步就是初始化系统资源。根据官方文档，我们可以使用&lt;code&gt;tx_application_define&lt;/code&gt;来初始化你的第一个线程。搜索&lt;code&gt;tx_application_define&lt;/code&gt;，可以发现这个函数被生成在了&lt;code&gt;AZURE_RTOS\App\app_azure_rtos.c&lt;/code&gt;文件下。这个文件非常长，简单来说就是根据在CubeMX里面设置的Azure Application的设置，来初始化对应的资源：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111213535995.png&#34; alt=&#34;image-20221111213535995&#34;&gt;&lt;/p&gt;
+&lt;p&gt;然后在资源创建完成之后，你就可以在对应的区域添加你自己的实时任务代码了。如下图框起来的就是ThreadX核心的线程代码和FileX的线程代码。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111213650138.png&#34; alt=&#34;image-20221111213650138&#34;&gt;&lt;/p&gt;
+&lt;p&gt;​	一般可以使用&lt;code&gt;tx_thread_create&lt;/code&gt;来创建。下面这段代码就是官方文档里面的最最简单的单线程创建代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;tx_api.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;unsigned&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_thread_counter&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;TX_THREAD&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_thread&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;cm&#34;&gt;/* Enter the ThreadX kernel. */&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;tx_kernel_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tx_application_define&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;first_unused_memory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;cm&#34;&gt;/* Create my_thread! */&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;tx_thread_create&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;my_thread&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;My Thread&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;my_thread_entry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mh&#34;&gt;0x1234&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;first_unused_memory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1024&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;TX_NO_TIME_SLICE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;TX_AUTO_START&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;my_thread_entry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;thread_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;cm&#34;&gt;/* Enter into a forever loop. */&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;cm&#34;&gt;/* Increment thread counter. */&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;my_thread_counter&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;cm&#34;&gt;/* Sleep for 1 tick. */&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;tx_thread_sleep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;可以看到整个的框架和CubeMX生成的实际上是一样的，入口就是&lt;code&gt;main&lt;/code&gt; -&amp;gt; &lt;code&gt;tx_kernel_enter&lt;/code&gt;，然后初始化就是&lt;code&gt;tx_application_define&lt;/code&gt;，然后里面定义了一个线程&lt;code&gt;my_thread_entry&lt;/code&gt;。这个线程会增加计数器 -&amp;gt; 休眠1Tick，就这样一直无限循环下去。&lt;/p&gt;
+&lt;p&gt;当然，你也可以创建一个线程，然后执行完毕之后就退出，这也是可以的。&lt;/p&gt;
+&lt;h3 id=&#34;基础配置&#34;&gt;基础配置&lt;/h3&gt;
+&lt;p&gt;ThreadX中有很多配置项，这些配置项都定义在&lt;code&gt;Core/Inc/tx_user.h&lt;/code&gt;中，只有当定义了&lt;code&gt;TX_INCLUDE_USER_DEFINE_FILE&lt;/code&gt;后这个文件里面的设置才会生效。不过不用担心，CubeMX已经帮我们设置好了。具体都有哪些设置，&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/threadx/chapter2#detailed-configuration-options&#34;&gt;这里&lt;/a&gt;看文档吧，也没什么捷径，唯一需要注意的是可以在CubeMX里面定义的尽量在CubeMX里面定义，否则重新生成代码可能会把原先的设置覆盖掉。&lt;/p&gt;
+&lt;h3 id=&#34;threadx的内核组件&#34;&gt;ThreadX的内核组件&lt;/h3&gt;
+&lt;p&gt;ThreadX应用程序包含四种类型的程序执行：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;初始化&lt;/li&gt;
+&lt;li&gt;线程执行&lt;/li&gt;
+&lt;li&gt;中断服务程序（Interrupt Service Routine，ISR）&lt;/li&gt;
+&lt;li&gt;应用程序计时器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这四类程序的执行如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111221713360.png&#34; alt=&#34;image-20221111221713360&#34; style=&#34;zoom:66%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;下面简单介绍一下这四类程序。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;初始化&lt;/p&gt;
+&lt;p&gt;就是初始化&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;线程执行&lt;/p&gt;
+&lt;p&gt;在初始化完毕之后，ThreadX就会进入&lt;strong&gt;线程计划循环&lt;/strong&gt;，简单来说就是&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;查找ready的最高优先级的线程&lt;/li&gt;
+&lt;li&gt;把控制权转交给该线程&lt;/li&gt;
+&lt;li&gt;执行完毕（或者更高优先级的线程Ready）&lt;/li&gt;
+&lt;li&gt;执行权交回线程计划循环&lt;/li&gt;
+&lt;li&gt;继续查找下一个最高优先级的线程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这样一个无限循环的过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;中断服务程序（ISR）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;中断是实时系统的基础&lt;/strong&gt;。在检测到更高优先级的中断时，系统会把当前程序的执行信息保存在堆栈上，然后去执行中断服务程序。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;应用程序计时器&lt;/p&gt;
+&lt;p&gt;和中断服务程序类似，区别在于其硬件实现是对程序隐藏的，通常被用来执行&lt;strong&gt;超时、定时任务或者监视器服务&lt;/strong&gt;。此外，应用程序计时器无法相互中断，这一点也和ISR不同。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这就是ThreadX中定义的四类主要程序。每一类程序的详细讲解，可以参考&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/threadx/chapter3#initialization-1&#34;&gt;这里&lt;/a&gt;的文档。&lt;/p&gt;
+&lt;h3 id=&#34;threadx的设备驱动程序&#34;&gt;ThreadX的设备驱动程序&lt;/h3&gt;
+&lt;h2 id=&#34;usbx&#34;&gt;USBX&lt;/h2&gt;
+&lt;p&gt;USBX是Azure RTOS提供的高性能USB主机和设备的嵌入式堆栈，其特点是&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;内存占用小&lt;/li&gt;
+&lt;li&gt;和ThreadX、FileX等Azure RTOS体系完美适配和集成&lt;/li&gt;
+&lt;li&gt;支持绝大多数MCU，以及绝大多数USB设备和主机类别&lt;/li&gt;
+&lt;li&gt;提供直观且一致的API，遵循动词 - 名词的命名约定，所有API均带有&lt;code&gt;ux_&lt;/code&gt;前缀&lt;/li&gt;
+&lt;li&gt;所有阻塞API都带有可选的超时&lt;/li&gt;
+&lt;li&gt;通过了各种认证&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下面就介绍一下USBX的功能，以及使用&lt;/p&gt;
+&lt;h3 id=&#34;usbx功能&#34;&gt;USBX功能&lt;/h3&gt;
+&lt;p&gt;USBX 同时支持主机端和设备端。 每一端都由三个层组成。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;控制器层&lt;/li&gt;
+&lt;li&gt;堆栈层&lt;/li&gt;
+&lt;li&gt;类层&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221112215822138.png&#34; alt=&#34;image-20221112215822138&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/keyboard/" term="keyboard" label="keyboard" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://haobogu.github.io/tags/embedded/" term="embedded" label="embedded" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">使用OpenOCD&#43;VSCode一键烧录Boot&#43;App到内置&#43;外置flash</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-10-31T11:53:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -768,7 +1023,7 @@ flash &#39;stmqspi&#39; found at 0x90000000
             <title type="text">OpenOCD</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-10-03T19:54:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1151,7 +1406,7 @@ flash1 &lt;span class=&#34;s1&#34;&gt;&amp;#39;win w25q64fv/jv&amp;#39;&lt;/span
             <title type="text">Learn Makefile - part 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/makefile/" />
             <id>https://haobogu.github.io/posts/engineering/makefile/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-09-26T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1468,7 +1723,7 @@ make --file your_make_file
             <title type="text">Learn QMK - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk-2/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk-2/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-08-14T15:38:55&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1991,7 +2246,7 @@ make --file your_make_file
             <title type="text">STM32 - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-3/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-3/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-08-01T11:03:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2189,7 +2444,7 @@ make --file your_make_file
             <title type="text">STM32 - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-2/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-2/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-07-31T20:22:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2377,7 +2632,7 @@ make --file your_make_file
             <title type="text">STM32</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-07-30T15:23:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2549,7 +2804,7 @@ make --file your_make_file
             <title type="text">Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/" />
             <id>https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-07-29T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2946,7 +3201,7 @@ source [find target/stm32f4x.cfg]
             <title type="text">Learn QMK</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-07-26T13:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3198,7 +3453,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/tokio/" />
             <id>https://haobogu.github.io/posts/engineering/tokio/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3723,7 +3978,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Basics of Vue</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vue/" />
             <id>https://haobogu.github.io/posts/engineering/vue/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-04-25T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4388,7 +4643,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4955,7 +5210,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5420,7 +5675,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/engineering/rust-build-scripts/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5561,7 +5816,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/engineering/rust-bindgen/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5778,7 +6033,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/tttttransformer/" />
             <id>https://haobogu.github.io/posts/deep-learning/tttttransformer/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6025,7 +6280,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6290,7 +6545,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/engineering/rusts-module-system/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6578,7 +6833,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-4/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6902,7 +7157,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-3/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7232,7 +7487,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-2/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7593,7 +7848,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-1/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8386,7 +8641,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/xlnet/" />
             <id>https://haobogu.github.io/posts/deep-learning/xlnet/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8517,7 +8772,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8624,7 +8879,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/dockerfile/" />
             <id>https://haobogu.github.io/posts/engineering/dockerfile/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8952,7 +9207,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9027,7 +9282,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9155,7 +9410,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/effective-go/" />
             <id>https://haobogu.github.io/posts/engineering/effective-go/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9505,7 +9760,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/git-commands/" />
             <id>https://haobogu.github.io/posts/others/git-commands/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9593,7 +9848,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10352,7 +10607,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/engineering/vs-code-extension/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10549,7 +10804,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/learning-hugo/" />
             <id>https://haobogu.github.io/posts/others/learning-hugo/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10713,7 +10968,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-gremlin/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10889,7 +11144,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-python/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11085,7 +11340,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/ssh/" />
             <id>https://haobogu.github.io/posts/engineering/ssh/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11192,7 +11447,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-basics/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11295,7 +11550,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/vim/" />
             <id>https://haobogu.github.io/posts/others/vim/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11424,7 +11679,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-hugo/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11583,7 +11838,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/blender/" />
             <id>https://haobogu.github.io/posts/keyboard/blender/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11724,7 +11979,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/ospi/" />
             <id>https://haobogu.github.io/posts/keyboard/ospi/</id>
-            <updated>2022-11-11T15:27:14&#43;00:00</updated>
+            <updated>2022-11-12T15:22:21&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
