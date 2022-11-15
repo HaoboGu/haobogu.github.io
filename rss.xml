@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 15 Nov 2022 06:21:08 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 15 Nov 2022 14:53:55 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -414,7 +414,41 @@
 &lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;</description>
+&lt;/div&gt;&lt;h2 id=&#34;filex&#34;&gt;FileX&lt;/h2&gt;
+&lt;p&gt;Azure FileX是一个FAT格式的文件管理系统，支持各种设备、各种FAT格式和exFAT拓展格式，并且针对性地做了很多优化。&lt;/p&gt;
+&lt;h3 id=&#34;filex的安装&#34;&gt;FileX的安装&lt;/h3&gt;
+&lt;p&gt;和上面ThreadX、USBX的安装一样，要安装FileX只需要在CubeMX中开启对应的功能，并设置相关参数即可。FileX的相关文件基本都是&lt;code&gt;fx_&lt;/code&gt;为开头，和上面ThreadX/USBX类似，主要引入的头文件是&lt;code&gt;fx_api.h&lt;/code&gt;和&lt;code&gt;fx_port.h&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;需要额外注意的是，FileX依赖ThreadX的计时器（timer）和信号量（semaphores）功能。&lt;/p&gt;
+&lt;p&gt;要想在项目中使用FileX，还需要如下配置：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;include &lt;code&gt;fx_api.h&lt;/code&gt;文件&lt;/li&gt;
+&lt;li&gt;在&lt;code&gt;tx_application_define&lt;/code&gt; 或&lt;strong&gt;应用程序线程&lt;/strong&gt;中调用 &lt;code&gt;fx_system_initialize&lt;/code&gt;，来初始化FileX文件系统&lt;/li&gt;
+&lt;li&gt;然后使用 &lt;code&gt;fx_media_open&lt;/code&gt; 来添加文件系统FileX媒体，这个函数必须在&lt;strong&gt;应用程序线程&lt;/strong&gt;中调用&lt;/li&gt;
+&lt;li&gt;编译代码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;filex的配置项&#34;&gt;FileX的配置项&lt;/h3&gt;
+&lt;p&gt;配置项在&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter2#configuration-options&#34;&gt;这里&lt;/a&gt;。注意使用CubeMX配置。整个Azure RTOS的配置都是类似的，参考上面其他模块的配置即可。&lt;/p&gt;
+&lt;h3 id=&#34;filex的功能组件&#34;&gt;FileX的功能组件&lt;/h3&gt;
+&lt;h4 id=&#34;filex的文件系统--fat文件系统基础&#34;&gt;FileX的文件系统 &amp;amp; FAT文件系统基础&lt;/h4&gt;
+&lt;p&gt;FileX会把物理的存储看作是一个&lt;strong&gt;逻辑扇区的数组&lt;/strong&gt;，至于扇区和底层物理的映射需要在I/O驱动程序中来做，这些驱动程序在调用&lt;code&gt;fx_media_open&lt;/code&gt;的时候被初始化。在FileX中，底层物理存储被称为&lt;strong&gt;介质（media）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;FAT12/16/32的介质的逻辑扇区布局一般长这样：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221115224431914.png&#34; alt=&#34;image-20221115224431914&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以看到：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;逻辑扇区的起始ID为1，扇区1指向的是&lt;strong&gt;保留扇区（reserved sector）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;第0扇区为启动扇区
+&lt;ul&gt;
+&lt;li&gt;不过，当介质有&lt;strong&gt;隐藏扇区&lt;/strong&gt;的时候，这些隐藏扇区会在启动扇区之前，因此启动扇区的偏移量必须要考虑是否有隐藏扇区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;作为区分，exFAT的逻辑扇区长这样：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221115224953857.png&#34; alt=&#34;image-20221115224953857&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;在exFAT中， 启动块和 FAT 区域属于&lt;strong&gt;系统区域&lt;/strong&gt;。 其余群集属于&lt;strong&gt;用户区域&lt;/strong&gt;。同时，作为对FAT12/16/32的兼容，exFAT中的0x0B 和 0x40 之间的区域（其中包含 FAT12/16/32 中的各种介质参数）在 exFAT 中标记为“保留”，&lt;strong&gt;必须全都置为0&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;FAT12/16/32以及exFAT的启动记录，可以参考文档中的详细说明：https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter3，这里不再一一介绍。&lt;/p&gt;
+&lt;h3 id=&#34;filex-的-io-驱动程序&#34;&gt;FileX 的 I/O 驱动程序&lt;/h3&gt;
+&lt;p&gt;TODO&lt;/p&gt;
+</description>
                 
                 
                 
