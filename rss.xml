@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Tue, 15 Nov 2022 14:53:55 &#43;0000</lastBuildDate>
+        <lastBuildDate>Wed, 16 Nov 2022 13:05:55 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -447,7 +447,18 @@
 &lt;p&gt;在exFAT中， 启动块和 FAT 区域属于&lt;strong&gt;系统区域&lt;/strong&gt;。 其余群集属于&lt;strong&gt;用户区域&lt;/strong&gt;。同时，作为对FAT12/16/32的兼容，exFAT中的0x0B 和 0x40 之间的区域（其中包含 FAT12/16/32 中的各种介质参数）在 exFAT 中标记为“保留”，&lt;strong&gt;必须全都置为0&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;FAT12/16/32以及exFAT的启动记录，可以参考文档中的详细说明：https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter3，这里不再一一介绍。&lt;/p&gt;
 &lt;h3 id=&#34;filex-的-io-驱动程序&#34;&gt;FileX 的 I/O 驱动程序&lt;/h3&gt;
-&lt;p&gt;TODO&lt;/p&gt;
+&lt;p&gt;FileX支持多介质（media），每一个FileX的介质实例都有其对应的唯一的I/O的驱动程序。在FileX中，&lt;code&gt;FX_MEDIA&lt;/code&gt;结构定义了管理对应的存储介质所需要的一切。用户需要做的，就是为FileX的I/O驱动程序，写一个函数作为整个驱动的入口：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;my_driver_entry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FX_MEDIA&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;media_ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这个函数的唯一一个参数是&lt;code&gt;FX_MEDIA&lt;/code&gt;，它会根据&lt;code&gt;FX_MEDIA&lt;/code&gt;中的请求&lt;code&gt;fx_media_driver_request&lt;/code&gt;和具体的参数，来判断当前要做的事情，然后调用对应的函数/硬件接口。在这里可以看到常用的&lt;code&gt;fx_media_driver_request&lt;/code&gt;的值，以及对应请求会用到的参数：https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#io-driver-requests。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;my_driver_entry&lt;/code&gt;可以理解成是对硬件存储驱动程序的一个统一入口，在这里去分发不同的硬件I/O请求。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#sample-ram-driver&#34;&gt;这里&lt;/a&gt;是一个针对RAM的Driver &lt;code&gt;fx_ram_driver.c&lt;/code&gt;，作为参考。&lt;/p&gt;
 </description>
                 
                 
