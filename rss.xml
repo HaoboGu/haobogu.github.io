@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Wed, 16 Nov 2022 13:05:55 &#43;0000</lastBuildDate>
+        <lastBuildDate>Thu, 17 Nov 2022 11:32:48 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -459,6 +459,27 @@
 &lt;/div&gt;&lt;p&gt;这个函数的唯一一个参数是&lt;code&gt;FX_MEDIA&lt;/code&gt;，它会根据&lt;code&gt;FX_MEDIA&lt;/code&gt;中的请求&lt;code&gt;fx_media_driver_request&lt;/code&gt;和具体的参数，来判断当前要做的事情，然后调用对应的函数/硬件接口。在这里可以看到常用的&lt;code&gt;fx_media_driver_request&lt;/code&gt;的值，以及对应请求会用到的参数：https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#io-driver-requests。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;my_driver_entry&lt;/code&gt;可以理解成是对硬件存储驱动程序的一个统一入口，在这里去分发不同的硬件I/O请求。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#sample-ram-driver&#34;&gt;这里&lt;/a&gt;是一个针对RAM的Driver &lt;code&gt;fx_ram_driver.c&lt;/code&gt;，作为参考。&lt;/p&gt;
+&lt;h3 id=&#34;filex的容错模块&#34;&gt;FileX的容错模块&lt;/h3&gt;
+&lt;p&gt;FileX包含了一个容错模块，用于在文件写入过程中介质断电或者弹出时的容错。这个模块不是默认开启的，如果想要开启，需要在定义了&lt;code&gt;FX_ENABLE_FAULT_TOLERANT&lt;/code&gt;的情况下，生成FileX。这样，在调用&lt;code&gt;fx_media_open&lt;/code&gt;初始化FileX之后，FileX会自动调用&lt;code&gt;fx_fault_tolerant_enable&lt;/code&gt;从而启动容错服务。&lt;/p&gt;
+&lt;p&gt;容错模块会开启容错日志，容错日志会在介质中占用一个cluster的大小。容错日志里面会记录文件操作，当操作被异常终止的时候，日志就可以把当前操作记录下来，后面再初始化FileX之后就会根据容错日志来完成上次中断的操作。当所有数据都成功写入并且提交到介质之后，FileX会删除当前的日志条目文件更新操作完成。&lt;/p&gt;
+&lt;h2 id=&#34;levelx&#34;&gt;LevelX&lt;/h2&gt;
+&lt;p&gt;LevelX是Azure RTOS提供的用于NAND和NOR闪存的磨损均衡工具。需要注意的是，LevelX不依赖FileX，但是会依赖ThreadX。&lt;/p&gt;
+&lt;h3 id=&#34;levelx的安装&#34;&gt;LevelX的安装&lt;/h3&gt;
+&lt;p&gt;和上面基本一样，不再赘述。生成的文件中，api都在&lt;code&gt;lx_api.h&lt;/code&gt;中。此外，LevelX生成的文件可以分成两类，&lt;code&gt;lx_nand_xxxxx&lt;/code&gt;和&lt;code&gt;lx_nor_xxxxx&lt;/code&gt;，分别用于NAND Flash和NOR Flash的磨损均衡。按需取用即可。&lt;/p&gt;
+&lt;p&gt;在官方库里面，还有LevelX结合FileX的示例，在这些文件中&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# nand flash
+demo_filex_nand_flash.c
+fx_nand_flash_simulated_driver.c
+lx_nand_flash_simulator.c
+
+# nor flash
+demo_filex_nor_flash.c
+fx_nor_flash_simulated_driver.c
+lx_nor_flash_simulator.c
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;levelx的配置选项&#34;&gt;LevelX的配置选项&lt;/h3&gt;
+&lt;p&gt;同上，见：https://learn.microsoft.com/zh-cn/azure/rtos/levelx/chapter2#configuration-options&lt;/p&gt;
+&lt;h3 id=&#34;levelx对nor-flash的支持&#34;&gt;LevelX对NOR Flash的支持&lt;/h3&gt;
+&lt;p&gt;我们主要会使用NOR Flash，因此主要看一下LevelX对NOR Flash的支持就好。&lt;/p&gt;
 </description>
                 
                 
