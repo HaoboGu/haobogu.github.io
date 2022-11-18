@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 17 Nov 2022 11:32:48 &#43;0000</lastBuildDate>
+        <lastBuildDate>Fri, 18 Nov 2022 15:13:11 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -479,7 +479,116 @@ lx_nor_flash_simulator.c
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;levelx的配置选项&#34;&gt;LevelX的配置选项&lt;/h3&gt;
 &lt;p&gt;同上，见：https://learn.microsoft.com/zh-cn/azure/rtos/levelx/chapter2#configuration-options&lt;/p&gt;
 &lt;h3 id=&#34;levelx对nor-flash的支持&#34;&gt;LevelX对NOR Flash的支持&lt;/h3&gt;
-&lt;p&gt;我们主要会使用NOR Flash，因此主要看一下LevelX对NOR Flash的支持就好。&lt;/p&gt;
+&lt;p&gt;我们主要会使用NOR Flash，因此主要看一下LevelX对NOR Flash的支持就好。LevelX在初始化的时候，会调用&lt;code&gt;lx_nor_flash_open&lt;/code&gt;，这个函数会把NOR Flash的驱动程序指定给LevelX。NOR Flash的驱动函数如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_initialize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LX_NOR_FLASH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中&lt;code&gt;instance&lt;/code&gt;就是LevelX的实例。在这个驱动函数里面，会把具体的硬件驱动和LevelX实例关联起来。每个LevelX的NOR Flash的实例需要实现如下几个服务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;读取扇区&lt;/li&gt;
+&lt;li&gt;写入扇区&lt;/li&gt;
+&lt;li&gt;块擦除&lt;/li&gt;
+&lt;li&gt;验证擦除的块&lt;/li&gt;
+&lt;li&gt;系统错误处理程序&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面的这些服务是通过在上面的初始化函数中设置&lt;code&gt;LX_NOR_FLASH&lt;/code&gt;的&lt;code&gt;instance&lt;/code&gt;的&lt;strong&gt;相应函数指针来设置&lt;/strong&gt;的，此外，驱动程序的初始化函数还负责&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;指定Flash的基础地址&lt;/li&gt;
+&lt;li&gt;指定块的总数和每个块的字节数&lt;/li&gt;
+&lt;li&gt;RAM缓冲区设置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下面介绍一下需要在驱动程序中实现的服务。&lt;/p&gt;
+&lt;h3 id=&#34;读取扇区&#34;&gt;读取扇区&lt;/h3&gt;
+&lt;p&gt;顾名思义，就是读取NOR Flash中的特定扇区。如果成功，返回&lt;code&gt;LX_SUCCESS&lt;/code&gt;。失败则返回&lt;code&gt;LX_ERROR&lt;/code&gt;。其原型函数为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_read_sector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flash_address&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;destination&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;words&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;其中，&lt;code&gt;flash_address&lt;/code&gt;就是读取的逻辑扇区的地址，&lt;code&gt;destination&lt;/code&gt;是读出来的数据位置，而&lt;code&gt;words&lt;/code&gt;则是读取大小（32位字节的数量）。&lt;/p&gt;
+&lt;h3 id=&#34;写入扇区&#34;&gt;写入扇区&lt;/h3&gt;
+&lt;p&gt;和读取类似，如果成功，返回&lt;code&gt;LX_SUCCESS&lt;/code&gt;。失败则返回&lt;code&gt;LX_ERROR&lt;/code&gt;。原型函数为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_write_sector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flash_address&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;words&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;flash_address&lt;/code&gt;为写入逻辑扇区的地址，&lt;code&gt;source&lt;/code&gt;为数据，&lt;code&gt;words&lt;/code&gt;为写入的大小。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，在写入时，需要自行判断写入是否成功。这个步骤可以通过读取回写入值并校验实现。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;块擦除&#34;&gt;块擦除&lt;/h3&gt;
+&lt;p&gt;负责擦除指定的块（Block）。如果成功，返回&lt;code&gt;LX_SUCCESS&lt;/code&gt;。失败则返回&lt;code&gt;LX_ERROR&lt;/code&gt;。原型函数为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_block_erase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;block&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  
+    &lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;erase_count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;block&lt;/code&gt;就是要擦除的块，而&lt;code&gt;erase_count&lt;/code&gt;则主要用于诊断&lt;/p&gt;
+&lt;h3 id=&#34;验证擦除的块&#34;&gt;验证擦除的块&lt;/h3&gt;
+&lt;p&gt;LevelX需要验证对应的块是否已经成功擦除，如果已被擦除，则返回&lt;code&gt;LX_SUCCESS&lt;/code&gt;，否则返回&lt;code&gt;LX_ERROR&lt;/code&gt;。函数原型如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_block_erased_verify&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ULONG&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;block&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;block&lt;/code&gt;就是要验证的块。&lt;/p&gt;
+&lt;h3 id=&#34;驱动程序系统错误&#34;&gt;驱动程序系统错误&lt;/h3&gt;
+&lt;p&gt;这个函数负责处理驱动程序发生的错误，函数原型入下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;n&#34;&gt;INT&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;nor_driver_system_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;UINT&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;error_code&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;error_code&lt;/code&gt;表示发生的错误码。&lt;/p&gt;
+&lt;h3 id=&#34;nor的模拟驱动程序&#34;&gt;NOR的模拟驱动程序&lt;/h3&gt;
+&lt;p&gt;LevelX提供了使用RAM来模拟NOR闪存的驱动程序，默认情况下，这个驱动程序会提供8个闪存块（Block），每个块有16个扇区（Sector），每个扇区512字节。这个模拟驱动程序在&lt;code&gt;lx_nor_flash_simulator.c&lt;/code&gt;中定义，可以作为自定义驱动程序的很好的参考。其初始化函数为&lt;code&gt;lx_nor_flash_simulator_initialize&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;filex集成&#34;&gt;FileX集成&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt; fx_nor_flash_simulated_driver.c&lt;/code&gt;文件提供了NOR模拟 + FileX的集成驱动程序，可以作为很好的参考。&lt;/p&gt;
+&lt;p&gt;另外，官方问题还有如下提示，可以用来提升读写效率：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;FileX NOR 闪存格式应该是小于 NOR 闪存提供的扇区的一个完整块大小。 这将有助于确保在损耗均衡处理期间获得最佳性能。 在 LevelX 损耗均衡算法中提高写入性能的其他技巧包含：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;确保所有写入大小都恰好是一个或多个群集（cluster），并且在确切的群集边界上启动。&lt;/li&gt;
+&lt;li&gt;通过  FileX 的API &lt;code&gt;fx_file_allocate&lt;/code&gt; 类执行大文件写入操作之前，请先预分配群集。&lt;/li&gt;
+&lt;li&gt;定期使用 &lt;code&gt;lx_nor_flash_defragment&lt;/code&gt; 释放尽可能多的 NOR 块，从而提高写入性能。&lt;/li&gt;
+&lt;li&gt;确保已启用 FileX 驱动程序以接收释放扇区信息，并通过调用 &lt;code&gt;lx_nor_flash_sector_release&lt;/code&gt; 在驱动程序中处理对驱动程序发出的释放扇区的请求。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
 </description>
                 
                 
