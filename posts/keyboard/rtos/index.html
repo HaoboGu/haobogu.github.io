@@ -54,13 +54,13 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2022-11-11T23:59:37+08:00",
-        "dateModified": "2022-11-18T15:13:08+00:00",
+        "dateModified": "2022-11-21T12:52:12+00:00",
         "url": "https://haobogu.github.io/posts/keyboard/rtos/",
         "headline": "RTOS",
         "description": "Learn RTOS",
         "inLanguage" : "en",
         "articleSection": "posts",
-        "wordCount":  8602 ,
+        "wordCount":  9005 ,
         "image": ["https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111212205232.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111213535995.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111213650138.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111221713360.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221112215822138.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221114194946535.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221115224431914.png","https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221115224953857.png"],
         "author": {
             "@type": "Person",
@@ -97,7 +97,7 @@
 <meta property="og:locale" content="en" /><meta property="og:image" content="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221111212205232.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2022-11-11T23:59:37&#43;08:00" />
-    <meta property="article:modified_time" content="2022-11-18T15:13:08&#43;00:00" />
+    <meta property="article:modified_time" content="2022-11-21T12:52:12&#43;00:00" />
     
     <meta property="article:section" content="posts" />
 
@@ -217,7 +217,7 @@
     
     
         
-        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;8602</span>
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;9005</span>
     
     
         
@@ -783,6 +783,49 @@ lx_nor_flash_simulator.c
 <li>确保已启用 FileX 驱动程序以接收释放扇区信息，并通过调用 <code>lx_nor_flash_sector_release</code> 在驱动程序中处理对驱动程序发出的释放扇区的请求。</li>
 </ol>
 </blockquote>
+<h2 id="cubemx的坑"><a href="#cubemx的坑" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>CubeMX的坑</h2>
+<p>在使用CubeMX生成ThreadX工程的时候，需要注意如下几个坑：</p>
+<ol>
+<li>
+<p>生成的ThreadX，默认的porting是IAR，即使在CubeMX中选择makefile，也一样。因此，需要去官方库，把<code>port/cortex_m7/gnu</code>目录下的内容复制到CubeMX工程下的<code>Middlewares/ST/threadx/ports/cortex_m7/gnu</code>。</p>
+</li>
+<li>
+<p>把<code>makefile</code>里面的IAR相关的路径干掉，换成gnu的</p>
+</li>
+<li>
+<p>在<code>makefile</code>里面添加<code>.S</code>文件（即ThreadX的gnu porting）相关的编译选项，代码如下：</p>
+<div class="highlight"><div class="chroma">
+<div class="table-container"><table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-makefile" data-lang="makefile"><span class="c"># 添加所有的 .S 文件到 S_SOURCES，主要是 gnu porting。
+</span><span class="c"># 别忘记 tx_initialize_low_level.S 这个文件。
+</span><span class="c"></span><span class="nv">S_SOURCES</span> <span class="o">=</span> <span class="k">$(</span>wildcard Middlewares/ST/threadx/ports/cortex_m7/gnu/src/*.S<span class="k">)</span> <span class="se">\
+</span><span class="se"></span><span class="err">Core/Src/tx_initialize_low_level.S</span>
+   
+<span class="c"># .. 中间省略，下面到生成的 OBJECTS 的地方，添加 .S 文件对应的 OBJECTS
+</span><span class="c"></span><span class="nv">OBJECTS</span> <span class="o">+=</span> <span class="k">$(</span>addprefix <span class="k">$(</span>BUILD_DIR<span class="k">)</span>/,<span class="k">$(</span>notdir <span class="k">$(</span>sort <span class="k">$(</span>S_SOURCES:.S<span class="o">=</span>.o<span class="k">))))</span>
+<span class="err">vpath</span> <span class="err">%.S</span> <span class="k">$(</span><span class="nv">sort</span> <span class="k">$(</span><span class="nv">dir</span> <span class="k">$(</span><span class="nv">sort</span> <span class="k">$(</span><span class="nv">S_SOURCES</span><span class="k">))))</span>
+   
+<span class="c"># .. 然后到构建命令这边，添加 .S 对应的构建任务（参照 .s 即可）
+</span><span class="c"></span><span class="nf">$(BUILD_DIR)/%.o</span><span class="o">:</span> %.<span class="n">S</span> <span class="n">Makefile</span> <span class="p">|</span> <span class="k">$(</span><span class="nv">BUILD_DIR</span><span class="k">)</span>
+ <span class="k">$(</span>AS<span class="k">)</span> -c <span class="k">$(</span>CFLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span>
+</code></pre></td></tr></table></div>
+</div>
+</div></li>
+</ol>
 
             </div>
 
@@ -810,9 +853,9 @@ lx_nor_flash_simulator.c
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2022-11-18 15:13:08 UTC" style="cursor:help">
+        <span title="Updated @ 2022-11-21 12:52:12 UTC" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-11-18</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-11-18</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2022-11-21</text><text x="915" y="140" textLength="650" transform="scale(.1)">2022-11-21</text></g></svg>
         </span></div>
 
 

@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Fri, 18 Nov 2022 15:13:11 &#43;0000</lastBuildDate>
+        <lastBuildDate>Mon, 21 Nov 2022 12:52:15 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -589,6 +589,49 @@ lx_nor_flash_simulator.c
 &lt;li&gt;确保已启用 FileX 驱动程序以接收释放扇区信息，并通过调用 &lt;code&gt;lx_nor_flash_sector_release&lt;/code&gt; 在驱动程序中处理对驱动程序发出的释放扇区的请求。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
+&lt;h2 id=&#34;cubemx的坑&#34;&gt;CubeMX的坑&lt;/h2&gt;
+&lt;p&gt;在使用CubeMX生成ThreadX工程的时候，需要注意如下几个坑：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;生成的ThreadX，默认的porting是IAR，即使在CubeMX中选择makefile，也一样。因此，需要去官方库，把&lt;code&gt;port/cortex_m7/gnu&lt;/code&gt;目录下的内容复制到CubeMX工程下的&lt;code&gt;Middlewares/ST/threadx/ports/cortex_m7/gnu&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;把&lt;code&gt;makefile&lt;/code&gt;里面的IAR相关的路径干掉，换成gnu的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在&lt;code&gt;makefile&lt;/code&gt;里面添加&lt;code&gt;.S&lt;/code&gt;文件（即ThreadX的gnu porting）相关的编译选项，代码如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-makefile&#34; data-lang=&#34;makefile&#34;&gt;&lt;span class=&#34;c&#34;&gt;# 添加所有的 .S 文件到 S_SOURCES，主要是 gnu porting。
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# 别忘记 tx_initialize_low_level.S 这个文件。
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;S_SOURCES&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;wildcard Middlewares/ST/threadx/ports/cortex_m7/gnu/src/*.S&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;Core/Src/tx_initialize_low_level.S&lt;/span&gt;
+   
+&lt;span class=&#34;c&#34;&gt;# .. 中间省略，下面到生成的 OBJECTS 的地方，添加 .S 文件对应的 OBJECTS
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;OBJECTS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;addprefix &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;BUILD_DIR&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;/,&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;notdir &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;sort &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;S_SOURCES:.S&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;.o&lt;span class=&#34;k&#34;&gt;))))&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;vpath&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;%.S&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;sort&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;sort&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;S_SOURCES&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;))))&lt;/span&gt;
+   
+&lt;span class=&#34;c&#34;&gt;# .. 然后到构建命令这边，添加 .S 对应的构建任务（参照 .s 即可）
+&lt;/span&gt;&lt;span class=&#34;c&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;$(BUILD_DIR)/%.o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; %.&lt;span class=&#34;n&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Makefile&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;BUILD_DIR&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;
+ &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;AS&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; -c &lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;CFLAGS&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt; $&amp;lt; -o &lt;span class=&#34;nv&#34;&gt;$@&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
                 
                 
