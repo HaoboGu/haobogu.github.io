@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Mon, 21 Nov 2022 12:52:15 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sun, 11 Dec 2022 13:17:39 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -457,7 +457,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;这个函数的唯一一个参数是&lt;code&gt;FX_MEDIA&lt;/code&gt;，它会根据&lt;code&gt;FX_MEDIA&lt;/code&gt;中的请求&lt;code&gt;fx_media_driver_request&lt;/code&gt;和具体的参数，来判断当前要做的事情，然后调用对应的函数/硬件接口。在这里可以看到常用的&lt;code&gt;fx_media_driver_request&lt;/code&gt;的值，以及对应请求会用到的参数：https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#io-driver-requests。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;my_driver_entry&lt;/code&gt;可以理解成是对硬件存储驱动程序的一个统一入口，在这里去分发不同的硬件I/O请求。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;my_driver_entry&lt;/code&gt;可以理解成是对硬件存储驱动程序的一个统一入口，在这里去分发不同的硬件I/O请求。需要注意的是，在CubeMX生成的LevelX + FileX代码中，入口函数名为：&lt;code&gt;fx_stm32_levelx_nor_driver&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://learn.microsoft.com/zh-cn/azure/rtos/filex/chapter5#sample-ram-driver&#34;&gt;这里&lt;/a&gt;是一个针对RAM的Driver &lt;code&gt;fx_ram_driver.c&lt;/code&gt;，作为参考。&lt;/p&gt;
 &lt;h3 id=&#34;filex的容错模块&#34;&gt;FileX的容错模块&lt;/h3&gt;
 &lt;p&gt;FileX包含了一个容错模块，用于在文件写入过程中介质断电或者弹出时的容错。这个模块不是默认开启的，如果想要开启，需要在定义了&lt;code&gt;FX_ENABLE_FAULT_TOLERANT&lt;/code&gt;的情况下，生成FileX。这样，在调用&lt;code&gt;fx_media_open&lt;/code&gt;初始化FileX之后，FileX会自动调用&lt;code&gt;fx_fault_tolerant_enable&lt;/code&gt;从而启动容错服务。&lt;/p&gt;
