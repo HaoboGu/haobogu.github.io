@@ -21,10 +21,153 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Sat, 08 Apr 2023 15:10:55 &#43;0000</lastBuildDate>
+        <lastBuildDate>Sat, 08 Apr 2023 15:16:56 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
+        
+            <item>
+                <title>使用VSCode &#43; RTT方便地调试STM32</title>
+                <link>https://haobogu.github.io/posts/keyboard/rtt/</link>
+                <guid isPermaLink="true">https://haobogu.github.io/posts/keyboard/rtt/</guid>
+                <pubDate>Sat, 08 Apr 2023 22:11:15 &#43;0800</pubDate>
+                
+                    <author>haobogu@outlook.com (Haobo Gu)</author>
+                
+                
+                
+                    <description>&lt;p&gt;一直以来，我都用的是openocd + vscode来开发stm32，相比传统的KEIL MDK，VSCode无论是各种插件（Copilot！）还是人性化方面都更胜一筹。用习惯之后，不论是Python还是Rust还是C，所有的语言都在一个地方开发，真的很爽。在开发stm32的时候，由于引入了RTOS，所以仅仅是断点单步调试显得有些不够用了，就想着可不可以像其他高级语言一样，电脑端命令行中实时打印日志。几番搜索下来，发现VSCode上面的这套开源工具链（OpenOCD + CortexDebug）已经把这个事情做了！先展示一下效果：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20230408224147062.png&#34; alt=&#34;image-20230408224147062&#34;&gt;&lt;/p&gt;
+&lt;p&gt;单步调试 + 彩色日志，直接IDE内命令行展示，全齐，且不需要额外硬件，一个stlink足够。真的很方便。下面就简单介绍一下如何实现。&lt;/p&gt;
+&lt;h2 id=&#34;安装rtt&#34;&gt;安装RTT&lt;/h2&gt;
+&lt;p&gt;首先是要从SEGGER网站上面下载JLink全家桶，并且把RTT相关代码复制到工程下面，在makefile中添加对应的文件。参见：https://zhuanlan.zhihu.com/p/163771273 这篇文章。其中，如果你要使用stlink，那么环境变量也不用配置，只需要复制RTT源码即可。然后，添加log文件，同样是从上面的文章中复制得到，感谢文章作者：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt; * Author: Jayant Tang
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt; * Email: jayant97@foxmail.com
+&lt;/span&gt;&lt;span class=&#34;cm&#34;&gt; */&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;#ifndef _LOG_H_
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define _LOH_H_
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;#34;SEGGER_RTT.h&amp;#34;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#define LOG_DEBUG 1
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#if LOG_DEBUG
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;#define LOG_PROTO(type,color,format,...)            \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;        SEGGER_RTT_printf(0,&amp;#34;  %s%s&amp;#34;format&amp;#34;\r\n%s&amp;#34;, \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;                          color,                    \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;                          type,                     \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;                          ##__VA_ARGS__,            \
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;                          RTT_CTRL_RESET)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* 清屏*/&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#define LOG_CLEAR() SEGGER_RTT_WriteString(0, &amp;#34;  &amp;#34;RTT_CTRL_CLEAR)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* 无颜色日志输出 */&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#define LOG(format,...) LOG_PROTO(&amp;#34;&amp;#34;,&amp;#34;&amp;#34;,format,##__VA_ARGS__)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cm&#34;&gt;/* 有颜色格式日志输出 */&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#define LOGI(format,...) LOG_PROTO(&amp;#34;INFO: &amp;#34;, RTT_CTRL_TEXT_BRIGHT_GREEN , format, ##__VA_ARGS__)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOGW(format,...) LOG_PROTO(&amp;#34;WARN: &amp;#34;, RTT_CTRL_TEXT_BRIGHT_YELLOW, format, ##__VA_ARGS__)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOGE(format,...) LOG_PROTO(&amp;#34;ERROR: &amp;#34;, RTT_CTRL_TEXT_BRIGHT_RED   , format, ##__VA_ARGS__)
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#else
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOG_CLEAR()
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOG
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOGI
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOGW
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;#define LOGE
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#endif
+&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#endif &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;// !_LOG_H_
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;配置cortex-debug&#34;&gt;配置Cortex-Debug&lt;/h2&gt;
+&lt;p&gt;OpenOCD原生是支持RTT的，在默认情况下需要去修改&lt;code&gt;openocd.cfg&lt;/code&gt;来配置RTT。不过在VSCode里面，Cortex-Debug插件已经帮你配置好了一切（当然底层还是使用的OpenOCD的能力）！本来Cortex-Debug也是在VSCode下调试stm32必装的软件，所以说我们实际上只需要改改配置就可以使用RTT了。&lt;/p&gt;
+&lt;p&gt;具体Cortex-Debug的配置可以参见我之前的文章：https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/ 中的&lt;code&gt;launch.json&lt;/code&gt;配置环节。&lt;/p&gt;
+&lt;p&gt;在这里，我们只需要在原本的&lt;code&gt;launch.json&lt;/code&gt;中，增加如下配置：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20230408225111211.png&#34; alt=&#34;image-20230408225111211&#34;&gt;&lt;/p&gt;
+&lt;p&gt;然后，按F5烧录代码并启动调试。你就会在下面的终端页面上看到新增了一个窗口：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20230408225245588.png&#34; alt=&#34;image-20230408225245588&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这里就是RTT日志显示的地方。这样，不管是单步调试还是彩色日志显示，在一个地方全齐。Cortex-Debug甚至还支持RTT的其他特性，比如Graph：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20230408230952997.png&#34; alt=&#34;image-20230408230952997&#34; style=&#34;zoom:50%;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;更多的使用方法，可以参考Cortex-Debug的WIKI：https://github.com/Marus/cortex-debug/wiki/SEGGER-RTT-support&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/keyboard/">keyboard</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://haobogu.github.io/tags/embedded/">embedded</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>RTOS</title>
