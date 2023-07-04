@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title type="text">Haobo&#39;s Blog</title>
     <subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle>
-    <updated>2023-07-04T05:46:16&#43;00:00</updated>
+    <updated>2023-07-04T16:48:05&#43;00:00</updated>
     <id>https://haobogu.github.io/</id>
     <link rel="alternate" type="text/html" href="https://haobogu.github.io/" />
     <link rel="self" type="application/atom&#43;xml" href="https://haobogu.github.io/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Learn Tauri</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/tauri/" />
             <id>https://haobogu.github.io/posts/engineering/tauri/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2023-06-30T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -210,7 +210,7 @@ npm run tauri dev
             <title type="text">使用VSCode &#43; RTT方便地调试STM32</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/rtt/" />
             <id>https://haobogu.github.io/posts/keyboard/rtt/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2023-04-08T22:11:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -356,7 +356,7 @@ npm run tauri dev
             <title type="text">RTOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/rtos/" />
             <id>https://haobogu.github.io/posts/keyboard/rtos/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-11-11T23:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -993,7 +993,7 @@ lx_nor_flash_simulator.c
             <title type="text">使用OpenOCD&#43;VSCode一键烧录Boot&#43;App到内置&#43;外置flash</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-10-31T11:53:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -1741,7 +1741,7 @@ flash &#39;stmqspi&#39; found at 0x90000000
             <title type="text">OpenOCD</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/openocd/" />
             <id>https://haobogu.github.io/posts/keyboard/openocd/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-10-03T19:54:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2124,7 +2124,7 @@ flash1 &lt;span class=&#34;s1&#34;&gt;&amp;#39;win w25q64fv/jv&amp;#39;&lt;/span
             <title type="text">Learn Makefile - part 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/makefile/" />
             <id>https://haobogu.github.io/posts/engineering/makefile/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-09-26T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2441,7 +2441,7 @@ make --file your_make_file
             <title type="text">FMC</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/fmc/" />
             <id>https://haobogu.github.io/posts/keyboard/fmc/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-09-18T16:19:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2553,7 +2553,7 @@ make --file your_make_file
             <title type="text">TouchGFX</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/touchgfx/" />
             <id>https://haobogu.github.io/posts/keyboard/touchgfx/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-09-18T00:03:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -2771,7 +2771,7 @@ make --file your_make_file
             <title type="text">Learn QMK - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk-2/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk-2/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-08-14T15:38:55&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3294,7 +3294,7 @@ make --file your_make_file
             <title type="text">STM32 - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-3/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-3/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-08-01T11:03:23&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3492,7 +3492,7 @@ make --file your_make_file
             <title type="text">STM32 - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32-2/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32-2/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-07-31T20:22:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3680,7 +3680,7 @@ make --file your_make_file
             <title type="text">STM32</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-07-30T15:23:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -3852,7 +3852,7 @@ make --file your_make_file
             <title type="text">Develop stm32 using VSCode &#43; PlatformIO on MacOS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/" />
             <id>https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-07-29T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4249,7 +4249,7 @@ source [find target/stm32f4x.cfg]
             <title type="text">Learn QMK</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/qmk/" />
             <id>https://haobogu.github.io/posts/keyboard/qmk/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-07-26T13:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -4501,7 +4501,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Get Started With Tokio</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/tokio/" />
             <id>https://haobogu.github.io/posts/engineering/tokio/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-06-18T17:48:45&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5026,7 +5026,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Basics of Vue</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vue/" />
             <id>https://haobogu.github.io/posts/engineering/vue/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-04-25T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -5691,7 +5691,7 @@ Transitioning to dfuMANIFEST state
             <title type="text">Tree sitter - advanced parsing</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-01-27T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6258,7 +6258,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Tree sitter - basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/tree-sitter/" />
             <id>https://haobogu.github.io/posts/code-intelligence/tree-sitter/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2022-01-21T23:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6723,7 +6723,7 @@ Capture: (QueryMatch { id: 2, pattern_index: 0, captures: [QueryCapture { node: 
             <title type="text">Rust Build Scripts</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-build-scripts/" />
             <id>https://haobogu.github.io/posts/engineering/rust-build-scripts/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-11-12T17:27:44&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -6864,7 +6864,7 @@ The script may commnunicate with Cargo by printing commands like &lt;code&gt;car
             <title type="text">Rust bindgen</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rust-bindgen/" />
             <id>https://haobogu.github.io/posts/engineering/rust-bindgen/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-11-11T16:06:12&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7081,7 +7081,7 @@ test result: ok. 81 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
             <title type="text">From Transformer to Transformer-XL</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/tttttransformer/" />
             <id>https://haobogu.github.io/posts/deep-learning/tttttransformer/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-10-09T15:06:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7328,7 +7328,7 @@ $$&lt;/p&gt;
             <title type="text">A Survey of Machine Learning for Big Code and Naturalness</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-08-16T17:38:34&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7593,7 +7593,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Rust&#39;s Module System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/rusts-module-system/" />
             <id>https://haobogu.github.io/posts/engineering/rusts-module-system/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-07-21T10:19:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -7881,7 +7881,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 4</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-4/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-4/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-07-09T10:18:19&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8205,7 +8205,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 3</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-3/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-3/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-07-08T11:29:31&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8535,7 +8535,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 2</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-2/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-2/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-07-07T16:55:48&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -8896,7 +8896,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Learning Rust - 1</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/learning-rust-1/" />
             <id>https://haobogu.github.io/posts/engineering/learning-rust-1/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-07-07T10:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9689,7 +9689,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">XLNet</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/xlnet/" />
             <id>https://haobogu.github.io/posts/deep-learning/xlnet/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-06-11T14:15:10&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9820,7 +9820,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">IntelliCode Compose</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/intellicode-compose/" />
             <id>https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2021-02-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -9927,7 +9927,7 @@ When context $C(c)$ is $\emptyset$, the probability distribution $P_D$ is a &lt;
             <title type="text">Get Started with Docker &amp; Dockerfile</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/dockerfile/" />
             <id>https://haobogu.github.io/posts/engineering/dockerfile/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2020-10-22T17:41:25&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10255,7 +10255,7 @@ docker build -t nginx:v3 .
             <title type="text">Pythia: AI Assisted Code Completion System</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/" />
             <id>https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2020-09-04T17:59:37&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10330,7 +10330,7 @@ docker build -t nginx:v3 .
             <title type="text">A Self-Attentional Neural Architecture for Code Completion with Multi-Task Learning</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/" />
             <id>https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2020-07-16T15:16:28&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10458,7 +10458,7 @@ docker build -t nginx:v3 .
             <title type="text">Effective Go</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/effective-go/" />
             <id>https://haobogu.github.io/posts/engineering/effective-go/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2020-04-10T17:28:08&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10808,7 +10808,7 @@ docker build -t nginx:v3 .
             <title type="text">Powerful Git Commands</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/git-commands/" />
             <id>https://haobogu.github.io/posts/others/git-commands/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-12-18T19:47:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -10896,7 +10896,7 @@ e - manually edit the current hunk
             <title type="text">Language Server Protocol</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/code-intelligence/language-server-protocol/" />
             <id>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-10-25T14:18:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11655,7 +11655,7 @@ e - manually edit the current hunk
             <title type="text">VS Code Extension Development(1) - Get Started</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/vs-code-extension/" />
             <id>https://haobogu.github.io/posts/engineering/vs-code-extension/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-10-12T17:09:33&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -11852,7 +11852,7 @@ e - manually edit the current hunk
             <title type="text">Learning Hugo(1)</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/learning-hugo/" />
             <id>https://haobogu.github.io/posts/others/learning-hugo/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-23T15:35:00&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12016,7 +12016,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started With Gremlin</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-gremlin/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-gremlin/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-21T19:22:24&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12192,7 +12192,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Python Development</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-python/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-python/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-20T11:33:02&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12388,7 +12388,7 @@ https://example.com/posts/index.html
             <title type="text">SSH on Mac OS</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/engineering/ssh/" />
             <id>https://haobogu.github.io/posts/engineering/ssh/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-19T14:26:42&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12495,7 +12495,7 @@ https://example.com/posts/index.html
             <title type="text">Alfred Workflow Basics</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/alfred-workflow-basics/" />
             <id>https://haobogu.github.io/posts/others/alfred-workflow-basics/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-19T14:25:50&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12598,7 +12598,7 @@ https://example.com/posts/index.html
             <title type="text">Vim 命令</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/vim/" />
             <id>https://haobogu.github.io/posts/others/vim/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-15T22:16:15&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12727,7 +12727,7 @@ https://example.com/posts/index.html
             <title type="text">Get Started with Hugo</title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/others/get-started-with-hugo/" />
             <id>https://haobogu.github.io/posts/others/get-started-with-hugo/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>2019-08-14T19:57:40&#43;08:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -12886,7 +12886,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/blender/" />
             <id>https://haobogu.github.io/posts/keyboard/blender/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -13027,7 +13027,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/ospi/" />
             <id>https://haobogu.github.io/posts/keyboard/ospi/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -13097,7 +13097,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/rm67162/" />
             <id>https://haobogu.github.io/posts/keyboard/rm67162/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
@@ -13139,7 +13139,7 @@ git submodule add -b master git@github.com:&amp;lt;USERNAME&amp;gt;/&amp;lt;USER
             <title type="text"></title>
             <link rel="alternate" type="text/html" href="https://haobogu.github.io/posts/keyboard/stm32cubemx/" />
             <id>https://haobogu.github.io/posts/keyboard/stm32cubemx/</id>
-            <updated>2023-07-04T05:46:12&#43;00:00</updated>
+            <updated>2023-07-04T16:48:00&#43;00:00</updated>
             <published>0001-01-01T00:00:00&#43;00:00</published>
             <author>
                     <name>Haobo Gu</name>
