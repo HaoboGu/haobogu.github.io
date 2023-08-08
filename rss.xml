@@ -21,7 +21,7 @@
             <webMaster>haobogu@outlook.com (Haobo Gu)</webMaster>
         
         
-        <lastBuildDate>Thu, 06 Jul 2023 01:58:32 &#43;0000</lastBuildDate>
+        <lastBuildDate>Tue, 08 Aug 2023 15:16:07 &#43;0000</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://haobogu.github.io/rss.xml" />
         
@@ -88,7 +88,7 @@ npm run tauri dev
 &lt;/div&gt;&lt;h2 id=&#34;vue&#34;&gt;Vue&lt;/h2&gt;
 &lt;p&gt;项目结构&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;public: 不会被变异的资源文件&lt;/li&gt;
+&lt;li&gt;public: 不会被编译的资源文件&lt;/li&gt;
 &lt;li&gt;src/assets: 资源文件，会被编译&lt;/li&gt;
 &lt;li&gt;src/components: 组件&lt;/li&gt;
 &lt;li&gt;src/App.vue: 入口文件&lt;/li&gt;
