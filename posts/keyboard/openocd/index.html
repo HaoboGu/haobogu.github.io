@@ -3,7 +3,10 @@
     <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
     <meta charset="UTF-8" />
 
-    <meta name="generator" content="Hugo 0.76.5" /><meta name="theme-color" content="#fff" />
+    <meta name="generator" content="Hugo 0.121.1"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -14,12 +17,14 @@
 
     <title>OpenOCD | Haobo&#39;s Blog</title>
 
-    <link rel="stylesheet" href="https://haobogu.github.io/css/meme.min.bff275fae6b50a6e4b3cad6db8bebea3861c02c3d3c16bda4193a1de9746c367.css" integrity="sha256-v/J1&#43;ua1Cm5LPK1tuL6&#43;o4YcAsPTwWvaQZOh3pdGw2c=" />
+    <link rel="stylesheet" href="https://haobogu.github.io/css/meme.min.256faa0133275faf3bef63cbd3216ba6ba7e602e042804212375ff13b40cac95.css"/>
 
     
     
-        <script src="https://haobogu.github.io/js/meme.min.0a1c3cbdc2d181fee03c4bea6e671e4b312a227f1bd54e9d555da949161763b1.js" integrity="sha256-Chw8vcLRgf7gPEvqbmceSzEqIn8b1U6dVV2pSRYXY7E="></script>
+        
+            <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js" defer></script><script src="https://haobogu.github.io/js/meme.min.860735ba0f3e3e2d52f1ddb86db8e7aa799ff6892cfe9da49d29a3034e02af77.js"></script>
 
+        
     
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,7 +39,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://haobogu.github.io/icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Haobo&#39;s Blog" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="Haobo&#39;s Blog" />
     <meta name="msapplication-starturl" content="../../../" />
@@ -46,7 +51,7 @@
     
 
     
-    <link rel="canonical" href="https://haobogu.github.io/posts/keyboard/openocd/" />
+        <link rel="canonical" href="https://haobogu.github.io/posts/keyboard/openocd/" />
     
 
 <script type="application/ld+json">
@@ -54,7 +59,7 @@
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "datePublished": "2022-10-03T19:54:23+08:00",
-        "dateModified": "2023-11-09T14:13:17+00:00",
+        "dateModified": "2023-12-18T09:51:34+00:00",
         "url": "https://haobogu.github.io/posts/keyboard/openocd/",
         "headline": "OpenOCD",
         "description": "Learn OpenOCD",
@@ -76,11 +81,11 @@
                 "@type": "ImageObject",
                 "url": "https://haobogu.github.io/images/avatar.png"
             },
-            "url": "https://haobogu.github.io/"
+            "url": "https://haobogu.github.io"
         },
         "mainEntityOfPage": {
             "@type": "WebSite",
-            "@id": "https://haobogu.github.io/"
+            "@id": "https://haobogu.github.io"
         }
     }
 </script>
@@ -97,11 +102,14 @@
 <meta property="og:locale" content="en" /><meta property="og:image" content="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png" />
 <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2022-10-03T19:54:23&#43;08:00" />
-    <meta property="article:modified_time" content="2023-11-09T14:13:17&#43;00:00" />
+    <meta property="article:modified_time" content="2023-12-18T09:51:34&#43;00:00" />
     
     <meta property="article:section" content="posts" />
 
 
+
+    
+    
 
     
 </head>
@@ -160,6 +168,27 @@
             
         
             
+                
+            
+        
+            
+                <li class="menu-item search-item">
+                        <form id="search" class="search" role="search">
+    <label for="search-input"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon search-icon"><path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></label>
+    <input type="search" id="search-input" class="search-input">
+</form>
+
+<template id="search-result" hidden>
+    <article class="content post">
+        <h2 class="post-title"><a class="summary-title-link"></a></h2>
+        <summary class="summary"></summary>
+        <div class="read-more-container">
+            <a class="read-more-link">Read More »</a>
+        </div>
+    </article>
+</template>
+
+                    </li>
                 
             
         
@@ -230,52 +259,52 @@
             
 
             <div class="post-body e-content">
-              <h1 id="openocd"><a href="#openocd" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>OpenOCD</h1>
+                <h1 id="openocd"><a href="#openocd" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>OpenOCD</h1>
 <p>OpenOCD是一款开源的针对嵌入式设备的调试器，可以用来烧录、调试很多嵌入式设备。</p>
 <h2 id="安装"><a href="#安装" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>安装</h2>
 <p>在mac上面安装OpenOCD非常简单，使用<code>brew</code>安装就好。需要注意的是，<code>brew</code>里面默认的版本比较老旧，在安装时最好使用:</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">brew intall openocd --HEAD
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">brew intall openocd --HEAD
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>在Windows上面安装则更为简单：去OpenOCD的Github的Release页面下载最新版本的OpenOCD安装文件即可。</p>
 <h2 id="openocd入门"><a href="#openocd入门" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>OpenOCD入门</h2>
 <p>OpenOCD内置了对很多MCU和开发板的支持，这些都可以去<code>${安装目录}/share/openocd/scripts</code>下获取。一般来说，只需要在<code>interface</code>文件夹下面找到你使用的debugger，然后在<code>board</code>文件夹下面找到你所使用的板子或者在<code>target</code>目录下找到你使用的MCU，即可以不做任何改动，直接使用OpenOCD进行烧录和调试：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell">openocd -f interface/cmsis-dap.cfg -f target/stm32h7x.cfg 
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">openocd -f interface/cmsis-dap.cfg -f target/stm32h7x.cfg 
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>这是默认选项，也是大多数人的用法。不过在这里，如果我们想要对OpenOCD的烧录、调试选项做更加深入细致地定制的话，就必须熟悉OpenOCD的配置文件，也就是<code>-f</code>选项后面的文件。OpenOCD自带的这些文件是很好的参考，后面我们也会参考这些文件，针对我们自己的板子写出对应的配置文件。</p>
 <h2 id="openocd的配置文件"><a href="#openocd的配置文件" class="anchor-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon anchor-icon"><path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/></svg></a>OpenOCD的配置文件</h2>
 <p>OK，到现在为止我们已经入门了OpenOCD，现在就进一步学习OpenOCD的配置文件。默认情况下（即不使用<code>-f</code>指定配置文件时），OpenOCD会使用当前目录下的<code>openocd.cfg</code>文件作为配置文件。</p>
 <p>在写我们自己的配置文件时，我们仍然可以复用<code>scripts</code> 目录下的配置文件，像这样：</p>
-<pre><code># 引用stlink.cfg
+<pre tabindex="0"><code># 引用stlink.cfg
 source [find interface/stlink.cfg]
 </code></pre><p>大多数情况下，你所使用的debugger的配置文件都会随OpenOCD提供，引用即可。</p>
 <p>下面，针对我们使用的debugger，需要去指定通信类型。比如，对于stlink，我们使用<code>hla_swd</code>：</p>
-<pre><code># Choose transport interfance 
+<pre tabindex="0"><code># Choose transport interfance 
 transport select hla_swd
 </code></pre><p>或者对于<code>cmsis-dap</code>，我们使用<code>swd</code>：</p>
-<pre><code>source [find interface/cmsis-dap.cfg]
+<pre tabindex="0"><code>source [find interface/cmsis-dap.cfg]
 transport select swd
 </code></pre><p>再然后，就可以看一下我们使用的MCU是否在targets里面了。绝大多数情况下，是在的，那么我们可能需要进行一些些的配置。比如，指定芯片名称：</p>
-<pre><code>set CHIPNAME stm32h7x
+<pre tabindex="0"><code>set CHIPNAME stm32h7x
 </code></pre><p>再比如，打开octo-spi的开关：</p>
-<pre><code># Enable stmqspi
+<pre tabindex="0"><code># Enable stmqspi
 if {![info exists OCTOSPI1]} {
 	set OCTOSPI1 1
 	set OCTOSPI2 0
 }
 </code></pre><p>然后直接引用对应的内置配置文件即可：</p>
-<pre><code># Use built-in stm32h7 openocd configs
+<pre tabindex="0"><code># Use built-in stm32h7 openocd configs
 source [find target/stm32h7x.cfg]
 source [find board/stm32h7x_dual_qspi.cfg]
 </code></pre><p>这里，由于我们已经事先看了这两个文件，知道打开octo-spi要把<code>OCTOSPI1</code>配置为1。对于不同的MCU，最好去看一下对应<code>target</code>下的配置文件，这样你就能够知道可以配置哪些东西，需要配置哪些东西。</p>
@@ -291,7 +320,7 @@ source [find board/stm32h7x_dual_qspi.cfg]
 <ul>
 <li>flash write_image erase [filename] [address]：烧录指定文件到对应地址。对于stm32h7，如果烧录elf文件，不需要加地址。而如果烧录bin文件，则需要加地址：</li>
 </ul>
-<pre><code>flash write_image erase build/h7b0.bin 0x08000000
+<pre tabindex="0"><code>flash write_image erase build/h7b0.bin 0x08000000
 # 或者
 flash write_image erase build/h7b0.elf
 </code></pre></li>
@@ -314,7 +343,7 @@ flash write_image erase build/h7b0.elf
 <p>program: OpenOCD提供了program命令，相当于是flash命令的高级封装。可以直接使用如下一条命令，完成初始化、停止、烧录、重启、退出等一系列命令可以完成的事情：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -325,16 +354,16 @@ flash write_image erase build/h7b0.elf
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 一条命令完成烧写</span>
-program build/h7b0.elf verify reset <span class="nb">exit</span>
-  
-<span class="c1"># 下面一堆命令也一样</span>
-init
-halt
-flash write_image erase build/h7b0.elf
-reset
-shutdown
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 一条命令完成烧写</span>
+</span></span><span class="line"><span class="cl">program build/h7b0.elf verify reset <span class="nb">exit</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 下面一堆命令也一样</span>
+</span></span><span class="line"><span class="cl">init
+</span></span><span class="line"><span class="cl">halt
+</span></span><span class="line"><span class="cl">flash write_image erase build/h7b0.elf
+</span></span><span class="line"><span class="cl">reset
+</span></span><span class="line"><span class="cl">shutdown
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div></li>
 </ul>
@@ -342,7 +371,7 @@ shutdown
 <p>OpenOCD支持stm32系列MCU的qual-spi和octo-spi，可以使用spi把外部flash映射到内部的地址空间，这些flash可以自动地被OpenOCD检测到。在这种模式下，MCU可以直接读取对应的内存，执行flash里面的代码。不过需要注意的是，<strong>MCU不能直接从外置flash区域启动</strong>。因此，在具体的实现代码里面，<strong>必须在内置flash区（或者说boot代码里面），配置好qspi或者ospi的memory mapping</strong>。这样OpenOCD才能使用地址映射去操作这部分内存。下面是测试命令：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -377,47 +406,47 @@ shutdown
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 首先，进入OpenOCD</span>
-nc localhost <span class="m">4444</span>
-
-<span class="c1"># 之后，可以使用如下命令查看spi-flash</span>
-
-<span class="c1"># 查看flash列表，可以看到有内置和外置两个flash</span>
-$ flash list
-&gt; <span class="o">{</span>name stm32h7b0xx.bank1.cpu0 driver stm32h7x base <span class="m">134217728</span> size <span class="m">0</span> bus_width <span class="m">0</span> chip_width <span class="m">0</span> target stm32h7b0xx.cpu0<span class="o">}</span> <span class="o">{</span>name stm32h7b0xx.octospi1 driver stmqspi base <span class="m">2415919104</span> size <span class="m">0</span> bus_width <span class="m">0</span> chip_width <span class="m">0</span> target stm32h7b0xx.cpu0<span class="o">}</span>
-
-<span class="c1"># 获取内置flash的信息</span>
-$ flash info <span class="m">0</span>
-&gt; Device: STM32H7Ax/7Bx
-flash size probed value 128k
-STM32H7 flash has a single bank
-Bank <span class="o">(</span>0<span class="o">)</span> size is <span class="m">128</span> kb, base address is 0x08000000
-<span class="c1">#0 : stm32h7x at 0x08000000, size 0x00020000, buswidth 0, chipwidth 0</span>
-        <span class="c1">#  0: 0x00000000 (0x8000 32kB) not protected</span>
-        <span class="c1">#  1: 0x00008000 (0x8000 32kB) not protected</span>
-        <span class="c1">#  2: 0x00010000 (0x8000 32kB) not protected</span>
-        <span class="c1">#  3: 0x00018000 (0x8000 32kB) not protected</span>
-STM32H7Ax/7Bx - Rev: unknown <span class="o">(</span>0x1001<span class="o">)</span>
-
-<span class="c1"># 获取外部flash信息</span>
-$ flash info <span class="m">1</span>
-&gt; flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span> <span class="nv">id</span> <span class="o">=</span> 0x1740ef <span class="nv">size</span> <span class="o">=</span> <span class="m">8192</span> KiB
-<span class="c1">#1 : stmqspi at 0x90000000, size 0x00800000, buswidth 0, chipwidth 0</span>
-        <span class="c1">#  0: 0x00000000 (0x10000 64kB) not protected</span>
-        <span class="c1">#  1: 0x00010000 (0x10000 64kB) not protected</span>
-        ... 省略
-        <span class="c1">#126: 0x007e0000 (0x10000 64kB) not protected</span>
-        <span class="c1">#127: 0x007f0000 (0x10000 64kB) not protected</span>
-flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv">id</span> <span class="o">=</span> 0x1740ef, flash <span class="nv">size</span> <span class="o">=</span> 8192Ki B
-<span class="o">(</span>page <span class="nv">size</span> <span class="o">=</span> 256, <span class="nb">read</span> <span class="o">=</span> 0x03, <span class="nv">qread</span> <span class="o">=</span> 0xeb, <span class="nv">pprog</span> <span class="o">=</span> 0x02, <span class="nv">mass_erase</span> <span class="o">=</span> 0xc7, sector <span class="nv">size</span> <span class="o">=</span> <span class="m">64</span> KiB, <span class="nv">sector_erase</span> <span class="o">=</span> 0xd8<span class="o">)</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 首先，进入OpenOCD</span>
+</span></span><span class="line"><span class="cl">nc localhost <span class="m">4444</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 之后，可以使用如下命令查看spi-flash</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看flash列表，可以看到有内置和外置两个flash</span>
+</span></span><span class="line"><span class="cl">$ flash list
+</span></span><span class="line"><span class="cl">&gt; <span class="o">{</span>name stm32h7b0xx.bank1.cpu0 driver stm32h7x base <span class="m">134217728</span> size <span class="m">0</span> bus_width <span class="m">0</span> chip_width <span class="m">0</span> target stm32h7b0xx.cpu0<span class="o">}</span> <span class="o">{</span>name stm32h7b0xx.octospi1 driver stmqspi base <span class="m">2415919104</span> size <span class="m">0</span> bus_width <span class="m">0</span> chip_width <span class="m">0</span> target stm32h7b0xx.cpu0<span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取内置flash的信息</span>
+</span></span><span class="line"><span class="cl">$ flash info <span class="m">0</span>
+</span></span><span class="line"><span class="cl">&gt; Device: STM32H7Ax/7Bx
+</span></span><span class="line"><span class="cl">flash size probed value 128k
+</span></span><span class="line"><span class="cl">STM32H7 flash has a single bank
+</span></span><span class="line"><span class="cl">Bank <span class="o">(</span>0<span class="o">)</span> size is <span class="m">128</span> kb, base address is 0x08000000
+</span></span><span class="line"><span class="cl"><span class="c1">#0 : stm32h7x at 0x08000000, size 0x00020000, buswidth 0, chipwidth 0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  0: 0x00000000 (0x8000 32kB) not protected</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  1: 0x00008000 (0x8000 32kB) not protected</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  2: 0x00010000 (0x8000 32kB) not protected</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  3: 0x00018000 (0x8000 32kB) not protected</span>
+</span></span><span class="line"><span class="cl">STM32H7Ax/7Bx - Rev: unknown <span class="o">(</span>0x1001<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取外部flash信息</span>
+</span></span><span class="line"><span class="cl">$ flash info <span class="m">1</span>
+</span></span><span class="line"><span class="cl">&gt; flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span> <span class="nv">id</span> <span class="o">=</span> 0x1740ef <span class="nv">size</span> <span class="o">=</span> <span class="m">8192</span> KiB
+</span></span><span class="line"><span class="cl"><span class="c1">#1 : stmqspi at 0x90000000, size 0x00800000, buswidth 0, chipwidth 0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  0: 0x00000000 (0x10000 64kB) not protected</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#  1: 0x00010000 (0x10000 64kB) not protected</span>
+</span></span><span class="line"><span class="cl">        ... 省略
+</span></span><span class="line"><span class="cl">        <span class="c1">#126: 0x007e0000 (0x10000 64kB) not protected</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#127: 0x007f0000 (0x10000 64kB) not protected</span>
+</span></span><span class="line"><span class="cl">flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv">id</span> <span class="o">=</span> 0x1740ef, flash <span class="nv">size</span> <span class="o">=</span> 8192Ki B
+</span></span><span class="line"><span class="cl"><span class="o">(</span>page <span class="nv">size</span> <span class="o">=</span> 256, <span class="nb">read</span> <span class="o">=</span> 0x03, <span class="nv">qread</span> <span class="o">=</span> 0xeb, <span class="nv">pprog</span> <span class="o">=</span> 0x02, <span class="nv">mass_erase</span> <span class="o">=</span> 0xc7, sector <span class="nv">size</span> <span class="o">=</span> <span class="m">64</span> KiB, <span class="nv">sector_erase</span> <span class="o">=</span> 0xd8<span class="o">)</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>可以看到，OpenOCD甚至连外部flash的芯片型号（w25q64）都能都读取到。除了<code>list</code>和<code>info</code>命令外，还可以使用<code>banks</code>和<code>probe</code>命令：</p>
-<p><img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png" alt="image-20221003222853401" style="zoom:50%;" /></p>
+<img src="https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png" alt="image-20221003222853401" style="zoom:50%;" />
 <p>这里需要注意的是，在OpenOCD进行烧录的时候，通常不会启动芯片。因此对于外置SPI Flash，一般还需要通过手动写寄存器的方式来进行时钟的初始化和SPI外设的初始化。这样才能让OpenOCD正确地识别到目标芯片。如果你使用的芯片在OpenOCD已经内置，那么一般可以直接使用，直接<code>source</code>即可。如果没有内置或者你有自己的设置（比如SPI GPIO配置不同），那么就需要自己写了。下面是一个例子：</p>
 <div class="highlight"><div class="chroma">
 <div class="table-container"><table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -494,82 +523,82 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
 </span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-tcl" data-lang="tcl"><span class="c"># OCTOSPI 初始化
-</span><span class="c"></span><span class="k">proc</span> octospi_init <span class="k">{</span> <span class="nv">octo</span> <span class="k">}</span> <span class="k">{</span>
-	<span class="k">global</span> a b
-	<span class="nv">mmw</span> <span class="mh">0x58024540</span> <span class="mh">0x000006FF</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB4ENR |= GPIOAEN-GPIOKEN (enable clocks)
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024534</span> <span class="mh">0x00284000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB3ENR |= IOMNGREN, OSPI2EN, OSPI1EN (enable clocks)
-</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>									<span class="k">;</span><span class="c"># Wait for clock startup
-</span><span class="c">
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B404</span> <span class="mh">0x03010111</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P1CR: assign Port 1 to OCTOSPI1
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B408</span> <span class="mh">0x00000000</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P2CR: disable Port 2
-</span><span class="c">
-</span><span class="c"></span>	<span class="c"># AF mapping can be found in datasheet. For h7b0, see DS13196, page 54
-</span><span class="c"></span>	<span class="c"># PB02: OCSPI1_CLK, PB06: OCSPI1_NCS, PD11: OCSPI1_IO0, PD12: OCSPI1_IO1, PE2: OCSPI1_IO2, PD13: OCSPI1_IO3
-</span><span class="c"></span>	<span class="c"># Generate the GPIO config: perl resources/gpio_gen.pl -c &#34;PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V&#34;
-</span><span class="c">
-</span><span class="c"></span>	<span class="c"># mmw command: &#34;memory modify word, modify only given bits&#34;
-</span><span class="c"></span>	<span class="c"># usage: mmw &#34;address setbits clearbits&#34;
-</span><span class="c">
-</span><span class="c"></span>	<span class="c"># PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V
-</span><span class="c"></span>	<span class="c"># Port B: PB06:AF10:V, PB02:AF09:V
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020400</span> <span class="mh">0x00002020</span> <span class="mh">0x00001010</span>    <span class="k">;</span><span class="c"># MODER
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020408</span> <span class="mh">0x00003030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802040C</span> <span class="mh">0x00000000</span> <span class="mh">0x00003030</span>    <span class="k">;</span><span class="c"># PUPDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020420</span> <span class="mh">0x0A000900</span> <span class="mh">0x05000600</span>    <span class="k">;</span><span class="c"># AFRL
-</span><span class="c"></span>	<span class="c"># Port D: PD13:AF09:V, PD12:AF09:V, PD11:AF09:V
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C00</span> <span class="mh">0x0A800000</span> <span class="mh">0x05400000</span>    <span class="k">;</span><span class="c"># MODER
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C08</span> <span class="mh">0x0FC00000</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C0C</span> <span class="mh">0x00000000</span> <span class="mh">0x0FC00000</span>    <span class="k">;</span><span class="c"># PUPDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C24</span> <span class="mh">0x00999000</span> <span class="mh">0x00666000</span>    <span class="k">;</span><span class="c"># AFRH
-</span><span class="c"></span>	<span class="c"># Port E: PE02:AF09:V
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021000</span> <span class="mh">0x00000020</span> <span class="mh">0x00000010</span>    <span class="k">;</span><span class="c"># MODER
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021008</span> <span class="mh">0x00000030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802100C</span> <span class="mh">0x00000000</span> <span class="mh">0x00000030</span>    <span class="k">;</span><span class="c"># PUPDR
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021020</span> <span class="mh">0x00000900</span> <span class="mh">0x00000600</span>    <span class="k">;</span><span class="c"># AFRL
-</span><span class="c">
-</span><span class="c"></span>	<span class="c"># OCTOSPI1: memory-mapped 4-line read mode with 3-byte(24bits) addresses
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005130</span> <span class="mh">0x00001000</span>				<span class="k">;</span><span class="c"># OCTOSPI_LPTR: deactivate CS after 4096 clocks when FIFO is full
-</span><span class="c"></span>	<span class="c"># Enter Memory mapped mode 
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005000</span> <span class="mh">0x3040000B</span>				<span class="k">;</span><span class="c"># OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=0
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005008</span> <span class="mh">0x00160100</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR1: MTYP=0x0, FSIZE=0x16=22=2^(22+1), CSHT=0x00, CKMODE=0, DLYBYP=0
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200500C</span> <span class="mh">0x00000001</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR2: WRAPSIZE=0x00, PRESCALER=0+1
-</span><span class="c">
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005108</span> <span class="mh">0x00000008</span>				<span class="k">;</span><span class="c"># OCTOSPI_TCR: SSHIFT=0, DHQC=0, DCYC=0x8
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005100</span> <span class="mh">0x03002303</span>				<span class="k">;</span><span class="c"># OCTOSPI_CCR: SIOO=0, DMODE=011, ABMODE=0x0, ADSIZE=10, ADMODE=011, ISIZE=0x0, IMODE=011
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005110</span> <span class="mh">0x000000EB</span>				<span class="k">;</span><span class="c"># OCTOSPI_IR: INSTR=FastRead, 0xeb
-</span><span class="c">
-</span><span class="c"></span>	<span class="nv">flash</span> probe <span class="nv">$a</span>							<span class="k">;</span><span class="c"># load configuration from CR, TCR, CCR, IR register values
-</span><span class="c"></span><span class="k">}</span>
-
-<span class="c"># RCC时钟配置，然后调用octospi_init
-</span><span class="c"></span><span class="nv">$_CHIPNAME.cpu0</span> <span class="nv">configure</span> <span class="o">-</span>event reset-init <span class="k">{</span>
-	<span class="k">global</span> OCTOSPI1
-	<span class="k">global</span> OCTOSPI2
-
-	<span class="nv">mmw</span> <span class="mh">0x52002000</span> <span class="mh">0x00000004</span> <span class="mh">0x0000000B</span>	<span class="k">;</span><span class="c"># FLASH_ACR: 4 WS for  64MHZ HCLK
-</span><span class="c">
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x00000001</span> <span class="mh">0x00000018</span>	<span class="k">;</span><span class="c"># RCC_CR: HSIDIV=1, HSI on
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024418</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR1: CDCPRE=1, CDPPRE=2, HPRE=1
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802441C</span> <span class="mh">0x00000440</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR2: CDPPRE2=2, CDPPRE1=2
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024420</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_SRDCFGR: SRDPPRE=2
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024428</span> <span class="mh">0x00404040</span>				<span class="k">;</span><span class="c"># RCC_PLLCKSELR: DIVM3=4, DIVM2=4, DIVM1=4, PLLSRC=HSI
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802442C</span> <span class="mh">0x01ff0ccc</span>				<span class="k">;</span><span class="c"># RCC_PLLCFGR: PLLxRGE=8MHz to 16MHz, PLLxVCOSEL=wide
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024430</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL1DIVR: 64MHz: DIVR1=2, DIVQ1=2, DIVP1=2, DIVN1=8
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024438</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL2DIVR: 64MHz: DIVR2=2, DIVQ2=2, DIVP2=2, DIVN2=8
-</span><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024440</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL3DIVR: 64MHz: DIVR3=2, DIVQ3=2, DIVP3=2, DIVN3=8
-</span><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x01000000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CR: PLL1ON=1
-</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
-	<span class="nv">mmw</span> <span class="mh">0x58024410</span> <span class="mh">0x00000003</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CFGR: PLL1 as system clock
-</span><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
-
-	<span class="nv">adapter</span> speed <span class="mi">4000</span>
-
-	<span class="k">if</span> <span class="k">{</span> <span class="nv">$OCTOSPI1</span> <span class="k">}</span> <span class="k">{</span>
-		<span class="nv">octospi_init</span> <span class="mi">0</span>
-	<span class="k">}</span>
-<span class="k">}</span>
-</code></pre></td></tr></table></div>
+<pre tabindex="0" class="chroma"><code class="language-tcl" data-lang="tcl"><span class="line"><span class="cl"><span class="c"># OCTOSPI 初始化
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="k">proc</span> octospi_init <span class="k">{</span> <span class="nv">octo</span> <span class="k">}</span> <span class="k">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">global</span> a b
+</span></span><span class="line"><span class="cl">	<span class="nv">mmw</span> <span class="mh">0x58024540</span> <span class="mh">0x000006FF</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB4ENR |= GPIOAEN-GPIOKEN (enable clocks)
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024534</span> <span class="mh">0x00284000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_AHB3ENR |= IOMNGREN, OSPI2EN, OSPI1EN (enable clocks)
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>									<span class="k">;</span><span class="c"># Wait for clock startup
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B404</span> <span class="mh">0x03010111</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P1CR: assign Port 1 to OCTOSPI1
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200B408</span> <span class="mh">0x00000000</span>				<span class="k">;</span><span class="c"># OCTOSPIM_P2CR: disable Port 2
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># AF mapping can be found in datasheet. For h7b0, see DS13196, page 54
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># PB02: OCSPI1_CLK, PB06: OCSPI1_NCS, PD11: OCSPI1_IO0, PD12: OCSPI1_IO1, PE2: OCSPI1_IO2, PD13: OCSPI1_IO3
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># Generate the GPIO config: perl resources/gpio_gen.pl -c &#34;PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># mmw command: &#34;memory modify word, modify only given bits&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># usage: mmw &#34;address setbits clearbits&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># PB06:AF10:V, PB02:AF09:V, PD13:AF09:V, PD12:AF09:V, PD11:AF09:V, PE02:AF09:V
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># Port B: PB06:AF10:V, PB02:AF09:V
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020400</span> <span class="mh">0x00002020</span> <span class="mh">0x00001010</span>    <span class="k">;</span><span class="c"># MODER
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020408</span> <span class="mh">0x00003030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802040C</span> <span class="mh">0x00000000</span> <span class="mh">0x00003030</span>    <span class="k">;</span><span class="c"># PUPDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020420</span> <span class="mh">0x0A000900</span> <span class="mh">0x05000600</span>    <span class="k">;</span><span class="c"># AFRL
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># Port D: PD13:AF09:V, PD12:AF09:V, PD11:AF09:V
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C00</span> <span class="mh">0x0A800000</span> <span class="mh">0x05400000</span>    <span class="k">;</span><span class="c"># MODER
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C08</span> <span class="mh">0x0FC00000</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C0C</span> <span class="mh">0x00000000</span> <span class="mh">0x0FC00000</span>    <span class="k">;</span><span class="c"># PUPDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58020C24</span> <span class="mh">0x00999000</span> <span class="mh">0x00666000</span>    <span class="k">;</span><span class="c"># AFRH
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># Port E: PE02:AF09:V
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021000</span> <span class="mh">0x00000020</span> <span class="mh">0x00000010</span>    <span class="k">;</span><span class="c"># MODER
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021008</span> <span class="mh">0x00000030</span> <span class="mh">0x00000000</span>    <span class="k">;</span><span class="c"># OSPEEDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x5802100C</span> <span class="mh">0x00000000</span> <span class="mh">0x00000030</span>    <span class="k">;</span><span class="c"># PUPDR
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58021020</span> <span class="mh">0x00000900</span> <span class="mh">0x00000600</span>    <span class="k">;</span><span class="c"># AFRL
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># OCTOSPI1: memory-mapped 4-line read mode with 3-byte(24bits) addresses
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005130</span> <span class="mh">0x00001000</span>				<span class="k">;</span><span class="c"># OCTOSPI_LPTR: deactivate CS after 4096 clocks when FIFO is full
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="c"># Enter Memory mapped mode 
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005000</span> <span class="mh">0x3040000B</span>				<span class="k">;</span><span class="c"># OCTOSPI_CR: FMODE=0x11, APMS=1, FTHRES=0, FSEL=0, DQM=0, TCEN=0
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005008</span> <span class="mh">0x00160100</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR1: MTYP=0x0, FSIZE=0x16=22=2^(22+1), CSHT=0x00, CKMODE=0, DLYBYP=0
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5200500C</span> <span class="mh">0x00000001</span>				<span class="k">;</span><span class="c"># OCTOSPI_DCR2: WRAPSIZE=0x00, PRESCALER=0+1
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005108</span> <span class="mh">0x00000008</span>				<span class="k">;</span><span class="c"># OCTOSPI_TCR: SSHIFT=0, DHQC=0, DCYC=0x8
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005100</span> <span class="mh">0x03002303</span>				<span class="k">;</span><span class="c"># OCTOSPI_CCR: SIOO=0, DMODE=011, ABMODE=0x0, ADSIZE=10, ADMODE=011, ISIZE=0x0, IMODE=011
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x52005110</span> <span class="mh">0x000000EB</span>				<span class="k">;</span><span class="c"># OCTOSPI_IR: INSTR=FastRead, 0xeb
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">flash</span> probe <span class="nv">$a</span>							<span class="k">;</span><span class="c"># load configuration from CR, TCR, CCR, IR register values
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="k">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># RCC时钟配置，然后调用octospi_init
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="nv">$_CHIPNAME.cpu0</span> <span class="nv">configure</span> <span class="o">-</span>event reset-init <span class="k">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">global</span> OCTOSPI1
+</span></span><span class="line"><span class="cl">	<span class="k">global</span> OCTOSPI2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nv">mmw</span> <span class="mh">0x52002000</span> <span class="mh">0x00000004</span> <span class="mh">0x0000000B</span>	<span class="k">;</span><span class="c"># FLASH_ACR: 4 WS for  64MHZ HCLK
+</span></span></span><span class="line"><span class="cl"><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x00000001</span> <span class="mh">0x00000018</span>	<span class="k">;</span><span class="c"># RCC_CR: HSIDIV=1, HSI on
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024418</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR1: CDCPRE=1, CDPPRE=2, HPRE=1
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802441C</span> <span class="mh">0x00000440</span>				<span class="k">;</span><span class="c"># RCC_CDCFGR2: CDPPRE2=2, CDPPRE1=2
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024420</span> <span class="mh">0x00000040</span>				<span class="k">;</span><span class="c"># RCC_SRDCFGR: SRDPPRE=2
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024428</span> <span class="mh">0x00404040</span>				<span class="k">;</span><span class="c"># RCC_PLLCKSELR: DIVM3=4, DIVM2=4, DIVM1=4, PLLSRC=HSI
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x5802442C</span> <span class="mh">0x01ff0ccc</span>				<span class="k">;</span><span class="c"># RCC_PLLCFGR: PLLxRGE=8MHz to 16MHz, PLLxVCOSEL=wide
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024430</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL1DIVR: 64MHz: DIVR1=2, DIVQ1=2, DIVP1=2, DIVN1=8
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024438</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL2DIVR: 64MHz: DIVR2=2, DIVQ2=2, DIVP2=2, DIVN2=8
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mww</span> <span class="mh">0x58024440</span> <span class="mh">0x01010207</span>				<span class="k">;</span><span class="c"># RCC_PLL3DIVR: 64MHz: DIVR3=2, DIVQ3=2, DIVP3=2, DIVN3=8
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">mmw</span> <span class="mh">0x58024400</span> <span class="mh">0x01000000</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CR: PLL1ON=1
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">mmw</span> <span class="mh">0x58024410</span> <span class="mh">0x00000003</span> <span class="mi">0</span>				<span class="k">;</span><span class="c"># RCC_CFGR: PLL1 as system clock
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>	<span class="nv">sleep</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nv">adapter</span> speed <span class="mi">4000</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="k">{</span> <span class="nv">$OCTOSPI1</span> <span class="k">}</span> <span class="k">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nv">octospi_init</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">}</span>
+</span></span></code></pre></td></tr></table></div>
 </div>
 </div><p>OpenOCD官方有提供根据你的Pin的配置自动生成SPI GPIO配置的工具，在官方库的<code>gpio_gen.pl</code>文件中，需要perl执行。这样就不用对照着手册一个一个地自己去算寄存器的值了，非常的方便。</p>
 
@@ -599,9 +628,9 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
 
         
     <div class="updated-badge-container">
-        <span title="Updated @ 2023-11-09 14:13:17 UTC" style="cursor:help">
+        <span title="Updated @ 2023-12-18 09:51:34 UTC" style="cursor:help">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2023-11-09</text><text x="915" y="140" textLength="650" transform="scale(.1)">2023-11-09</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2023-12-18</text><text x="915" y="140" textLength="650" transform="scale(.1)">2023-12-18</text></g></svg>
         </span></div>
 
 
@@ -616,79 +645,33 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
         <div class="share-items">
 
             
-                <div class="share-item twitter">
-                    
-                    <a href="https://twitter.com/share?url=https://haobogu.github.io/posts/keyboard/openocd/&amp;text=OpenOCD&amp;hashtags=keyboard,embedding,&amp;via=%25!s%28%3cnil%3e%29" title="Share on Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
-                </div>
             
-
-            
-                <div class="share-item facebook">
-                    
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://haobogu.github.io/posts/keyboard/openocd/&amp;hashtag=%23keyboard" title="Share on Facebook" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item linkedin">
-                    
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://haobogu.github.io/posts/keyboard/openocd/&amp;title=OpenOCD&amp;summary=Learn%20OpenOCD&amp;source=Haobo%27s%20Blog" title="Share on LinkedIn" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item telegram">
-                    
-                    <a href="https://t.me/share/url?url=https://haobogu.github.io/posts/keyboard/openocd/&amp;text=OpenOCD" title="Share on Telegram" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item weibo">
-                    
-                    <a href="https://service.weibo.com/share/share.php?&amp;url=https://haobogu.github.io/posts/keyboard/openocd/&amp;title=OpenOCD&amp;pic=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png&amp;searchPic=false" title="Share on Weibo" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon weibo-icon"><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item douban">
-                    
-                    <a href="https://www.douban.com/share/service?href=https://haobogu.github.io/posts/keyboard/openocd/&amp;name=OpenOCD&amp;text=Learn%20OpenOCD" title="Share on Douban" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon douban-icon"><path d="M.643.92v2.412h22.714V.92H.643zm1.974 4.926v9.42h18.764v-9.42H2.617zm2.72 2.408H18.69v4.605H5.338V8.254zm1.657 7.412l-2.512.938c1.037 1.461 1.87 2.825 2.512 4.091H0v2.385h24v-2.385h-6.678c.818-1.176 1.589-2.543 2.303-4.091l-2.73-.938a29.952 29.952 0 01-2.479 5.03h-4.75c-.786-1.962-1.677-3.641-2.672-5.03Z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item qq">
-                    
-                    <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://haobogu.github.io/posts/keyboard/openocd/&amp;title=OpenOCD&amp;summary=Learn%20OpenOCD&amp;pics=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png&amp;site=Haobo%27s%20Blog" title="Share on QQ" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item qzone">
-                    
-                    <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://haobogu.github.io/posts/keyboard/openocd/&amp;title=OpenOCD&amp;summary=Learn%20OpenOCD&amp;pics=https://haobogu-md.oss-cn-hangzhou.aliyuncs.com/markdown/imgs/image-20221003222853401.png&amp;site=Haobo%27s%20Blog" title="Share on Qzone" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
-                </div>
-            
-
-            
-                <div class="share-item qrcode">
-                    <div class="qrcode-container" title="Share via QR Code"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                
+                    <div class="share-item facebook">
+                        
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://haobogu.github.io/posts/keyboard/openocd/&amp;hashtag=%23keyboard" title="Share on Facebook" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
                     </div>
-                    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-
-<script>
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData('https:\/\/haobogu.github.io\/posts\/keyboard\/openocd\/');
-    qr.make();
-    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
-</script>
-
-                </div>
+                
             
-
+                
+                    <div class="share-item mastodon">
+                            <a href="https://haobogu.github.io/fedishare.html#title=OpenOCD&amp;description=Learn%20OpenOCD&amp;url=https://haobogu.github.io/posts/keyboard/openocd/" title="Share on Mastodon" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon mastodon-icon"><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></a>
+                        </div>
+                    
+            
+                
+                    <div class="share-item fediverse">
+                            <a href="https://haobogu.github.io/fedishare.html#title=OpenOCD&amp;description=Learn%20OpenOCD&amp;url=https://haobogu.github.io/posts/keyboard/openocd/" title="Share on Fediverse" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="64 163 873 873" class="icon fediverse-icon"><defs><linearGradient id="fediverse-gradient"><stop offset="0%" stop-color="#ff0101"/><stop offset="10%" stop-color="#9501ff"/><stop offset="50%" stop-color="#ffca01"/><stop offset="75%" stop-color="#01a3ff"/><stop offset="100%" stop-color="#65ff01"/></linearGradient></defs><path d="M539 176q-32 0 -55 22t-25 55t20.5 58t56 27t58.5 -20.5t27 -56t-20.5 -59t-56.5 -26.5h-5zM452 271l-232 118q20 20 25 48l231 -118q-19 -20 -24 -48zM619 298q-13 25 -38 38l183 184q13 -25 39 -38zM477 320l-135 265l40 40l143 -280q-28 -5 -48 -25zM581 336 q-22 11 -46 10l-8 -1l21 132l56 9zM155 370q-32 0 -55 22.5t-25 55t20.5 58t56.5 27t59 -21t26.5 -56t-21 -58.5t-55.5 -27h-6zM245 438q1 9 1 18q-1 19 -10 35l132 21l26 -50zM470 474l-26 51l311 49q-1 -8 -1 -17q1 -19 10 -36zM842 480q-32 1 -55 23t-24.5 55t21 58 t56 27t58.5 -20.5t27 -56.5t-20.5 -59t-56.5 -27h-6zM236 493q-13 25 -39 38l210 210l51 -25zM196 531q-21 11 -44 10l-9 -1l40 256q21 -10 45 -9l8 1zM560 553l48 311q21 -10 44 -9l10 1l-46 -294zM755 576l-118 60l8 56l135 -68q-20 -20 -25 -48zM781 625l-119 231 q28 5 48 25l119 -231q-28 -5 -48 -25zM306 654l-68 134q28 5 48 25l60 -119zM568 671l-281 143q19 20 24 48l265 -135zM513 771l-51 25l106 107q13 -25 39 -38zM222 795q-32 0 -55.5 22.5t-25 55t21 57.5t56 27t58.5 -20.5t27 -56t-20.5 -58.5t-56.5 -27h-5zM311 863 q2 9 1 18q-1 19 -9 35l256 41q-1 -9 -1 -18q1 -18 10 -35zM646 863q-32 0 -55 22.5t-24.5 55t20.5 58t56 27t59 -21t27 -56t-20.5 -58.5t-56.5 -27h-6z"/></svg></a>
+                        </div>
+                    
+            
+                
+                    <div class="share-item twitter">
+                        
+                        <a href="https://twitter.com/share?url=https://haobogu.github.io/posts/keyboard/openocd/&amp;text=OpenOCD&amp;hashtags=keyboard,embedding,&amp;via=%25!s%28%3cnil%3e%29" title="Share on Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                    </div>
+                
+            
         </div>
 
     </div>
@@ -800,7 +783,7 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
             
     <footer id="footer" class="footer">
         <div class="footer-inner">
-            <div class="site-info">©&nbsp;2019–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;Haobo Gu</div><div class="powered-by">Powered by <a href="https://github.com/gohugoio/hugo" target="_blank" rel="noopener">Hugo</a> | Theme is <a href="https://github.com/reuixiy/hugo-theme-meme" target="_blank" rel="noopener">MemE</a></div><div class="site-copyright"></div>
+            <div class="site-info">©&nbsp;2019–2023&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg></div><div class="powered-by">Powered by <a href="https://github.com/gohugoio/hugo" target="_blank" rel="noopener">Hugo</a> | Theme is <a href="https://github.com/reuixiy/hugo-theme-meme" target="_blank" rel="noopener">MemE</a></div><div class="site-copyright"></div>
                 <div class="busuanzi-site-uv-and-pv">
                     <span id="busuanzi_container_site_uv">访客&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon busuanzi-site-uv"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>&nbsp;<span id="busuanzi_value_site_uv"></span></span>&nbsp;|&nbsp;<span id="busuanzi_container_site_pv">本站访问量&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon busuanzi-site-pv"><path d="M288 144a110.94 110.94 0 0 0-31.24 5 55.4 55.4 0 0 1 7.24 27 56 56 0 0 1-56 56 55.4 55.4 0 0 1-27-7.24A111.71 111.71 0 1 0 288 144zm284.52 97.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400c-98.65 0-189.09-55-237.93-144C98.91 167 189.34 112 288 112s189.09 55 237.93 144C477.1 345 386.66 400 288 400z"/></svg>&nbsp;<span id="busuanzi_value_site_pv"></span></span>
                 </div>
@@ -811,6 +794,8 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
                     <a href="mailto:haobogu@outlook.com" target="_blank" rel="external noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a>
                 </li><li class="socials-item">
                     <a href="https://github.com/haobogu" target="_blank" rel="external noopener" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://space.bilibili.com/26705509" target="_blank" rel="external noopener" title="bilibili"></a>
                 </li></ul>
     
 
@@ -836,7 +821,10 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
     <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
 
 <script>
-    mediumZoom(document.querySelectorAll('div.post-body img'), {
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
         background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
     })
 </script>
@@ -844,8 +832,7 @@ flash1 <span class="s1">&#39;win w25q64fv/jv&#39;</span>, device <span class="nv
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
 
 
 

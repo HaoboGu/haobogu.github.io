@@ -1,459 +1,277 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://haobogu.github.io/tags/embedded/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/keyboard/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/rust-embedded-tutorial/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/about/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/tauri/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/rust/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/rtt/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/rtos/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/embedding/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/stm32/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/openocd-ospi-flash/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/openocd/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/c/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/c-/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/makefile/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/makefile/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/fmc/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/touchgfx/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/qmk-2/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/qmk/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/stm32-3/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/stm32-2/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/stm32/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/develop-stm32-using-vscode/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/qmk/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/tokio/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/vue/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/frontend/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/parsing/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/code-intelligence/tree-sitter-advanced/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/code-intelligence/tree-sitter/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/rust-build-scripts/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/rust-bindgen/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/posts/deep-learning/tttttransformer/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/tags/nlp/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/tags/paper-note/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/tags/transformer/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/deep-learning/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/posts/deep-learning/tttttransformer/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/tags/nlp/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/tags/paper-note/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/tags/transformer/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/code-intelligence/a-survey-of-machine-learning-for-big-code-and-naturalness/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/research/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/rusts-module-system/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/learning-rust-4/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/learning-rust-3/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/learning-rust-2/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/learning-rust-1/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/posts/deep-learning/xlnet/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/xlnet/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/posts/deep-learning/xlnet/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/code-completion/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/code-intelligence/intellicode-compose/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/docker/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/dockerfile/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/dockerfile/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/deep-learning/pythia-ai-assisted-code-completion-system/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/code-intelligence/a-self-attentional-neural-architecture-for-code-completion-with-multi-task-learning/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/effective-go/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/go/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/git/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/git-commands/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/language-server-protocol/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
+    <loc>https://haobogu.github.io/posts/code-intelligence/language-server-protocol/</loc>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/lsp/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/type-script/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/extension/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/node.js/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/typescript/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/vs-code-extension/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/vscode/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/hugo/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/learning-hugo/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/get-started-with-gremlin/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/graph-database/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/gremlin/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/tinkerpop/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/alfred/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/alfred-workflow-python/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/linux/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/engineering/ssh/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/alfred-workflow-basics/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/tags/vim/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/vim/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/resume/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/others/get-started-with-hugo/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/blender/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/keeb/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/ospi/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/rm67162/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/posts/keyboard/stm32cubemx/</loc>
-    <lastmod>2023-11-09T14:13:17+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-12-18T09:51:34+00:00</lastmod>
+  </url><url>
     <loc>https://haobogu.github.io/categories/</loc>
   </url>
-  
 </urlset>
