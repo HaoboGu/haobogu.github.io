@@ -1,0 +1,39 @@
+language: go
+go:
+  - "1.8"  # 指定Golang 1.8
+# Specify which branches to build using a safelist
+# 分支白名单限制：只有 master 分支的提交才会触发构建
+# branches:
+#   only:
+#     - master
+
+# Handle git submodules yourself
+# 由于使用了我自己版本的主题，需要把ssh下载换成https方式，因为travis构建主机上没有sshkey
+git:
+    submodules: false
+# Use sed to replace the SSH URL with the public URL, then initialize submodules
+before_install:
+    - sed -i "s/git@github.com:/https:\/\/HaoboGu:$GITHUB_TOKEN@github.com\//" .gitmodules 
+    - git submodule update --init --recursive
+
+install:
+  # 安装hugo
+  - wget https://github.com/gohugoio/hugo/releases/download/v0.76.5/hugo_0.76.5_Linux-64bit.deb
+  - sudo dpkg -i hugo*.deb
+  
+script:
+  # 运行hugo命令
+  - hugo -t meme
+
+deploy:
+   provider: pages # 重要，指定这是一份github pages的部署配置
+   skip-cleanup: true # 重要，不能省略
+   local-dir: public # 静态站点文件所在目录
+   repo: haobogu/haobogu.github.io
+   target-branch: master # 要将静态站点文件发布到哪个分支
+   github-token: $GITHUB_TOKEN # 重要，$GITHUB_TOKEN是变量，需要在GitHub上申请、再到配置到Travis
+   # fqdn:  # 如果是自定义域名，此处要填
+   keep-history: true # 是否保持target-branch分支的提交记录
+   verbose: true
+   on:
+     branch: master # 博客源码的分支

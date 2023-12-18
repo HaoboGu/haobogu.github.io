@@ -1,0 +1,69 @@
+name = "Haobo Gu"
+
+# These two variable definitions need to go before [contact], etc.
+languages = [
+  "Chinese (native)",
+  "English (fluent)",
+]
+
+interests = [
+  "Sports",
+  "Video Games"
+]
+
+[contact]
+
+  [[contact.list]]
+    class = "email"
+    url = "mailto:haobogu@outlook.com"
+    title = "haobogu@outlook.com"
+
+  [[contact.list]]
+    class = "github"
+    url = "//github.com/haobogu"
+    title = "github.com/haobogu"
+
+[education]
+
+  [[education.list]]
+    degree = "M.S. Computational Linguistics"
+    school = "University of Washington"
+    year = "2017 - 2018"
+    description = "GAP: 3.98/4.0"
+
+  [[education.list]]
+    degree = "B.S. Automation"
+    school = "Tsinghua University"
+    year = "2011 - 2016"
+    description = "Minor: Economics"
+
+
+[experience]
+
+  [[experience.list]]
+    name = "Alibaba Cloud"
+    company = "Alibaba, Inc."
+    location = "Hangzhou, Zhejiang, China"
+    title = "Algorithm Engineer"
+    year = "3/2019 - now"
+    # description = """Aim to make coding an enjoyable thing for programmers."""
+    projects = [
+        """Code completion""",
+        """Code generation""",
+        """Cosy""",
+        """Alibaba Cloud AI Coding Assistant""",
+        ]
+
+[skill]
+
+  [[skill.list]]
+    name = "Java"
+    level = "80"
+
+  [[skill.list]]
+    name = "Python + Pytorch"
+    level = "80"
+
+  [[skill.list]]
+    name = "LLM"
+    level = "80"
