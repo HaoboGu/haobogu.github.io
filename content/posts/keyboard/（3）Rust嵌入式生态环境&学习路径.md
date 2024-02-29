@@ -2,7 +2,7 @@
 title: "Rust嵌入式教程（3）- 嵌入式生态环境 & 学习路径"
 author: "Haobo Gu"
 tags: [rust]
-date: 2024-01-26T11:13:40+08:00
+date: 2024-01-26T11:13:30+08:00
 summary: B站视频教程链接：https://www.bilibili.com/video/BV1g94y1V75c
 ---
 

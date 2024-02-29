@@ -2,7 +2,7 @@
 title: "Rust嵌入式教程（5）- embedded-hal & gpio点灯"
 author: "Haobo Gu"
 tags: [rust]
-date: 2024-01-26T11:13:40+08:00
+date: 2024-01-26T11:13:50+08:00
 summary: B站视频教程链接：https://www.bilibili.com/video/BV1nN41177ct
 ---
 

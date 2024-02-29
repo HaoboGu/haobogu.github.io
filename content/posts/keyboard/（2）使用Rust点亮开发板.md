@@ -2,7 +2,7 @@
 title: "Rust嵌入式教程（2）- 点亮开发板"
 author: "Haobo Gu"
 tags: [rust]
-date: 2024-01-26T11:13:40+08:00
+date: 2024-01-26T11:13:20+08:00
 summary: B站视频教程链接：https://www.bilibili.com/video/BV1jC4y1H7k8
 ---
 
