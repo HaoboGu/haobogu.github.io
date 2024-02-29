@@ -28,6 +28,9 @@ summary: B站视频教程链接：https://www.bilibili.com/video/BV1G5411C7mu
 ### 异步运行时 embassy-rs
 [Embassy](https://embassy.dev/)
 ## 示例代码（点灯 + button）
+
+main.rs: 
+
 ```rust
 #![no_std]
 #![no_main]
@@ -76,6 +79,9 @@ async fn main(spawner: Spawner) {
 }
 
 ```
+
+build.rs:
+
 ```rust
 fn main() {
     println!("cargo:rustc-link-arg-bins=--nmagic");
@@ -83,6 +89,9 @@ fn main() {
     println!("cargo:rustc-link-arg-bins=-Tdefmt.x");
 }
 ```
+
+.cargo/config.toml
+
 ```toml
 [target.thumbv7em-none-eabihf]
 runner = "probe-rs run --chip STM32H7B0VBTx"
@@ -93,6 +102,9 @@ target = "thumbv7em-none-eabihf"
 [env]
 DEFMT_LOG = "info"
 ```
+
+Cargo.toml:
+
 ```toml
 [package]
 edition = "2021"
